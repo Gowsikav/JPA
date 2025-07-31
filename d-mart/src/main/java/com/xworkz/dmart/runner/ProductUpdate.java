@@ -24,9 +24,10 @@ public class ProductUpdate {
                 productEntity.setPrice(80);
                 productEntity.setName("Cold Coffee");
                 ProductEntity updatedEntity = entityManager.merge(productEntity);
+                entityTransaction.commit();
                 System.out.println("Updated data: " + updatedEntity);
             }
-            entityTransaction.commit();
+
         } catch (PersistenceException e) {
             System.out.println(e.getMessage());
             if (entityTransaction != null) {
