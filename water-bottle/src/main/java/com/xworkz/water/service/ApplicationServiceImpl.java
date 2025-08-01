@@ -171,4 +171,77 @@ public class ApplicationServiceImpl implements ApplicationService{
         return true;
 
     }
+
+    @Override
+    public void findByApplicationName(String applicationName) {
+        System.out.println("findByApplicationName in ApplicationService Implementation");
+        if(applicationName!=null)
+        {
+            applicationRepository.findByApplicationName(applicationName);
+        }
+        else{
+            System.out.println("applicationName is null");
+        }
+
+    }
+
+    @Override
+    public void findByApplicationSize(String applicationSize) {
+        System.out.println("findByApplicationSize in ApplicationService Implementation");
+        if(applicationSize!=null)
+        {
+            applicationRepository.findByApplicationSize(applicationSize);
+        }
+        else{
+            System.out.println("applicationSize is null");
+        }
+    }
+
+    @Override
+    public void findByApplicationUsersCount(Integer applicationUsersCount) {
+        System.out.println("findByApplicationUsersCount in ApplicationService Implementation");
+        if(applicationUsersCount>0)
+        {
+            applicationRepository.findByApplicationUsersCount(applicationUsersCount);
+        }
+        else{
+            System.out.println("applicationUsersCount is less than 0");
+        }
+    }
+
+    @Override
+    public void findByApplicationRatings(Float applicationRatings) {
+        System.out.println("findByApplicationRatings in ApplicationService Implementation");
+        if(applicationRatings>0)
+        {
+            applicationRepository.findByApplicationRatings(applicationRatings);
+        }
+        else{
+            System.out.println("applicationRatings is less than 0");
+        }
+    }
+
+    @Override
+    public void findByApplicationLaunchDate(LocalDate applicationLaunchDate) {
+        System.out.println("findByApplicationLaunchDate in ApplicationService Implementation");
+        if(applicationLaunchDate!=null)
+        {
+            applicationRepository.findByApplicationLaunchDate(applicationLaunchDate);
+        }
+        else{
+            System.out.println("applicationLaunchDate is null");
+        }
+    }
+
+    @Override
+    public void findByApplicationCompany(String applicationCompany) {
+        System.out.println("findByApplicationCompany in ApplicationService Implementation");
+        if(applicationCompany!=null)
+        {
+            applicationRepository.findByApplicationCompany(applicationCompany);
+        }
+        else{
+            System.out.println("applicationCompany is null");
+        }
+    }
 }
