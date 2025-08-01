@@ -1,11 +1,14 @@
 package com.xworkz.water.repository;
 
 import com.xworkz.water.entity.ApplicationEntity;
+import com.xworkz.water.util.JPAConnection;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Optional;
 
 public class ApplicationRepositoryImpl implements ApplicationRepository {
+
 
     public ApplicationRepositoryImpl() {
         System.out.println("ApplicationRepository implementation constructor");
@@ -15,14 +18,11 @@ public class ApplicationRepositoryImpl implements ApplicationRepository {
     public boolean saveApplication(ApplicationEntity applicationEntity) {
         System.out.println("saveApplication method in ApplicationRepository implementation");
 
-        EntityManagerFactory entityManagerFactory = null;
         EntityManager entityManager = null;
         EntityTransaction entityTransaction = null;
 
         try {
-            entityManagerFactory = Persistence.createEntityManagerFactory("x-workz");
-            System.out.println("connection established");
-            entityManager = entityManagerFactory.createEntityManager();
+            entityManager = JPAConnection.getEntityManager();
             entityTransaction = entityManager.getTransaction();
 
             entityTransaction.begin();
@@ -38,10 +38,6 @@ public class ApplicationRepositoryImpl implements ApplicationRepository {
                 return false;
             }
         } finally {
-            if (entityManagerFactory != null) {
-                System.out.println("entityManagerFactory is closed");
-                entityManagerFactory.close();
-            }
             if (entityManager != null) {
                 System.out.println("entityManager is closed");
                 entityManager.close();
@@ -54,14 +50,11 @@ public class ApplicationRepositoryImpl implements ApplicationRepository {
     public Optional<ApplicationEntity> findById(int id) {
         System.out.println("findById method in ApplicationRepository implementation");
 
-        EntityManagerFactory entityManagerFactory = null;
         EntityManager entityManager = null;
         ApplicationEntity applicationEntity = null;
 
         try {
-            entityManagerFactory = Persistence.createEntityManagerFactory("x-workz");
-            System.out.println("connection established");
-            entityManager = entityManagerFactory.createEntityManager();
+            entityManager = JPAConnection.getEntityManager();
 
             applicationEntity = entityManager.find(ApplicationEntity.class, id);
             if (applicationEntity != null) {
@@ -71,10 +64,6 @@ public class ApplicationRepositoryImpl implements ApplicationRepository {
         } catch (PersistenceException e) {
             System.out.println(e.getMessage());
         } finally {
-            if (entityManagerFactory != null) {
-                System.out.println("entityManagerFactory is closed");
-                entityManagerFactory.close();
-            }
             if (entityManager != null) {
                 System.out.println("entityManager is closed");
                 entityManager.close();
@@ -87,14 +76,11 @@ public class ApplicationRepositoryImpl implements ApplicationRepository {
     public boolean deleteById(int id) {
         System.out.println("deleteById method in ApplicationRepository implementation");
 
-        EntityManagerFactory entityManagerFactory = null;
         EntityManager entityManager = null;
         EntityTransaction entityTransaction = null;
 
         try {
-            entityManagerFactory = Persistence.createEntityManagerFactory("x-workz");
-            System.out.println("connection established");
-            entityManager = entityManagerFactory.createEntityManager();
+            entityManager = JPAConnection.getEntityManager();
             entityTransaction = entityManager.getTransaction();
 
             entityTransaction.begin();
@@ -112,10 +98,6 @@ public class ApplicationRepositoryImpl implements ApplicationRepository {
             }
             return false;
         } finally {
-            if (entityManagerFactory != null) {
-                System.out.println("entityManagerFactory is closed");
-                entityManagerFactory.close();
-            }
             if (entityManager != null) {
                 System.out.println("entityManager is closed");
                 entityManager.close();
@@ -129,14 +111,11 @@ public class ApplicationRepositoryImpl implements ApplicationRepository {
     public boolean updateById(int id, String company) {
         System.out.println("updateById method in ApplicationRepository implementation");
 
-        EntityManagerFactory entityManagerFactory = null;
         EntityManager entityManager = null;
         EntityTransaction entityTransaction = null;
 
         try {
-            entityManagerFactory = Persistence.createEntityManagerFactory("x-workz");
-            System.out.println("connection established");
-            entityManager = entityManagerFactory.createEntityManager();
+            entityManager = JPAConnection.getEntityManager();
             entityTransaction = entityManager.getTransaction();
 
             entityTransaction.begin();
@@ -157,16 +136,151 @@ public class ApplicationRepositoryImpl implements ApplicationRepository {
             }
             return false;
         } finally {
-            if (entityManagerFactory != null) {
-                System.out.println("entityManagerFactory is closed");
-                entityManagerFactory.close();
-            }
             if (entityManager != null) {
                 System.out.println("entityManager is closed");
                 entityManager.close();
             }
         }
         return true;
+    }
+
+    @Override
+    public void findByApplicationName(String applicationName) {
+        System.out.println("findByApplicationName method in Repo implementation");
+        EntityManager entityManager = null;
+        ApplicationEntity applicationEntity;
+        try {
+            entityManager = JPAConnection.getEntityManager();
+            applicationEntity = (ApplicationEntity) entityManager.createNamedQuery("applicationName").setParameter("name", applicationName).getSingleResult();
+            if (applicationEntity != null) {
+                System.out.println("Result: " + applicationEntity);
+            }
+
+        } catch (PersistenceException e) {
+            System.out.println(e.getMessage());
+        }
+        finally {
+            if(entityManager!=null)
+            {
+                System.out.println("entityManager is closed");
+                entityManager.close();
+            }
+        }
+    }
+
+    @Override
+    public void findByApplicationSize(String applicationSize) {
+        System.out.println("findByApplicationSize method in Repo implementation");
+        EntityManager entityManager = null;
+        ApplicationEntity applicationEntity;
+        try {
+            entityManager = JPAConnection.getEntityManager();
+            applicationEntity = (ApplicationEntity) entityManager.createNamedQuery("applicationSize").setParameter("size", applicationSize).getSingleResult();
+            if (applicationEntity != null) {
+                System.out.println("Result: " + applicationEntity);
+            }
+
+        } catch (PersistenceException e) {
+            System.out.println(e.getMessage());
+        }finally {
+            if(entityManager!=null)
+            {
+                System.out.println("entityManager is closed");
+                entityManager.close();
+            }
+        }
+    }
+
+    @Override
+    public void findByApplicationCompany(String applicationCompany) {
+        System.out.println("findByApplicationCompany method in Repo implementation");
+        EntityManager entityManager = null;
+        ApplicationEntity applicationEntity;
+        try {
+            entityManager =JPAConnection.getEntityManager();
+            applicationEntity = (ApplicationEntity) entityManager.createNamedQuery("applicationCompany").setParameter("company", applicationCompany).getSingleResult();
+            if (applicationEntity != null) {
+                System.out.println("Result: " + applicationEntity);
+            }
+
+        } catch (PersistenceException e) {
+            System.out.println(e.getMessage());
+        }finally {
+            if(entityManager!=null)
+            {
+                System.out.println("entityManager is closed");
+                entityManager.close();
+            }
+        }
+    }
+
+    @Override
+    public void findByApplicationUsersCount(Integer applicationUsersCount) {
+        System.out.println("findByApplicationUsersCount method in Repo implementation");
+        EntityManager entityManager = null;
+        ApplicationEntity applicationEntity;
+        try {
+            entityManager = JPAConnection.getEntityManager();
+            applicationEntity = (ApplicationEntity) entityManager.createNamedQuery("applicationUsers").setParameter("usersCount", applicationUsersCount).getSingleResult();
+            if (applicationEntity != null) {
+                System.out.println("Result: " + applicationEntity);
+            }
+
+        } catch (PersistenceException e) {
+            System.out.println(e.getMessage());
+        }finally {
+            if(entityManager!=null)
+            {
+                System.out.println("entityManager is closed");
+                entityManager.close();
+            }
+        }
+    }
+
+    @Override
+    public void findByApplicationRatings(Float applicationRatings) {
+        System.out.println("findByApplicationRatings method in Repo implementation");
+        EntityManager entityManager = null;
+        ApplicationEntity applicationEntity;
+        try {
+            entityManager = JPAConnection.getEntityManager();
+            applicationEntity = (ApplicationEntity) entityManager.createNamedQuery("applicationRatings").setParameter("ratings", applicationRatings).getSingleResult();
+            if (applicationEntity != null) {
+                System.out.println("Result: " + applicationEntity);
+            }
+
+        } catch (PersistenceException e) {
+            System.out.println(e.getMessage());
+        }finally {
+            if(entityManager!=null)
+            {
+                System.out.println("entityManager is closed");
+                entityManager.close();
+            }
+        }
+    }
+
+    @Override
+    public void findByApplicationLaunchDate(LocalDate applicationLaunchDate) {
+        System.out.println("findByApplicationLaunchDate method in Repo implementation");
+        EntityManager entityManager = null;
+        ApplicationEntity applicationEntity;
+        try {
+            entityManager = JPAConnection.getEntityManager();
+            applicationEntity = (ApplicationEntity) entityManager.createNamedQuery("applicationLaunchDate").setParameter("launchDate", applicationLaunchDate).getSingleResult();
+            if (applicationEntity != null) {
+                System.out.println("Result: " + applicationEntity);
+            }
+
+        } catch (PersistenceException e) {
+            System.out.println(e.getMessage());
+        }finally {
+            if(entityManager!=null)
+            {
+                System.out.println("entityManager is closed");
+                entityManager.close();
+            }
+        }
     }
 }
 
