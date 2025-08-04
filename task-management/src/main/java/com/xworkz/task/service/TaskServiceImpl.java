@@ -7,6 +7,8 @@ import com.xworkz.task.util.Priority;
 import com.xworkz.task.util.Status;
 
 import java.time.LocalDate;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 public class TaskServiceImpl implements TaskService{
@@ -128,21 +130,19 @@ public class TaskServiceImpl implements TaskService{
     }
 
     @Override
-    public Optional<TaskEntity> findByPriority(Priority priority) {
+    public List<TaskEntity> findByPriority(Priority priority) {
         System.out.println("find by priority method in service");
         if(priority!=null )
         {
             if(priority.equals(Priority.HIGH) || priority.equals(Priority.MEDIUM)|| priority.equals(Priority.LOW))
             {
                 System.out.println("priority is valid");
-                Optional<TaskEntity> optionalTaskEntity= taskRepository.findByPriority(priority);
-                optionalTaskEntity.ifPresent(this::validateDetails);
-                return optionalTaskEntity;
+                return taskRepository.findByPriority(priority);
             }else {
                 System.out.println("priority is not valid");
             }
         }
-        return Optional.empty();
+        return null;
     }
 
     @Override
@@ -158,5 +158,24 @@ public class TaskServiceImpl implements TaskService{
             System.out.println("due date is not valid");
         }
         return Optional.empty();
+    }
+
+    @Override
+    public List<TaskEntity> findAll() {
+        System.out.println("findAll method in service");
+        return taskRepository.findAll();
+    }
+
+    @Override
+    public TaskEntity findById(Integer id) {
+        System.out.println("find by id i service");
+        if(id !=null && id>0)
+        {
+            System.out.println("id is valid");
+            return taskRepository.findById(id);
+        }else {
+            System.out.println("id is not valid");
+        }
+        return null;
     }
 }

@@ -3,6 +3,7 @@ package com.xworkz.water.repository;
 import com.xworkz.water.entity.ApplicationEntity;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 public interface ApplicationRepository {
@@ -25,4 +26,7 @@ public interface ApplicationRepository {
 
     void findByApplicationLaunchDate(LocalDate applicationLaunchDate);
     void findByApplicationCompany(String applicationCompany);
+    List<ApplicationEntity> findAll();
+
+    ApplicationEntity findByCompany(String companyName);
 }

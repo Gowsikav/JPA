@@ -5,6 +5,7 @@ import com.xworkz.water.repository.ApplicationRepository;
 import com.xworkz.water.repository.ApplicationRepositoryImpl;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 public class ApplicationServiceImpl implements ApplicationService{
@@ -243,5 +244,21 @@ public class ApplicationServiceImpl implements ApplicationService{
         else{
             System.out.println("applicationCompany is null");
         }
+    }
+
+    @Override
+    public List<ApplicationEntity> findAll() {
+        System.out.println("findAll method in service");
+        return applicationRepository.findAll();
+    }
+
+    @Override
+    public ApplicationEntity findByCompany(String company) {
+        System.out.println("find by company in service");
+        if(company!=null)
+        {
+            return applicationRepository.findByCompany(company);
+        }
+        return null;
     }
 }

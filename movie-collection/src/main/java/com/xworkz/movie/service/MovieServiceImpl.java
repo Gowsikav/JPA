@@ -5,6 +5,8 @@ import com.xworkz.movie.repository.MovieRepository;
 import com.xworkz.movie.repository.MovieRepositoryImpl;
 
 import java.time.LocalDate;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 public class MovieServiceImpl implements MovieService{
@@ -140,18 +142,16 @@ public class MovieServiceImpl implements MovieService{
     }
 
     @Override
-    public Optional<MovieEntity> findByHeroName(String heroName) {
+    public List<MovieEntity> findByHeroName(String heroName) {
         System.out.println("find by hero name in service");
         if(heroName!=null && heroName.length()>=3 && heroName.length()<25)
         {
             System.out.println("hero name is valid");
-             optionalMovieEntity=movieRepository.findByHeroName(heroName);
-             optionalMovieEntity.ifPresent(this::validateDetails);
-             return optionalMovieEntity;
+             return movieRepository.findByHeroName(heroName);
         }else {
             System.out.println("hero name is not valid");
         }
-        return Optional.empty();
+        return null;
     }
 
     @Override
@@ -167,5 +167,25 @@ public class MovieServiceImpl implements MovieService{
             System.out.println("director name is not valid");
         }
         return Optional.empty();
+    }
+
+    @Override
+    public MovieEntity findById(Integer id) {
+
+        System.out.println("find by id method in service");
+        if(id!=null && id>0)
+        {
+            System.out.println("id is valid");
+           return movieRepository.findById(id);
+        }else {
+            System.out.println("id is not valid");
+        }
+        return null;
+    }
+
+    @Override
+    public List<MovieEntity> findAll() {
+        System.out.println("findAll method in service");
+        return movieRepository.findAll();
     }
 }

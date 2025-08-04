@@ -6,10 +6,13 @@ import com.xworkz.water.service.ApplicationServiceImpl;
 import com.xworkz.water.util.JPAConnection;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 public class ApplicationRunner {
     public static void main(String[] args) {
+        ApplicationService applicationService=new ApplicationServiceImpl();
+
         ApplicationEntity applicationEntity=new ApplicationEntity();
         applicationEntity.setApplicationName("Filpkart");
         applicationEntity.setApplicationSize("3 GB");
@@ -18,7 +21,6 @@ public class ApplicationRunner {
         applicationEntity.setRatings(4.0f);
         applicationEntity.setLaunchDate(LocalDate.of(2021,8,10));
 
-        ApplicationService applicationService=new ApplicationServiceImpl();
         if(applicationService.validate(applicationEntity))
         {
             System.out.println("Data saved");
@@ -52,6 +54,19 @@ public class ApplicationRunner {
         applicationService.findByApplicationCompany("rapido company");
         applicationService.findByApplicationRatings(4f);
         applicationService.findByApplicationLaunchDate(LocalDate.of(2017,3,7));
+
+        List<ApplicationEntity> list=applicationService.findAll();
+        if(list!=null)
+        {
+            list.forEach(System.out::println);
+        }else {
+            System.out.println("list is empty");
+        }
+
+        String companyName="TCS";
+        ApplicationEntity applicationEntity1=applicationService.findByCompany(companyName);
+       if(applicationEntity1!=null)
+           System.out.println(applicationEntity1);
 
         JPAConnection.closeResource();
     }

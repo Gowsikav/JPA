@@ -6,6 +6,7 @@ import com.xworkz.movie.service.MovieServiceImpl;
 import com.xworkz.movie.util.DBConnection;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 public class MovieRunner {
@@ -51,14 +52,6 @@ public class MovieRunner {
         }else {
             System.out.println("Data not present");
         }
-        Optional<MovieEntity> movieEntity2=movieService.findByHeroName("karthick");
-        if(movieEntity2.isPresent())
-        {
-            System.out.println("Data is found");
-            System.out.println(movieEntity2.get());
-        }else {
-            System.out.println("Data is not found");
-        }
 
         Optional<MovieEntity> movieEntity3=movieService.findByDirectorName("Ram");
         if(movieEntity3.isPresent())
@@ -69,7 +62,34 @@ public class MovieRunner {
             System.out.println("Data is not found");
         }
 
-        DBConnection.closeResource();
+        List<MovieEntity> movieEntity2=movieService.findByHeroName("karthick");
+        if(!movieEntity2.isEmpty())
+        {
+            System.out.println("Data is found");
+           movieEntity2.forEach(System.out::println);
+        }else {
+            System.out.println("Data is not found");
+        }
 
+        List<MovieEntity> list=movieService.findAll();
+        if(!list.isEmpty())
+        {
+            System.out.println("Data is found");
+            list.forEach(System.out::println);
+        }else {
+            System.out.println("Data is not found");
+        }
+
+        Integer findId=4;
+        MovieEntity movie=movieService.findById(findId);
+        if(movie!=null)
+        {
+            System.out.println("data is found");
+            System.out.println(movie);
+        }else {
+            System.out.println("Data is not found");
+        }
+
+        DBConnection.closeResource();
     }
 }
