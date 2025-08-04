@@ -5,6 +5,7 @@ import com.xworkz.task.util.Priority;
 import com.xworkz.task.util.Status;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 public interface TaskService {
@@ -13,7 +14,9 @@ public interface TaskService {
     boolean delete(Integer id);
     boolean UpdateById(Integer id, Status status );
     Optional<TaskEntity> findByTitle(String taskTitle);
-    Optional<TaskEntity> findByPriority(Priority priority);
     Optional<TaskEntity> findByDueDate(LocalDate taskDueDate);
+    List<TaskEntity> findByPriority(Priority priority);
+    TaskEntity findById(Integer id);
+    List<TaskEntity> findAll();
 
 }

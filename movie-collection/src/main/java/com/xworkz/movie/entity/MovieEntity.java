@@ -11,7 +11,8 @@ import java.time.LocalDate;
 @NamedQuery(name = "movieName",query = "select a from MovieEntity a where a.movieName=:name")
 @NamedQuery(name = "directorName",query = "select a from MovieEntity a where a.directorName=:name")
 @NamedQuery(name = "heroName",query = "select a from MovieEntity a where a.heroName=:name")
-
+@NamedQuery(name = "findAll",query = "select a from MovieEntity a")
+@NamedQuery(name = "findById",query = "select a from MovieEntity a where a.movieId=:id")
 public class MovieEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

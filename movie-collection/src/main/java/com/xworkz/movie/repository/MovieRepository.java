@@ -2,6 +2,7 @@ package com.xworkz.movie.repository;
 
 import com.xworkz.movie.entity.MovieEntity;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface MovieRepository {
@@ -10,7 +11,9 @@ public interface MovieRepository {
     boolean deleteById(Integer id);
     boolean updateById(Integer id,Float ratings);
     Optional<MovieEntity> findByMovieName(String movieName);
-    Optional<MovieEntity> findByHeroName(String heroName);
     Optional<MovieEntity> findByDirectorName(String directorName);
+    List<MovieEntity> findByHeroName(String heroName);
+    List<MovieEntity> findAll();
+    MovieEntity findById(Integer id);
 
 }

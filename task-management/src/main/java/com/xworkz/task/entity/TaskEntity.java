@@ -13,6 +13,8 @@ import java.time.LocalDate;
 @NamedQuery(name = "getTitle",query = "select a from TaskEntity a where a.title=:title")
 @NamedQuery(name = "getPriority",query = "select a from TaskEntity a where a.priority=:priority")
 @NamedQuery(name = "getDueDate",query = "select a from TaskEntity a where a.dueDate=:dueDate")
+@NamedQuery(name = "findAll",query = "select a from TaskEntity a")
+@NamedQuery(name = "findById",query = "select a from TaskEntity a where a.taskId=:id")
 public class TaskEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

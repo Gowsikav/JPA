@@ -4,6 +4,8 @@ import com.xworkz.book.entity.BookEntity;
 import com.xworkz.book.repository.BookRepository;
 import com.xworkz.book.repository.BookRepositoryImpl;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 public class BookServiceImpl implements BookService{
@@ -165,17 +167,35 @@ public class BookServiceImpl implements BookService{
     }
 
     @Override
-    public Optional<BookEntity> findByLanguage(String bookLanguage) {
+    public List<BookEntity> findByLanguage(String bookLanguage) {
         System.out.println("find by language method in service");
         if(bookLanguage!=null && bookLanguage.length()>3 && bookLanguage.length()<25)
         {
             System.out.println("language is valid");
-            Optional<BookEntity> optionalBookEntity=bookRepository.findByLanguage(bookLanguage);
-            optionalBookEntity.ifPresent(this::validateDetails);
-            return optionalBookEntity;
+            return bookRepository.findByLanguage(bookLanguage);
         }else {
             System.out.println("language is not valid");
         }
-        return Optional.empty();
+        return null;
+    }
+
+    @Override
+    public List<BookEntity> findAll() {
+        System.out.println("find all method in service");
+
+        return bookRepository.findAll();
+    }
+
+    @Override
+    public BookEntity finById(Integer id) {
+        System.out.println("find by id method in service");
+        if(id!=null && id>0)
+        {
+            System.out.println("id is valid");
+            return bookRepository.findById(id);
+        }else {
+            System.out.println("id is not valid");
+        }
+        return null;
     }
 }

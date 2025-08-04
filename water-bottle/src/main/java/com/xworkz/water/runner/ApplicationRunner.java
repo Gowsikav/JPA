@@ -11,48 +11,49 @@ import java.util.Optional;
 
 public class ApplicationRunner {
     public static void main(String[] args) {
-        ApplicationEntity applicationEntity=new ApplicationEntity();
-//        applicationEntity.setApplicationName("Filpkart");
-//        applicationEntity.setApplicationSize("3 GB");
-//        applicationEntity.setCompany("TCS");
-//        applicationEntity.setNoOfUsers(150);
-//        applicationEntity.setRatings(4.0f);
-//        applicationEntity.setLaunchDate(LocalDate.of(2021,8,10));
-
         ApplicationService applicationService=new ApplicationServiceImpl();
-//        if(applicationService.validate(applicationEntity))
-//        {
-//            System.out.println("Data saved");
-//        }
-//        else {
-//            System.out.println("Invalid details");
-//        }
-//
-//        Optional<ApplicationEntity> optionalApplicationEntity=applicationService.findById(3);
-//        optionalApplicationEntity.ifPresent(System.out::println);
-//
-//        if(applicationService.deleteById(3))
-//        {
-//            System.out.println("id is deleted");
-//        }
-//        else {
-//            System.out.println("id not deleted");
-//        }
-//
-//        if(applicationService.updateById(2,"Wipro"))
-//        {
-//            System.out.println("Updated the company name in id ");
-//        }
-//        else {
-//            System.out.println("Not updated");
-//        }
-//
-//        applicationService.findByApplicationName("Filpkart");
-//        applicationService.findByApplicationSize("12 GB");
-//        applicationService.findByApplicationUsersCount(100);
-//        applicationService.findByApplicationCompany("rapido company");
-//        applicationService.findByApplicationRatings(4f);
-//        applicationService.findByApplicationLaunchDate(LocalDate.of(2017,3,7));
+
+        ApplicationEntity applicationEntity=new ApplicationEntity();
+        applicationEntity.setApplicationName("Filpkart");
+        applicationEntity.setApplicationSize("3 GB");
+        applicationEntity.setCompany("TCS");
+        applicationEntity.setNoOfUsers(150);
+        applicationEntity.setRatings(4.0f);
+        applicationEntity.setLaunchDate(LocalDate.of(2021,8,10));
+
+        if(applicationService.validate(applicationEntity))
+        {
+            System.out.println("Data saved");
+        }
+        else {
+            System.out.println("Invalid details");
+        }
+
+        Optional<ApplicationEntity> optionalApplicationEntity=applicationService.findById(3);
+        optionalApplicationEntity.ifPresent(System.out::println);
+
+        if(applicationService.deleteById(3))
+        {
+            System.out.println("id is deleted");
+        }
+        else {
+            System.out.println("id not deleted");
+        }
+
+        if(applicationService.updateById(2,"Wipro"))
+        {
+            System.out.println("Updated the company name in id ");
+        }
+        else {
+            System.out.println("Not updated");
+        }
+
+        applicationService.findByApplicationName("Filpkart");
+        applicationService.findByApplicationSize("12 GB");
+        applicationService.findByApplicationUsersCount(100);
+        applicationService.findByApplicationCompany("rapido company");
+        applicationService.findByApplicationRatings(4f);
+        applicationService.findByApplicationLaunchDate(LocalDate.of(2017,3,7));
 
         List<ApplicationEntity> list=applicationService.findAll();
         if(list!=null)
