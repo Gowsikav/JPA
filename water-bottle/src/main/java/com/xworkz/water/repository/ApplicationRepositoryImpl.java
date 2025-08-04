@@ -4,7 +4,9 @@ import com.xworkz.water.entity.ApplicationEntity;
 import com.xworkz.water.util.JPAConnection;
 
 import javax.persistence.*;
+import javax.swing.text.html.Option;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 public class ApplicationRepositoryImpl implements ApplicationRepository {
@@ -158,10 +160,8 @@ public class ApplicationRepositoryImpl implements ApplicationRepository {
 
         } catch (PersistenceException e) {
             System.out.println(e.getMessage());
-        }
-        finally {
-            if(entityManager!=null)
-            {
+        } finally {
+            if (entityManager != null) {
                 System.out.println("entityManager is closed");
                 entityManager.close();
             }
@@ -182,9 +182,8 @@ public class ApplicationRepositoryImpl implements ApplicationRepository {
 
         } catch (PersistenceException e) {
             System.out.println(e.getMessage());
-        }finally {
-            if(entityManager!=null)
-            {
+        } finally {
+            if (entityManager != null) {
                 System.out.println("entityManager is closed");
                 entityManager.close();
             }
@@ -197,7 +196,7 @@ public class ApplicationRepositoryImpl implements ApplicationRepository {
         EntityManager entityManager = null;
         ApplicationEntity applicationEntity;
         try {
-            entityManager =JPAConnection.getEntityManager();
+            entityManager = JPAConnection.getEntityManager();
             applicationEntity = (ApplicationEntity) entityManager.createNamedQuery("applicationCompany").setParameter("company", applicationCompany).getSingleResult();
             if (applicationEntity != null) {
                 System.out.println("Result: " + applicationEntity);
@@ -205,9 +204,8 @@ public class ApplicationRepositoryImpl implements ApplicationRepository {
 
         } catch (PersistenceException e) {
             System.out.println(e.getMessage());
-        }finally {
-            if(entityManager!=null)
-            {
+        } finally {
+            if (entityManager != null) {
                 System.out.println("entityManager is closed");
                 entityManager.close();
             }
@@ -228,9 +226,8 @@ public class ApplicationRepositoryImpl implements ApplicationRepository {
 
         } catch (PersistenceException e) {
             System.out.println(e.getMessage());
-        }finally {
-            if(entityManager!=null)
-            {
+        } finally {
+            if (entityManager != null) {
                 System.out.println("entityManager is closed");
                 entityManager.close();
             }
@@ -251,9 +248,8 @@ public class ApplicationRepositoryImpl implements ApplicationRepository {
 
         } catch (PersistenceException e) {
             System.out.println(e.getMessage());
-        }finally {
-            if(entityManager!=null)
-            {
+        } finally {
+            if (entityManager != null) {
                 System.out.println("entityManager is closed");
                 entityManager.close();
             }
@@ -274,13 +270,57 @@ public class ApplicationRepositoryImpl implements ApplicationRepository {
 
         } catch (PersistenceException e) {
             System.out.println(e.getMessage());
-        }finally {
-            if(entityManager!=null)
-            {
+        } finally {
+            if (entityManager != null) {
                 System.out.println("entityManager is closed");
                 entityManager.close();
             }
         }
+    }
+
+    @Override
+    public List<ApplicationEntity> findAll() {
+
+        System.out.println("find all method in repository");
+
+        EntityManager entityManager = null;
+        List<ApplicationEntity> ref=null;
+        try {
+            entityManager = JPAConnection.getEntityManager();
+            Query query= entityManager.createNamedQuery("applicationAll");
+            ref=query.getResultList();
+            return ref;
+        } catch (PersistenceException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (entityManager != null && entityManager.isOpen()) {
+                entityManager.close();
+                System.out.println("entityManager is closed");
+            }
+        }
+        return ref;
+    }
+
+    @Override
+    public ApplicationEntity findByCompany(String companyName) {
+        System.out.println("find by company in repository");
+        EntityManager entityManager=null;
+        ApplicationEntity applicationEntity=null;
+        try{
+            entityManager=JPAConnection.getEntityManager();
+            Query query=entityManager.createNamedQuery("company").setParameter("companyName",companyName);
+            applicationEntity= (ApplicationEntity) query.getSingleResult();
+            return applicationEntity;
+        } catch (PersistenceException e) {
+            System.out.println(e.getMessage());
+        }finally {
+            if(entityManager!=null && entityManager.isOpen())
+            {
+                entityManager.close();
+                System.out.println("entityManager is closed");
+            }
+        }
+        return applicationEntity;
     }
 }
 

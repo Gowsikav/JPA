@@ -3,6 +3,7 @@ package com.xworkz.water.service;
 import com.xworkz.water.entity.ApplicationEntity;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 public interface ApplicationService {
@@ -26,5 +27,8 @@ public interface ApplicationService {
 
     void findByApplicationLaunchDate(LocalDate applicationLaunchDate);
 
+    List<ApplicationEntity> findAll();
+
+    ApplicationEntity findByCompany(String company);
 
 }
