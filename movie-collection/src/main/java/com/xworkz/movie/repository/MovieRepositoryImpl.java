@@ -4,7 +4,6 @@ import com.xworkz.movie.entity.MovieEntity;
 import com.xworkz.movie.util.DBConnection;
 
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 import java.util.Optional;
 

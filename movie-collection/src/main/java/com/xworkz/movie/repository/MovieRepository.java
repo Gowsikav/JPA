@@ -1,6 +1,5 @@
 package com.xworkz.movie.repository;
 
-import com.sun.javafx.image.IntPixelGetter;
 import com.xworkz.movie.entity.MovieEntity;
 
 import java.util.List;

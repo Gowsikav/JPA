@@ -2,7 +2,6 @@ package com.xworkz.movie.service;
 
 import com.xworkz.movie.entity.MovieEntity;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 import java.util.Optional;
 
