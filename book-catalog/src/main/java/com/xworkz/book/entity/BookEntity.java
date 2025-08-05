@@ -8,11 +8,17 @@ import java.time.LocalDate;
 @Data
 @Entity
 @Table(name = "book_details")
-@NamedQuery(name = "getTitle",query = "select a from BookEntity a where a.bookTitle=:title")
-@NamedQuery(name = "getAuthor",query = "select a from BookEntity a where a.author=:author")
-@NamedQuery(name = "getLanguage",query = "select a from BookEntity a where a.language=:language")
-@NamedQuery(name = "findAll",query = "select a from BookEntity a")
-@NamedQuery(name = "findById",query = "select a from BookEntity a where a.bookId=:id")
+@NamedQuery(name = "getTitle", query = "select a from BookEntity a where a.bookTitle=:title")
+@NamedQuery(name = "getAuthor", query = "select a from BookEntity a where a.author=:author")
+@NamedQuery(name = "getLanguage", query = "select a from BookEntity a where a.language=:language")
+@NamedQuery(name = "findAll", query = "select a from BookEntity a")
+@NamedQuery(name = "findById", query = "select a from BookEntity a where a.bookId=:id")
+@NamedQuery(name = "updatePriceByBookTitle",
+        query = "update BookEntity a set a.price =:price where a.bookTitle =:bookTitle and a.bookId =:id")
+@NamedQuery(name = "updateAuthorByBookTitle",
+        query = "update BookEntity a set a.author =:author where a.bookTitle =:bookTitle and a.bookId =:id")
+@NamedQuery(name = "updateLanguageByAuthor",
+        query = "update BookEntity a set a.language =:language where a.author =:author and a.bookId =:id")
 public class BookEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

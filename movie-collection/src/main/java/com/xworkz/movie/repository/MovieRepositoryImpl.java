@@ -3,11 +3,8 @@ package com.xworkz.movie.repository;
 import com.xworkz.movie.entity.MovieEntity;
 import com.xworkz.movie.util.DBConnection;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-import javax.persistence.PersistenceException;
-import javax.persistence.Query;
-import java.util.Collections;
+import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 import java.util.Optional;
 
@@ -222,6 +219,131 @@ public class MovieRepositoryImpl implements MovieRepository {
             if (entityManager != null && entityManager.isOpen()) {
                 System.out.println("EntityManager is closed");
                 entityManager.close();
+            }
+        }
+        return movieEntity;
+    }
+
+    @Override
+    public List<MovieEntity> findByGenre(String genre) {
+        System.out.println("find by genre method in repository");
+        EntityManager entityManager=null;
+        List<MovieEntity> movieEntity=null;
+        try{
+            entityManager=DBConnection.getEntityManager();
+           TypedQuery<MovieEntity> typedQuery = entityManager.createQuery("select a from MovieEntity a where a.genre=:genre", MovieEntity.class).setParameter("genre",genre);
+           movieEntity= typedQuery.getResultList();
+        }catch (PersistenceException e)
+        {
+            System.out.println(e.getMessage());
+        }finally {
+            if(entityManager!=null && entityManager.isOpen())
+            {
+                entityManager.close();
+                System.out.println("entityManager is closed");
+            }
+        }
+        return movieEntity;
+    }
+
+    @Override
+    public MovieEntity updateByMovieName(String movieName, Integer id, String directorName, float ratings) {
+        System.out.println("updateByMovieName method in repository");
+        EntityManager entityManager=null;
+        EntityTransaction entityTransaction=null;
+        MovieEntity movieEntity=null;
+        try{
+            entityManager=DBConnection.getEntityManager();
+            entityTransaction=entityManager.getTransaction();
+            entityTransaction.begin();
+            int row=entityManager.createNamedQuery("updateByMovieName")
+                    .setParameter("id",id).setParameter("movieName",movieName)
+                    .setParameter("directorName",directorName).setParameter("ratings",ratings)
+                    .executeUpdate();
+            System.out.println("Rows affected: "+row);
+            entityTransaction.commit();
+            movieEntity=entityManager.find(MovieEntity.class,id);
+            return movieEntity;
+        } catch (PersistenceException e) {
+            System.out.println(e.getMessage());
+            if(entityTransaction!=null)
+            {
+                entityTransaction.rollback();
+            }
+        }finally {
+            if(entityManager!=null && entityManager.isOpen())
+            {
+                entityManager.close();
+                System.out.println("entityManager is closed");
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public MovieEntity updateHeroName(Integer id,String heroName) {
+        System.out.println("updateHeroName method in repository");
+        EntityManager entityManager=null;
+        EntityTransaction entityTransaction=null;
+        MovieEntity movieEntity=null;
+        try{
+            entityManager=DBConnection.getEntityManager();
+            entityTransaction=entityManager.getTransaction();
+            entityTransaction.begin();
+            int row=entityManager.createNamedQuery("updateHeroName").setParameter("heroName",heroName)
+                    .setParameter("id",id).executeUpdate();
+            System.out.println("Row Affected: "+row);
+            entityTransaction.commit();
+            movieEntity=entityManager.find(MovieEntity.class,id);
+
+            return movieEntity;
+        }catch (PersistenceException e)
+        {
+            System.out.println(e.getMessage());
+            if(entityTransaction!=null)
+            {
+                entityTransaction.rollback();
+            }
+        }finally {
+            if (entityManager!=null && entityManager.isOpen())
+            {
+                entityManager.close();
+                System.out.println("EntityManager is closed");
+            }
+        }
+        return movieEntity;
+    }
+
+    @Override
+    public MovieEntity updateGenre(String movieName, String genre,Integer id) {
+        System.out.println("updateHeroGenre method in repository");
+        EntityManager entityManager=null;
+        EntityTransaction entityTransaction=null;
+        MovieEntity movieEntity=null;
+        try{
+            entityManager=DBConnection.getEntityManager();
+            entityTransaction=entityManager.getTransaction();
+            entityTransaction.begin();
+            int row=entityManager.createNamedQuery("updateGenre").setParameter("genre",genre)
+                    .setParameter("movieName",movieName)
+                    .setParameter("id",id).executeUpdate();
+            System.out.println("Row Affected: "+row);
+            entityTransaction.commit();
+            movieEntity=entityManager.find(MovieEntity.class,id);
+
+            return movieEntity;
+        }catch (PersistenceException e)
+        {
+            System.out.println(e.getMessage());
+            if(entityTransaction!=null)
+            {
+                entityTransaction.rollback();
+            }
+        }finally {
+            if (entityManager!=null && entityManager.isOpen())
+            {
+                entityManager.close();
+                System.out.println("EntityManager is closed");
             }
         }
         return movieEntity;

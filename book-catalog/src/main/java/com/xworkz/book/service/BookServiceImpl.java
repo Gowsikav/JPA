@@ -198,4 +198,27 @@ public class BookServiceImpl implements BookService{
         }
         return null;
     }
+
+    @Override
+    public BookEntity updatePriceByBookTitle(Integer id, String title, Float price) {
+        System.out.println("updatePriceByBookTitle method in service");
+
+        return bookRepository.updatePriceByBookTitle(id,title,price);
+    }
+
+    @Override
+    public BookEntity updateAuthorByBookTitle(Integer id, String title, String author) {
+        System.out.println("updateAuthorByBookTitle method in service");
+
+        return bookRepository.updateAuthorByBookTitle(id,title,author);
+    }
+
+    @Override
+    public BookEntity updateLanguageByAuthor(Integer id, String language, String author) {
+        System.out.println("updateLanguageByAuthor method in service");
+
+        return bookRepository.updateLanguageByAuthor(id,language,author);
+
+    }
+
 }

@@ -7,7 +7,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -217,4 +216,114 @@ public class BookRepositoryImpl implements BookRepository {
         }
         return bookEntity;
     }
+
+    @Override
+    public BookEntity updatePriceByBookTitle(Integer id, String title, Float price) {
+        System.out.println("updatePriceByBookTitle method in repository");
+        EntityManager entityManager=null;
+        EntityTransaction entityTransaction=null;
+        BookEntity bookEntity=null;
+        try{
+            entityManager=DBConnection.getEntityManager();
+            entityTransaction=entityManager.getTransaction();
+            entityTransaction.begin();
+            int row=entityManager.createNamedQuery("updatePriceByBookTitle")
+                    .setParameter("price",price)
+                    .setParameter("id",id)
+                    .setParameter("bookTitle",title).executeUpdate();
+            System.out.println("Row Affected: "+row);
+            entityTransaction.commit();
+            bookEntity=entityManager.find(BookEntity.class,id);
+
+            return bookEntity;
+        }catch (PersistenceException e)
+        {
+            System.out.println(e.getMessage());
+            if(entityTransaction!=null)
+            {
+                entityTransaction.rollback();
+            }
+        }finally {
+            if (entityManager!=null && entityManager.isOpen())
+            {
+                entityManager.close();
+                System.out.println("EntityManager is closed");
+            }
+        }
+        return bookEntity;
+    }
+
+    @Override
+    public BookEntity updateAuthorByBookTitle(Integer id, String title, String author) {
+        System.out.println("updateAuthorByBookTitle method in repository");
+        EntityManager entityManager=null;
+        EntityTransaction entityTransaction=null;
+        BookEntity bookEntity=null;
+        try{
+            entityManager=DBConnection.getEntityManager();
+            entityTransaction=entityManager.getTransaction();
+            entityTransaction.begin();
+            int row=entityManager.createNamedQuery("updateAuthorByBookTitle")
+                    .setParameter("bookTitle",title)
+                    .setParameter("id",id)
+                    .setParameter("author",author).executeUpdate();
+            System.out.println("Row Affected: "+row);
+            entityTransaction.commit();
+            bookEntity=entityManager.find(BookEntity.class,id);
+
+            return bookEntity;
+        }catch (PersistenceException e)
+        {
+            System.out.println(e.getMessage());
+            if(entityTransaction!=null)
+            {
+                entityTransaction.rollback();
+            }
+        }finally {
+            if (entityManager!=null && entityManager.isOpen())
+            {
+                entityManager.close();
+                System.out.println("EntityManager is closed");
+            }
+        }
+        return bookEntity;
+    }
+
+    @Override
+    public BookEntity updateLanguageByAuthor(Integer id, String language, String author) {
+        System.out.println("updateLanguageByAuthor method in repository");
+        EntityManager entityManager=null;
+        EntityTransaction entityTransaction=null;
+        BookEntity bookEntity=null;
+        try{
+            entityManager=DBConnection.getEntityManager();
+            entityTransaction=entityManager.getTransaction();
+            entityTransaction.begin();
+            int row=entityManager.createNamedQuery("updateLanguageByAuthor")
+                    .setParameter("id",id)
+                    .setParameter("language",language)
+                    .setParameter("author",author).executeUpdate();
+            System.out.println("Row Affected: "+row);
+            entityTransaction.commit();
+            bookEntity=entityManager.find(BookEntity.class,id);
+
+            return bookEntity;
+        }catch (PersistenceException e)
+        {
+            System.out.println(e.getMessage());
+            if(entityTransaction!=null)
+            {
+                entityTransaction.rollback();
+            }
+        }finally {
+            if (entityManager!=null && entityManager.isOpen())
+            {
+                entityManager.close();
+                System.out.println("EntityManager is closed");
+            }
+        }
+        return bookEntity;
+    }
+
+
 }

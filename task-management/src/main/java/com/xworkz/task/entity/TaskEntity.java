@@ -15,6 +15,9 @@ import java.time.LocalDate;
 @NamedQuery(name = "getDueDate",query = "select a from TaskEntity a where a.dueDate=:dueDate")
 @NamedQuery(name = "findAll",query = "select a from TaskEntity a")
 @NamedQuery(name = "findById",query = "select a from TaskEntity a where a.taskId=:id")
+@NamedQuery(name = "updateStatusByTitle",query = "update TaskEntity a set a.status=:status where a.taskId=:id and a.title=:title")
+@NamedQuery(name = "updatePriorityByDueDate",query = "update TaskEntity a set a.priority=:priority where a.taskId=:id and a.dueDate=:dueDate")
+@NamedQuery(name = "updateDueDateByStatus",query = "update TaskEntity a set a.dueDate=:dueDate where a.taskId=:id and a.status=:status")
 public class TaskEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

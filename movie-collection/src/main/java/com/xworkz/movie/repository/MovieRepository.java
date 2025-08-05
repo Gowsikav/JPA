@@ -1,5 +1,6 @@
 package com.xworkz.movie.repository;
 
+import com.sun.javafx.image.IntPixelGetter;
 import com.xworkz.movie.entity.MovieEntity;
 
 import java.util.List;
@@ -15,5 +16,9 @@ public interface MovieRepository {
     List<MovieEntity> findByHeroName(String heroName);
     List<MovieEntity> findAll();
     MovieEntity findById(Integer id);
+    List<MovieEntity> findByGenre(String genre);
+    MovieEntity updateByMovieName(String movieName,Integer id,String directorName,float ratings);
+    MovieEntity updateHeroName(Integer id,String heroName);
+    MovieEntity updateGenre(String movieName,String genre,Integer id);
 
 }

@@ -15,5 +15,8 @@ public interface BookService {
     List<BookEntity> findByLanguage(String bookLanguage);
     List<BookEntity> findAll();
     BookEntity finById(Integer id);
+    BookEntity updatePriceByBookTitle(Integer id,String title,Float price);
+    BookEntity updateAuthorByBookTitle(Integer id,String title,String author);
+    BookEntity updateLanguageByAuthor(Integer id,String language,String author);
 
 }

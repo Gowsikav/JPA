@@ -7,7 +7,6 @@ import com.xworkz.task.util.Priority;
 import com.xworkz.task.util.Status;
 
 import java.time.LocalDate;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -166,6 +165,7 @@ public class TaskServiceImpl implements TaskService{
         return taskRepository.findAll();
     }
 
+
     @Override
     public TaskEntity findById(Integer id) {
         System.out.println("find by id i service");
@@ -178,4 +178,24 @@ public class TaskServiceImpl implements TaskService{
         }
         return null;
     }
+
+    @Override
+    public TaskEntity updateStatusByTitle(Integer id, Status status, String title) {
+        System.out.println("updateStatusByTitle method in service");
+        return  taskRepository.updateStatusByTitle(id,status,title);
+
+    }
+
+    @Override
+    public TaskEntity updatePriorityByDueDate(Integer id, Priority priority, LocalDate dueDate) {
+        System.out.println("updatePriorityByDueDate method in service");
+        return  taskRepository.updatePriorityByDueDate(id,priority,dueDate);
+    }
+
+    @Override
+    public TaskEntity updateDueDateByStatus(Integer id, Status status, LocalDate dueDate) {
+        System.out.println("updateDueDateByStatus method in service");
+        return  taskRepository.updateDueDateByStatus(id,status,dueDate);
+    }
+
 }

@@ -2,6 +2,7 @@ package com.xworkz.movie.service;
 
 import com.xworkz.movie.entity.MovieEntity;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,4 +16,8 @@ public interface MovieService {
     List<MovieEntity> findByHeroName(String heroName);
     List<MovieEntity> findAll();
     MovieEntity findById(Integer id);
+    List<MovieEntity> findByGenre(String genre);
+    MovieEntity updateByMovieName(String movieName,Integer id,String directorName,float ratings);
+    MovieEntity updateHeroName(Integer id,String heroName);
+    MovieEntity updateGenre(String movieName, String genre, Integer id);
 }
