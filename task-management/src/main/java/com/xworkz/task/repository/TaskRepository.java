@@ -18,5 +18,8 @@ public interface TaskRepository {
     List<TaskEntity> findByPriority(Priority priority);
     TaskEntity findById(Integer id);
     List<TaskEntity> findAll();
+    TaskEntity updateStatusByTitle(Integer id,Status status,String title);
+    TaskEntity updatePriorityByDueDate(Integer id,Priority priority,LocalDate dueDate);
+    TaskEntity updateDueDateByStatus(Integer id,Status status,LocalDate dueDate);
 
 }

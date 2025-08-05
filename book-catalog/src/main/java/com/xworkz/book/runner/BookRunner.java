@@ -55,43 +55,50 @@ public class BookRunner {
 //            System.out.println("Data not found");
 //        }
 
-        String author="George Orwell";
-        Optional<BookEntity> optionalBook2=bookService.findByAuthor(author);
-        if(optionalBook2.isPresent())
-        {
-            System.out.println("value found");
-            System.out.println(optionalBook2.get());
-        }else {
-            System.out.println("Data not found");
-        }
+//        String author="George Orwell";
+//        Optional<BookEntity> optionalBook2=bookService.findByAuthor(author);
+//        if(optionalBook2.isPresent())
+//        {
+//            System.out.println("value found");
+//            System.out.println(optionalBook2.get());
+//        }else {
+//            System.out.println("Data not found");
+//        }
+//
+//        String language="English";
+//        List<BookEntity> list=bookService.findByLanguage(language);
+//        if(!list.isEmpty())
+//        {
+//            System.out.println("value found");
+//            list.forEach(System.out::println);
+//        }else {
+//            System.out.println("Data not found");
+//        }
+//
+//        BookEntity entity=bookService.finById(4);
+//        if (entity!=null)
+//        {
+//            System.out.println("Data is found");
+//            System.out.println(entity);
+//        }else {
+//            System.out.println("Data is not found");
+//        }
 
-        String language="English";
-        List<BookEntity> list=bookService.findByLanguage(language);
-        if(!list.isEmpty())
-        {
-            System.out.println("value found");
-            list.forEach(System.out::println);
-        }else {
-            System.out.println("Data not found");
-        }
-
-        BookEntity entity=bookService.finById(4);
-        if (entity!=null)
-        {
-            System.out.println("Data is found");
-            System.out.println(entity);
-        }else {
-            System.out.println("Data is not found");
-        }
-
-        List<BookEntity> list1=bookService.findAll();
-        if(!list1.isEmpty())
-        {
+        List<BookEntity> list1 = bookService.findAll();
+        if (!list1.isEmpty()) {
             System.out.println("Data is found");
             list1.forEach(System.out::println);
-        }else {
+        } else {
             System.out.println("Data is not found");
         }
+
+        BookEntity bookEntity=null;
+        bookEntity  = bookService.updateAuthorByBookTitle(4, "To Kill a Mockingbird", "Loe john");
+        System.out.println(bookEntity);
+        bookEntity = bookService.updatePriceByBookTitle(5, "George Orwell", 350f);
+        System.out.println(bookEntity);
+        bookEntity = bookService.updateLanguageByAuthor(2, "Russian", "James Clear");
+        System.out.println(bookEntity);
 
         DBConnection.closeResource();
 

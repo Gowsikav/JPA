@@ -4,7 +4,6 @@ import com.xworkz.task.entity.TaskEntity;
 import com.xworkz.task.util.DBConnection;
 import com.xworkz.task.util.Priority;
 import com.xworkz.task.util.Status;
-import javafx.concurrent.Task;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -150,7 +149,7 @@ public class TaskRepositoryImpl implements TaskRepository {
     public List<TaskEntity> findByPriority(Priority priority) {
         System.out.println("find by priority method in repository");
         EntityManager entityManager = null;
-        List<TaskEntity> list = null;
+        List<TaskEntity> list;
         try {
             entityManager = DBConnection.getEntityManager();
             Query query = entityManager.createNamedQuery("getPriority");
@@ -191,7 +190,7 @@ public class TaskRepositoryImpl implements TaskRepository {
     public List<TaskEntity> findAll() {
         System.out.println("findAll method in repository");
         EntityManager entityManager = null;
-        List list = null;
+        List<TaskEntity> list;
         try {
             entityManager = DBConnection.getEntityManager();
             Query query = entityManager.createNamedQuery("findAll");
@@ -228,4 +227,111 @@ public class TaskRepositoryImpl implements TaskRepository {
         }
         return null;
     }
+
+    @Override
+    public TaskEntity updateStatusByTitle(Integer id, Status status, String title) {
+        System.out.println("updateStatusByTitle method in repository");
+        EntityManager entityManager=null;
+        EntityTransaction entityTransaction=null;
+        TaskEntity taskEntity=null;
+        try{
+            entityManager=DBConnection.getEntityManager();
+            entityTransaction=entityManager.getTransaction();
+            entityTransaction.begin();
+            int row=entityManager.createNamedQuery("updateStatusByTitle").setParameter("status",status)
+                    .setParameter("title",title)
+                    .setParameter("id",id).executeUpdate();
+            System.out.println("Row Affected: "+row);
+            entityTransaction.commit();
+            taskEntity=entityManager.find(TaskEntity.class,id);
+
+            return taskEntity;
+        }catch (PersistenceException e)
+        {
+            System.out.println(e.getMessage());
+            if(entityTransaction!=null)
+            {
+                entityTransaction.rollback();
+            }
+        }finally {
+            if (entityManager!=null && entityManager.isOpen())
+            {
+                entityManager.close();
+                System.out.println("EntityManager is closed");
+            }
+        }
+        return taskEntity;
+    }
+
+    @Override
+    public TaskEntity updatePriorityByDueDate(Integer id, Priority priority, LocalDate dueDate) {
+        System.out.println("updatePriorityByDueDate method in repository");
+        EntityManager entityManager=null;
+        EntityTransaction entityTransaction=null;
+        TaskEntity taskEntity=null;
+        try{
+            entityManager=DBConnection.getEntityManager();
+            entityTransaction=entityManager.getTransaction();
+            entityTransaction.begin();
+            int row=entityManager.createNamedQuery("updatePriorityByDueDate").setParameter("priority",priority)
+                    .setParameter("dueDate",dueDate)
+                    .setParameter("id",id).executeUpdate();
+            System.out.println("Row Affected: "+row);
+            entityTransaction.commit();
+            taskEntity=entityManager.find(TaskEntity.class,id);
+
+            return taskEntity;
+        }catch (PersistenceException e)
+        {
+            System.out.println(e.getMessage());
+            if(entityTransaction!=null)
+            {
+                entityTransaction.rollback();
+            }
+        }finally {
+            if (entityManager!=null && entityManager.isOpen())
+            {
+                entityManager.close();
+                System.out.println("EntityManager is closed");
+            }
+        }
+        return taskEntity;
+    }
+
+    @Override
+    public TaskEntity updateDueDateByStatus(Integer id, Status status, LocalDate dueDate) {
+        System.out.println("updateDueDateByStatus method in repository");
+        EntityManager entityManager=null;
+        EntityTransaction entityTransaction=null;
+        TaskEntity taskEntity=null;
+        try{
+            entityManager=DBConnection.getEntityManager();
+            entityTransaction=entityManager.getTransaction();
+            entityTransaction.begin();
+            int row=entityManager.createNamedQuery("updateDueDateByStatus")
+                    .setParameter("status",status)
+                    .setParameter("dueDate",dueDate)
+                    .setParameter("id",id).executeUpdate();
+            System.out.println("Row Affected: "+row);
+            entityTransaction.commit();
+            taskEntity=entityManager.find(TaskEntity.class,id);
+
+            return taskEntity;
+        }catch (PersistenceException e)
+        {
+            System.out.println(e.getMessage());
+            if(entityTransaction!=null)
+            {
+                entityTransaction.rollback();
+            }
+        }finally {
+            if (entityManager!=null && entityManager.isOpen())
+            {
+                entityManager.close();
+                System.out.println("EntityManager is closed");
+            }
+        }
+        return taskEntity;
+    }
+
 }

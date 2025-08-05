@@ -13,6 +13,13 @@ import java.time.LocalDate;
 @NamedQuery(name = "heroName",query = "select a from MovieEntity a where a.heroName=:name")
 @NamedQuery(name = "findAll",query = "select a from MovieEntity a")
 @NamedQuery(name = "findById",query = "select a from MovieEntity a where a.movieId=:id")
+@NamedQuery(name = "updateByMovieName",
+        query = "update MovieEntity a set a.directorName=:directorName,a.ratings=:ratings where a.movieId=:id and a.movieName=:movieName")
+@NamedQuery(name="updateHeroName",
+        query = "update MovieEntity a set a.heroName=:heroName where a.movieId=:id")
+@NamedQuery(name="updateGenre",
+        query = "update MovieEntity a set a.genre=:genre where a.movieName=:movieName and a.movieId=:id")
+
 public class MovieEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

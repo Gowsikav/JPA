@@ -7,7 +7,6 @@ import com.xworkz.task.util.DBConnection;
 import com.xworkz.task.util.Priority;
 import com.xworkz.task.util.Status;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -15,7 +14,7 @@ import java.util.Optional;
 public class TaskRunner {
     public static void main(String[] args) {
 
-        TaskService taskService=new TaskServiceImpl();
+        TaskService taskService = new TaskServiceImpl();
 //        TaskEntity taskEntity=new TaskEntity();
 //        taskEntity.setTitle("Optimize database queries");
 //        taskEntity.setStatus(Status.PENDING);
@@ -57,44 +56,50 @@ public class TaskRunner {
 //            System.out.println("Data is not found");
 //        }
 //
-        LocalDate dueDate=LocalDate.of(2023,9,10);
-        Optional<TaskEntity> optionalTask=taskService.findByDueDate(dueDate);
-        if(optionalTask.isPresent())
-        {
-            System.out.println("Data is found");
-            System.out.println(optionalTask.get());
-        }else {
-            System.out.println("Data is not found");
-        }
+//        LocalDate dueDate=LocalDate.of(2023,9,10);
+//        Optional<TaskEntity> optionalTask=taskService.findByDueDate(dueDate);
+//        if(optionalTask.isPresent())
+//        {
+//            System.out.println("Data is found");
+//            System.out.println(optionalTask.get());
+//        }else {
+//            System.out.println("Data is not found");
+//        }
+//
+//        List<TaskEntity> list=taskService.findByPriority(Priority.HIGH);
+//        if(!list.isEmpty())
+//        {
+//            System.out.println("Data is found");
+//           list.forEach(System.out::println);
+//        }else {
+//            System.out.println("Data is not found");
+//        }
 
-        List<TaskEntity> list=taskService.findByPriority(Priority.HIGH);
-        if(!list.isEmpty())
-        {
-            System.out.println("Data is found");
-           list.forEach(System.out::println);
-        }else {
-            System.out.println("Data is not found");
-        }
+//        Integer id=1;
+//        TaskEntity taskEntity2=taskService.findById(id);
+//        if(taskEntity2!=null)
+//        {
+//            System.out.println("Data found");
+//            System.out.println(taskEntity2);
+//        }else {
+//            System.out.println("data not found");
+//        }
 
-        List<TaskEntity> taskEntityList=taskService.findAll();
-        if(!taskEntityList.isEmpty())
-        {
+        List<TaskEntity> taskEntityList = taskService.findAll();
+        if (!taskEntityList.isEmpty()) {
             System.out.println("Data is found");
             taskEntityList.forEach(System.out::println);
-        }else {
+        } else {
             System.out.println("Data is not found");
         }
 
-        Integer id=1;
-        TaskEntity taskEntity2=taskService.findById(id);
-        if(taskEntity2!=null)
-        {
-            System.out.println("Data found");
-            System.out.println(taskEntity2);
-        }else {
-            System.out.println("data not found");
-        }
-
+        TaskEntity taskEntity2 = null;
+        taskEntity2 = taskService.updateStatusByTitle(5, Status.COMPLETED, "Write unit tests for service layer");
+        System.out.println(taskEntity2);
+        taskEntity2 = taskService.updateDueDateByStatus(4, Status.COMPLETED, LocalDate.of(2023, 7, 20));
+        System.out.println(taskEntity2);
+        taskEntity2 = taskService.updatePriorityByDueDate(2, Priority.LOW, LocalDate.of(2023, 9, 10));
+        System.out.println(taskEntity2);
 
         DBConnection.closeResource();
 

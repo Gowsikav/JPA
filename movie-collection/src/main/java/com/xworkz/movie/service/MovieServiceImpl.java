@@ -12,7 +12,7 @@ import java.util.Optional;
 public class MovieServiceImpl implements MovieService{
 
     private final MovieRepository movieRepository=new MovieRepositoryImpl();
-    private Optional<MovieEntity> optionalMovieEntity= Optional.empty();
+    private Optional<MovieEntity> optionalMovieEntity;
 
     public MovieServiceImpl()
     {
@@ -187,5 +187,39 @@ public class MovieServiceImpl implements MovieService{
     public List<MovieEntity> findAll() {
         System.out.println("findAll method in service");
         return movieRepository.findAll();
+    }
+
+    @Override
+    public List<MovieEntity> findByGenre(String genre) {
+        System.out.println("find by genre in service");
+        if(genre!=null)
+        {
+            return movieRepository.findByGenre(genre);
+        }else {
+            System.out.println("genre is not valid");
+        }
+        return Collections.emptyList();
+    }
+
+    @Override
+    public MovieEntity updateByMovieName(String movieName, Integer id, String directorName, float ratings) {
+        System.out.println("updateByMovieName method in service");
+
+       return movieRepository.updateByMovieName(movieName,id,directorName,ratings);
+
+    }
+
+    @Override
+    public MovieEntity updateGenre(String movieName, String genre,Integer id) {
+        System.out.println("updateGenre method in service");
+
+        return movieRepository.updateGenre(movieName,genre,id);
+    }
+
+    @Override
+    public MovieEntity updateHeroName(Integer id, String heroName) {
+        System.out.println("updateHeroName method in service");
+
+        return movieRepository.updateHeroName(id,heroName);
     }
 }
