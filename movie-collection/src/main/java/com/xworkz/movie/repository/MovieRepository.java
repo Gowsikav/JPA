@@ -19,5 +19,9 @@ public interface MovieRepository {
     MovieEntity updateByMovieName(String movieName,Integer id,String directorName,float ratings);
     MovieEntity updateHeroName(Integer id,String heroName);
     MovieEntity updateGenre(String movieName,String genre,Integer id);
+    List<String> getAllMovieName();
+    List<Float> getAllRatings();
+    List<Object> getAllReleaseDate();
+    List<Object[]> getMovieNameAndHeroName();
 
 }

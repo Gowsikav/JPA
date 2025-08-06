@@ -19,7 +19,10 @@ import java.time.LocalDate;
         query = "update MovieEntity a set a.heroName=:heroName where a.movieId=:id")
 @NamedQuery(name="updateGenre",
         query = "update MovieEntity a set a.genre=:genre where a.movieName=:movieName and a.movieId=:id")
-
+@NamedQuery(name="getAllMovieName",query = "select a.movieName from MovieEntity a")
+@NamedQuery(name = "getAllRatings",query = "select a.ratings from MovieEntity a")
+@NamedQuery(name = "getAllReleaseDate",query = "select a.releaseDate from MovieEntity a")
+@NamedQuery(name = "getMovieNameAndHeroName",query = "select a.movieName,a.heroName from MovieEntity a")
 public class MovieEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
