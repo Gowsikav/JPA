@@ -50,7 +50,7 @@ public class BookRepositoryImpl implements BookRepository {
 
         EntityManager entityManager = null;
         EntityTransaction entityTransaction = null;
-        BookEntity bookEntity = null;
+        BookEntity bookEntity;
         try {
             entityManager = DBConnection.getEntityManager();
             entityTransaction = entityManager.getTransaction();
@@ -85,7 +85,7 @@ public class BookRepositoryImpl implements BookRepository {
         System.out.println("update by id method in repository");
         EntityManager entityManager = null;
         EntityTransaction entityTransaction = null;
-        BookEntity bookEntity = null;
+        BookEntity bookEntity;
         try {
             entityManager = DBConnection.getEntityManager();
             entityTransaction = entityManager.getTransaction();
@@ -325,5 +325,66 @@ public class BookRepositoryImpl implements BookRepository {
         return bookEntity;
     }
 
+    @Override
+    public List<String> getAllBookTitle() {
+        System.out.println("getAllBookTitle method in repository");
+        EntityManager entityManager=null;
+        List<String> list=null;
+        try {
+            entityManager=DBConnection.getEntityManager();
+            list=entityManager.createNamedQuery("getAllBookTitle").getResultList();
+        }catch (PersistenceException e)
+        {
+            System.out.println(e.getMessage());
+        }finally {
+            if(entityManager!=null && entityManager.isOpen())
+            {
+                entityManager.close();
+                System.out.println("entity manager is closed");
+            }
+        }
+        return list;
+    }
 
+    @Override
+    public List<Float> getAllPrice() {
+        System.out.println("getAllPrice method in repository");
+        EntityManager entityManager=null;
+        List<Float> list=null;
+        try {
+            entityManager=DBConnection.getEntityManager();
+            list=entityManager.createNamedQuery("getAllPrice").getResultList();
+        }catch (PersistenceException e)
+        {
+            System.out.println(e.getMessage());
+        }finally {
+            if(entityManager!=null && entityManager.isOpen())
+            {
+                entityManager.close();
+                System.out.println("entity manager is closed");
+            }
+        }
+        return list;
+    }
+
+    @Override
+    public List<Object[]> getAllAuthorAndLanguage() {
+        System.out.println("getAllAuthorAndLanguage method in repository");
+        EntityManager entityManager=null;
+        List<Object[]> list=null;
+        try {
+            entityManager=DBConnection.getEntityManager();
+            list=entityManager.createNamedQuery("getAllAuthorAndLanguage").getResultList();
+        }catch (PersistenceException e)
+        {
+            System.out.println(e.getMessage());
+        }finally {
+            if(entityManager!=null && entityManager.isOpen())
+            {
+                entityManager.close();
+                System.out.println("entity manager is closed");
+            }
+        }
+        return list;
+    }
 }

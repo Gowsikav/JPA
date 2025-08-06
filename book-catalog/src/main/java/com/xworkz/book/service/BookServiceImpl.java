@@ -4,7 +4,6 @@ import com.xworkz.book.entity.BookEntity;
 import com.xworkz.book.repository.BookRepository;
 import com.xworkz.book.repository.BookRepositoryImpl;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -221,4 +220,21 @@ public class BookServiceImpl implements BookService{
 
     }
 
+    @Override
+    public List<String> getAllBookTitle() {
+        System.out.println("getAllBookTitle method in service");
+        return bookRepository.getAllBookTitle();
+    }
+
+    @Override
+    public List<Float> getAllPrice() {
+        System.out.println("getAllPrice method in service");
+        return bookRepository.getAllPrice();
+    }
+
+    @Override
+    public List<Object[]> getAllAuthorAndLanguage() {
+        System.out.println("getAllAuthorAndLanguage method in service");
+        return bookRepository.getAllAuthorAndLanguage();
+    }
 }
