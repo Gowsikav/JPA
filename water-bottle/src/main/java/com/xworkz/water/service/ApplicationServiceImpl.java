@@ -261,4 +261,10 @@ public class ApplicationServiceImpl implements ApplicationService{
         }
         return null;
     }
+
+    @Override
+    public List<Object[]> getAllCompanyAndUsersCount() {
+        System.out.println("getAllCompanyAndUsersCount method in service");
+        return applicationRepository.getAllCompanyAndUsersCount();
+    }
 }
