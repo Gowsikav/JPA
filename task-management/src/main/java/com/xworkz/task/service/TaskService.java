@@ -21,5 +21,8 @@ public interface TaskService {
     TaskEntity updateStatusByTitle(Integer id,Status status,String title);
     TaskEntity updatePriorityByDueDate(Integer id,Priority priority,LocalDate dueDate);
     TaskEntity updateDueDateByStatus(Integer id,Status status,LocalDate dueDate);
+    List<String> getTitle();
+    List<LocalDate> getDueDate();
+    List<Object[]> getStatusAndCreatedAt();
 
 }

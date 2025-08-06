@@ -198,4 +198,22 @@ public class TaskServiceImpl implements TaskService{
         return  taskRepository.updateDueDateByStatus(id,status,dueDate);
     }
 
+    @Override
+    public List<String> getTitle() {
+        System.out.println("getTitle method in servie");
+        return taskRepository.getTitle();
+    }
+
+    @Override
+    public List<LocalDate> getDueDate() {
+        System.out.println("getDueDate method in servie");
+        return taskRepository.getDueDate();
+    }
+
+    @Override
+    public List<Object[]> getStatusAndCreatedAt() {
+        System.out.println("getStatusAndCreatedAt method in servie");
+        return taskRepository.getStatusAndCreatedAt();
+    }
+
 }
