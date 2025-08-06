@@ -4,7 +4,6 @@ import com.xworkz.water.entity.ApplicationEntity;
 import com.xworkz.water.util.JPAConnection;
 
 import javax.persistence.*;
-import javax.swing.text.html.Option;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -321,6 +320,27 @@ public class ApplicationRepositoryImpl implements ApplicationRepository {
             }
         }
         return applicationEntity;
+    }
+
+    @Override
+    public List<Object[]> getAllCompanyAndUsersCount() {
+        System.out.println("getAllCompanyAndUsersCount method in repository");
+        EntityManager entityManager=null;
+        List<Object[]> list=null;
+        try {
+            entityManager=JPAConnection.getEntityManager();
+            list=entityManager.createNamedQuery("getAllCompanyAndUsersCount").getResultList();
+        }catch (PersistenceException e)
+        {
+            System.out.println(e.getMessage());
+        }finally {
+            if(entityManager!=null && entityManager.isOpen())
+            {
+                entityManager.close();
+                System.out.println("entity manager is closed");
+            }
+        }
+        return list;
     }
 }
 

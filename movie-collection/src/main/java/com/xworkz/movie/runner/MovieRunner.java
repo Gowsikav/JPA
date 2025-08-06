@@ -6,6 +6,7 @@ import com.xworkz.movie.service.MovieServiceImpl;
 import com.xworkz.movie.util.DBConnection;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -90,14 +91,26 @@ public class MovieRunner {
 //            System.out.println("Data is not found");
 //        }
 
-        MovieEntity movieEntity1=movieService.updateByMovieName("Bheem",7,"Kumar",3.4f);
-        System.out.println(movieEntity1);
+//        MovieEntity movieEntity1=movieService.updateByMovieName("Bheem",7,"Kumar",3.4f);
+//        System.out.println(movieEntity1);
+//
+//        MovieEntity movieEntity2=movieService.updateGenre("Action","comedy",5);
+//        System.out.println(movieEntity2);
+//
+//        MovieEntity movieEntity3=movieService.updateHeroName(7,"Sathish");
+//        System.out.println(movieEntity3);
 
-        MovieEntity movieEntity2=movieService.updateGenre("Action","comedy",5);
-        System.out.println(movieEntity2);
+//        List<String> list1=movieService.getAllMovieName();
+//        list1.forEach(System.out::println);
 
-        MovieEntity movieEntity3=movieService.updateHeroName(7,"Sathish");
-        System.out.println(movieEntity3);
+//        List<Float> list2=movieService.getAllRatings();
+//        list2.forEach(System.out::println);
+
+        List<Object> objects=movieService.getAllReleaseDate();
+        objects.forEach(System.out::println);
+
+        List<Object[]> name=movieService.getMovieNameAndHeroName();
+        name.stream().map(e->e[0]+" : "+e[1]).forEach(System.out::println);
 
         DBConnection.closeResource();
     }

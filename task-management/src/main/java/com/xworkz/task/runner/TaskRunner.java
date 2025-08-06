@@ -85,21 +85,33 @@ public class TaskRunner {
 //            System.out.println("data not found");
 //        }
 
-        List<TaskEntity> taskEntityList = taskService.findAll();
-        if (!taskEntityList.isEmpty()) {
-            System.out.println("Data is found");
-            taskEntityList.forEach(System.out::println);
-        } else {
-            System.out.println("Data is not found");
-        }
+//        List<TaskEntity> taskEntityList = taskService.findAll();
+//        if (!taskEntityList.isEmpty()) {
+//            System.out.println("Data is found");
+//            taskEntityList.forEach(System.out::println);
+//        } else {
+//            System.out.println("Data is not found");
+//        }
+//
+//        TaskEntity taskEntity2 = null;
+//        taskEntity2 = taskService.updateStatusByTitle(5, Status.COMPLETED, "Write unit tests for service layer");
+//        System.out.println(taskEntity2);
+//        taskEntity2 = taskService.updateDueDateByStatus(4, Status.COMPLETED, LocalDate.of(2023, 7, 20));
+//        System.out.println(taskEntity2);
+//        taskEntity2 = taskService.updatePriorityByDueDate(2, Priority.LOW, LocalDate.of(2023, 9, 10));
+//        System.out.println(taskEntity2);
 
-        TaskEntity taskEntity2 = null;
-        taskEntity2 = taskService.updateStatusByTitle(5, Status.COMPLETED, "Write unit tests for service layer");
-        System.out.println(taskEntity2);
-        taskEntity2 = taskService.updateDueDateByStatus(4, Status.COMPLETED, LocalDate.of(2023, 7, 20));
-        System.out.println(taskEntity2);
-        taskEntity2 = taskService.updatePriorityByDueDate(2, Priority.LOW, LocalDate.of(2023, 9, 10));
-        System.out.println(taskEntity2);
+        List<String> title=taskService.getTitle();
+        System.out.println("title list");
+        title.forEach(System.out::println);
+
+        List<LocalDate> localDates=taskService.getDueDate();
+        System.out.println("Due dates list");
+        localDates.forEach(System.out::println);
+
+        List<Object[]> objects=taskService.getStatusAndCreatedAt();
+        System.out.println("Status and Created At");
+        objects.stream().map(e->e[0]+" : "+e[1]).forEach(System.out::println);
 
         DBConnection.closeResource();
 

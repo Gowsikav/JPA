@@ -211,7 +211,7 @@ public class TaskRepositoryImpl implements TaskRepository {
     public TaskEntity findById(Integer id) {
         System.out.println("find by id method in repository");
         EntityManager entityManager = null;
-        TaskEntity taskEntity = null;
+        TaskEntity taskEntity;
         try {
             entityManager = DBConnection.getEntityManager();
             Query query = entityManager.createNamedQuery("findById");
@@ -334,4 +334,66 @@ public class TaskRepositoryImpl implements TaskRepository {
         return taskEntity;
     }
 
+    @Override
+    public List<LocalDate> getDueDate() {
+        System.out.println("getDueDate method in repository");
+        EntityManager entityManager=null;
+        List<LocalDate> list=null;
+        try{
+            entityManager=DBConnection.getEntityManager();
+            list=entityManager.createNamedQuery("getAllDueDate").getResultList();
+        }catch (PersistenceException e)
+        {
+            System.out.println(e.getMessage());
+        }finally {
+            if(entityManager!=null && entityManager.isOpen())
+            {
+                entityManager.close();
+                System.out.println("entityManager is closed");
+            }
+        }
+        return list;
+    }
+
+    @Override
+    public List<String> getTitle() {
+        System.out.println("getTitle method in repository");
+        EntityManager entityManager=null;
+        List<String> list=null;
+        try{
+            entityManager=DBConnection.getEntityManager();
+            list=entityManager.createNamedQuery("getAllTitle").getResultList();
+        }catch (PersistenceException e)
+        {
+            System.out.println(e.getMessage());
+        }finally {
+            if(entityManager!=null && entityManager.isOpen())
+            {
+                entityManager.close();
+                System.out.println("entityManager is closed");
+            }
+        }
+        return list;
+    }
+
+    @Override
+    public List<Object[]> getStatusAndCreatedAt() {
+        System.out.println("getStatusAndCreatedAt method in repository");
+        EntityManager entityManager=null;
+        List<Object[]> list=null;
+        try{
+            entityManager=DBConnection.getEntityManager();
+            list=entityManager.createNamedQuery("getAllStatusAndCreatedAt").getResultList();
+        }catch (PersistenceException e)
+        {
+            System.out.println(e.getMessage());
+        }finally {
+            if(entityManager!=null && entityManager.isOpen())
+            {
+                entityManager.close();
+                System.out.println("entityManager is closed");
+            }
+        }
+        return list;
+    }
 }

@@ -84,21 +84,33 @@ public class BookRunner {
 //            System.out.println("Data is not found");
 //        }
 
-        List<BookEntity> list1 = bookService.findAll();
-        if (!list1.isEmpty()) {
-            System.out.println("Data is found");
-            list1.forEach(System.out::println);
-        } else {
-            System.out.println("Data is not found");
-        }
+//        List<BookEntity> list1 = bookService.findAll();
+//        if (!list1.isEmpty()) {
+//            System.out.println("Data is found");
+//            list1.forEach(System.out::println);
+//        } else {
+//            System.out.println("Data is not found");
+//        }
+//
+//        BookEntity bookEntity=null;
+//        bookEntity  = bookService.updateAuthorByBookTitle(4, "To Kill a Mockingbird", "Loe john");
+//        System.out.println(bookEntity);
+//        bookEntity = bookService.updatePriceByBookTitle(5, "George Orwell", 350f);
+//        System.out.println(bookEntity);
+//        bookEntity = bookService.updateLanguageByAuthor(2, "Russian", "James Clear");
+//        System.out.println(bookEntity);
 
-        BookEntity bookEntity=null;
-        bookEntity  = bookService.updateAuthorByBookTitle(4, "To Kill a Mockingbird", "Loe john");
-        System.out.println(bookEntity);
-        bookEntity = bookService.updatePriceByBookTitle(5, "George Orwell", 350f);
-        System.out.println(bookEntity);
-        bookEntity = bookService.updateLanguageByAuthor(2, "Russian", "James Clear");
-        System.out.println(bookEntity);
+        List<String> title=bookService.getAllBookTitle();
+        System.out.println("title list");
+        title.forEach(System.out::println);
+
+        List<Float> price=bookService.getAllPrice();
+        System.out.println("price list");
+        price.forEach(System.out::println);
+
+        List<Object[]> stringList=bookService.getAllAuthorAndLanguage();
+        System.out.println("Author and Language list");
+        stringList.stream().map(e->e[0]+" : "+e[1]).forEach(System.out::println);
 
         DBConnection.closeResource();
 

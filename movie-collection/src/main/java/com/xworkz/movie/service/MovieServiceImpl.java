@@ -222,4 +222,28 @@ public class MovieServiceImpl implements MovieService{
 
         return movieRepository.updateHeroName(id,heroName);
     }
+
+    @Override
+    public List<String> getAllMovieName() {
+        System.out.println("getAll movieName in service");
+        return movieRepository.getAllMovieName();
+    }
+
+    @Override
+    public List<Float> getAllRatings() {
+        System.out.println("getAllRatings in service");
+        return movieRepository.getAllRatings();
+    }
+
+    @Override
+    public List<Object> getAllReleaseDate() {
+        System.out.println("getAllReleaseDate in service");
+        return movieRepository.getAllReleaseDate();
+    }
+
+    @Override
+    public List<Object[]> getMovieNameAndHeroName() {
+        System.out.println("getMovieNameAndHeroName method in service");
+        return movieRepository.getMovieNameAndHeroName();
+    }
 }

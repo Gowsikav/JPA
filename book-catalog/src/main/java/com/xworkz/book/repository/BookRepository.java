@@ -2,7 +2,6 @@ package com.xworkz.book.repository;
 
 import com.xworkz.book.entity.BookEntity;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,5 +18,8 @@ public interface BookRepository {
     BookEntity updatePriceByBookTitle(Integer id,String title,Float price);
     BookEntity updateAuthorByBookTitle(Integer id,String title,String author);
     BookEntity updateLanguageByAuthor(Integer id,String language,String author);
+    List<String> getAllBookTitle();
+    List<Float> getAllPrice();
+    List<Object[]> getAllAuthorAndLanguage();
 
 }

@@ -19,6 +19,9 @@ import java.time.LocalDate;
         query = "update BookEntity a set a.author =:author where a.bookTitle =:bookTitle and a.bookId =:id")
 @NamedQuery(name = "updateLanguageByAuthor",
         query = "update BookEntity a set a.language =:language where a.author =:author and a.bookId =:id")
+@NamedQuery(name = "getAllBookTitle",query = "select a.bookTitle from BookEntity a")
+@NamedQuery(name = "getAllPrice",query = "select a.price from BookEntity a")
+@NamedQuery(name = "getAllAuthorAndLanguage",query = "select a.author,a.language from BookEntity a")
 public class BookEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

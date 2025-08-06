@@ -250,7 +250,7 @@ public class MovieRepositoryImpl implements MovieRepository {
         System.out.println("updateByMovieName method in repository");
         EntityManager entityManager=null;
         EntityTransaction entityTransaction=null;
-        MovieEntity movieEntity=null;
+        MovieEntity movieEntity;
         try{
             entityManager=DBConnection.getEntityManager();
             entityTransaction=entityManager.getTransaction();
@@ -346,5 +346,89 @@ public class MovieRepositoryImpl implements MovieRepository {
             }
         }
         return movieEntity;
+    }
+
+    @Override
+    public List<String> getAllMovieName() {
+        System.out.println("get all movieName in repository");
+        EntityManager entityManager=null;
+        List<String> list=null;
+        try {
+            entityManager=DBConnection.getEntityManager();
+            list=entityManager.createNamedQuery("getAllMovieName").getResultList();
+        }catch (PersistenceException e)
+        {
+            System.out.println(e.getMessage());
+        }finally {
+            if(entityManager!=null && entityManager.isOpen())
+            {
+                entityManager.close();
+                System.out.println("entity manager is closed");
+            }
+        }
+        return list;
+    }
+
+    @Override
+    public List<Float> getAllRatings() {
+        System.out.println("getAllRatings method in repository");
+        EntityManager entityManager=null;
+        List<Float> list=null;
+        try{
+            entityManager=DBConnection.getEntityManager();
+            list=entityManager.createNamedQuery("getAllRatings").getResultList();
+        }catch (PersistenceException e)
+        {
+            System.out.println(e.getMessage());
+        }finally {
+            if(entityManager!=null && entityManager.isOpen())
+            {
+                entityManager.close();
+                System.out.println("entity manager is closed");
+            }
+        }
+        return list;
+    }
+
+    @Override
+    public List<Object> getAllReleaseDate() {
+        System.out.println("getAllReleaseDate method in repository");
+        EntityManager entityManager=null;
+        List<Object> list=null;
+        try{
+            entityManager=DBConnection.getEntityManager();
+            list=entityManager.createNamedQuery("getAllReleaseDate").getResultList();
+        }catch (PersistenceException e)
+        {
+            System.out.println(e.getMessage());
+        }finally {
+            if(entityManager!=null && entityManager.isOpen())
+            {
+                entityManager.close();
+                System.out.println("entity manager is closed");
+            }
+        }
+        return list;
+    }
+
+    @Override
+    public List<Object[]> getMovieNameAndHeroName() {
+        System.out.println("getMovieNameAndHeroName method in repository");
+        EntityManager entityManager=null;
+        List<Object[]> list=null;
+        try{
+            entityManager=DBConnection.getEntityManager();
+            list=entityManager.createNamedQuery("getMovieNameAndHeroName").getResultList();
+        }catch (PersistenceException e)
+        {
+            System.out.println(e.getMessage());
+        }finally {
+            if(entityManager!=null && entityManager.isOpen())
+            {
+                entityManager.close();
+                System.out.println("entity manager is closed");
+            }
+        }
+        return list;
     }
 }

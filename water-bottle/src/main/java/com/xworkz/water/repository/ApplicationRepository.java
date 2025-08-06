@@ -29,4 +29,5 @@ public interface ApplicationRepository {
     List<ApplicationEntity> findAll();
 
     ApplicationEntity findByCompany(String companyName);
+    List<Object[]> getAllCompanyAndUsersCount();
 }
