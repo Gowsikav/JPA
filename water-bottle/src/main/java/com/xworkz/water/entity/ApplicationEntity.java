@@ -26,6 +26,8 @@ import java.time.LocalDate;
 @NamedQuery(name="company",query = "select a from ApplicationEntity a where a.company=:companyName")
 @NamedQuery(name = "getAllCompanyAndUsersCount",
         query = "select a.company,a.noOfUsers from ApplicationEntity a")
+@NamedQuery(name = "getAllApplicationNameAndCompany",
+        query = "select a.applicationName,a.company from ApplicationEntity a")
 public class ApplicationEntity {
 
     @Id

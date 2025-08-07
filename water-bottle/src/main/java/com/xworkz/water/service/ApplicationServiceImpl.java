@@ -5,6 +5,7 @@ import com.xworkz.water.repository.ApplicationRepository;
 import com.xworkz.water.repository.ApplicationRepositoryImpl;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -266,5 +267,11 @@ public class ApplicationServiceImpl implements ApplicationService{
     public List<Object[]> getAllCompanyAndUsersCount() {
         System.out.println("getAllCompanyAndUsersCount method in service");
         return applicationRepository.getAllCompanyAndUsersCount();
+    }
+
+    @Override
+    public List<String[]> getAllApplicationNameAndCompany() {
+        System.out.println("getAllApplicationNameAndCompany method in service");
+        return applicationRepository.getAllApplicationNameAndCompany();
     }
 }

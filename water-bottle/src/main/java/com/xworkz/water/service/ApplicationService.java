@@ -31,5 +31,6 @@ public interface ApplicationService {
 
     ApplicationEntity findByCompany(String company);
     List<Object[]> getAllCompanyAndUsersCount();
+    List<String[]> getAllApplicationNameAndCompany();
 
 }

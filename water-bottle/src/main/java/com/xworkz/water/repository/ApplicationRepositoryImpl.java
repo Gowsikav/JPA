@@ -342,5 +342,26 @@ public class ApplicationRepositoryImpl implements ApplicationRepository {
         }
         return list;
     }
+
+    @Override
+    public List<String[]> getAllApplicationNameAndCompany() {
+        System.out.println("getAllApplicationNameAndCompany method in repository");
+        EntityManager entityManager=null;
+        List<String[]> list=null;
+        try {
+            entityManager=JPAConnection.getEntityManager();
+            list=entityManager.createNamedQuery("getAllApplicationNameAndCompany").getResultList();
+        }catch (PersistenceException e)
+        {
+            System.out.println(e.getMessage());
+        }finally {
+            if(entityManager!=null && entityManager.isOpen())
+            {
+                entityManager.close();
+                System.out.println("entity manager is closed");
+            }
+        }
+        return list;
+    }
 }
 

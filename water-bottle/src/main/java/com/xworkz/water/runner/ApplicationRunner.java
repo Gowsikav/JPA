@@ -6,6 +6,8 @@ import com.xworkz.water.service.ApplicationServiceImpl;
 import com.xworkz.water.util.JPAConnection;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,8 +70,22 @@ public class ApplicationRunner {
 //       if(applicationEntity1!=null)
 //           System.out.println(applicationEntity1);
 
-        List<Object[]> objects=applicationService.getAllCompanyAndUsersCount();
-        objects.stream().map(e->e[0]+" : "+e[1]).forEach(System.out::println);
+//        List<Object[]> objects=applicationService.getAllCompanyAndUsersCount();
+//        objects.stream().map(e->e[0]+" : "+e[1]).forEach(System.out::println);
+
+        List<String[]> strings=applicationService.getAllApplicationNameAndCompany();
+        List<String[]> results = new ArrayList<>();
+
+        for (Object[] row : strings) {
+            String[] stringRow = new String[row.length];
+            for (int i = 0; i < row.length; i++) {
+                stringRow[i] = row[i] != null ? row[i].toString() : null;
+            }
+            results.add(stringRow);
+        }
+
+        results.stream().map(e->e[0]+" : "+e[1]).forEach(System.out::println);
+
         JPAConnection.closeResource();
     }
 }
