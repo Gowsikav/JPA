@@ -1,7 +1,7 @@
-package com.xworkz.foodorder.controller;
+package com.xworkz.onlineexam.controller;
 
-import com.xworkz.foodorder.dto.FoodOrderDTO;
-import com.xworkz.foodorder.service.FoodOrderService;
+import com.xworkz.onlineexam.dto.OnlineExamDTO;
+import com.xworkz.onlineexam.service.OnlineExamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,45 +14,47 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/")
-public class FoodOrderController {
+public class OnlineExamController {
 
     @Autowired
-    private FoodOrderService foodOrderService;
+    private OnlineExamService onlineExamService;
 
-    public FoodOrderController()
+    public OnlineExamController()
     {
-        System.out.println("FoodOrderController constructor");
+        System.out.println("OnlineExamController constructor");
     }
 
     @GetMapping("/redirectToTourism")
-    public String getFoodOrderPage()
+    public String getOnlineExam()
     {
-        System.out.println("redirected to food order page");
-        return "FoodOrder";
+        System.out.println("redirected to online exam page");
+        return "OnlineExam";
     }
 
-    @PostMapping("/foodOrder")
-    public String getOrder(@Valid FoodOrderDTO dto, BindingResult bindingResult, Model model)
+    @PostMapping("/onlineExam")
+    public String getExamForm(@Valid OnlineExamDTO dto, BindingResult bindingResult, Model model)
     {
-        System.out.println("getOrder method in controller");
+        System.out.println("getExamForm method");
         System.out.println("controller data: "+dto);
         if(bindingResult.hasErrors())
         {
+            System.out.println("Errors in fields");
             bindingResult.getFieldErrors().stream()
                     .map(e->e.getField()+" : "+e.getDefaultMessage())
                     .forEach(System.out::println);
-            model.addAttribute("dto",dto);
             model.addAttribute("message","Invalid details");
-            return "FoodOrder";
+            return "OnlineExam";
         }
         System.out.println("All details are valid");
-        if(foodOrderService.save(dto)) {
-            System.out.println("Details saved");
-            model.addAttribute("successMessage", "Details saved");
+        if(onlineExamService.save(dto))
+        {
+            System.out.println("Details are saved");
+            model.addAttribute("successMessage","Details saved");
         }else {
             System.out.println("Details not saved");
             model.addAttribute("message","Details not saved");
         }
-        return "FoodOrder";
+        return "OnlineExam";
     }
+
 }

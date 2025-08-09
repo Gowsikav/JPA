@@ -1,4 +1,4 @@
-package com.xworkz.foodorder.util;
+package com.xworkz.onlineexam.util;
 
 import org.springframework.stereotype.Component;
 
@@ -12,6 +12,7 @@ import javax.persistence.PersistenceException;
 public class DBConnection {
 
     private EntityManagerFactory entityManagerFactory;
+
     public DBConnection()
     {
         System.out.println("DBConnection constructor");
@@ -21,7 +22,7 @@ public class DBConnection {
     {
         if(entityManagerFactory==null)
         {
-            try{
+            try {
                 entityManagerFactory= Persistence.createEntityManagerFactory("x-workz");
             }catch (PersistenceException e)
             {
@@ -36,8 +37,8 @@ public class DBConnection {
     {
         if(entityManagerFactory!=null && entityManagerFactory.isOpen())
         {
-            System.out.println("EntityManagerFactory is closed");
             entityManagerFactory.close();
+            System.out.println("EntityManagerFactory is closed");
         }
     }
 }

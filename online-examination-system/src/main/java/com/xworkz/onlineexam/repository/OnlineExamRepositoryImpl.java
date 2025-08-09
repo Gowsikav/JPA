@@ -1,0 +1,53 @@
+package com.xworkz.onlineexam.repository;
+
+import com.xworkz.onlineexam.entity.OnlineExamEntity;
+import com.xworkz.onlineexam.util.DBConnection;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import javax.persistence.PersistenceException;
+
+@Repository
+public class OnlineExamRepositoryImpl implements OnlineExamRepository {
+
+    @Autowired
+    private DBConnection dbConnection;
+
+    public OnlineExamRepositoryImpl()
+    {
+        System.out.println("OnlineExamRepositoryImpl constructor");
+    }
+
+    @Override
+    public boolean save(OnlineExamEntity entity) {
+        System.out.println("save method in repository");
+        System.out.println("Repo data: "+entity);
+        EntityManager entityManager=null;
+        EntityTransaction entityTransaction=null;
+        try{
+            entityManager=dbConnection.getEntityManager();
+            entityTransaction=entityManager.getTransaction();
+            entityTransaction.begin();
+            entityManager.persist(entity);
+            entityTransaction.commit();
+        }catch (PersistenceException e)
+        {
+            if(entityTransaction!=null && entityTransaction.isActive())
+            {
+                entityTransaction.rollback();
+                System.out.println("Roll backed");
+            }
+            return false;
+        }finally {
+            if(entityManager!=null && entityManager.isOpen())
+            {
+                entityManager.close();
+                System.out.println("Entity manager is closed");
+            }
+        }
+
+        return true;
+    }
+}
