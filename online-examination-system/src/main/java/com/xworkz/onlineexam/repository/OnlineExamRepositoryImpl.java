@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceException;
+import java.util.Collections;
+import java.util.List;
 
 @Repository
 public class OnlineExamRepositoryImpl implements OnlineExamRepository {
@@ -49,5 +51,26 @@ public class OnlineExamRepositoryImpl implements OnlineExamRepository {
         }
 
         return true;
+    }
+
+    @Override
+    public List<OnlineExamEntity> findAllEntity() {
+        System.out.println("findAll entity method in repository");
+        EntityManager entityManager=null;
+        List<OnlineExamEntity> list=null;
+        try{
+            entityManager= dbConnection.getEntityManager();
+            list=entityManager.createNamedQuery("findAllEntity").getResultList();
+        }catch (PersistenceException e)
+        {
+            System.out.println(e.getMessage());
+        }finally {
+            if(entityManager!=null && entityManager.isOpen())
+            {
+                entityManager.close();
+                System.out.println("Entity Manager is closed");
+            }
+        }
+        return list;
     }
 }

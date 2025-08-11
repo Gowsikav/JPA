@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("/")
@@ -57,4 +58,13 @@ public class OnlineExamController {
         return "OnlineExam";
     }
 
+    @GetMapping("/findAllData")
+    public String getAllData(Model model)
+    {
+        System.out.println("getAll data method in controller");
+        List<OnlineExamDTO> list=onlineExamService.findAllEntity();
+        list.forEach(System.out::println);
+        model.addAttribute("listOfDto",list);
+        return "ListOfData";
+    }
 }
