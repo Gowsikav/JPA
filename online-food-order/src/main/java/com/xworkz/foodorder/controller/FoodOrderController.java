@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("/")
@@ -54,5 +55,15 @@ public class FoodOrderController {
             model.addAttribute("message","Details not saved");
         }
         return "FoodOrder";
+    }
+
+    @GetMapping("/findAll")
+    public  String getAllData(Model model)
+    {
+        System.out.println("get all Data method in controller");
+        List<FoodOrderDTO> list=foodOrderService.findAllDto();
+        list.forEach(System.out::println);
+        model.addAttribute("listOfDto",list);
+        return "ListOfData";
     }
 }
