@@ -7,6 +7,7 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name = "tourism_info")
+@NamedQuery(name = "getAllEntity",query = "select a from TourismEntity a")
 public class TourismEntity {
 
     @Id

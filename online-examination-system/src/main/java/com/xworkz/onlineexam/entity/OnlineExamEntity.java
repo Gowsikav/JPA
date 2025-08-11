@@ -9,6 +9,7 @@ import java.time.LocalDate;
 @Entity
 @Data
 @Table(name = "online_exam_info")
+@NamedQuery(name = "findAllEntity",query = "select a from OnlineExamEntity a")
 public class OnlineExamEntity {
 
     @Id

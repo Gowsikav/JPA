@@ -6,6 +6,9 @@ import com.xworkz.tourism.repository.TourismRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class TourismServiceImpl implements TourismService{
 
@@ -92,5 +95,25 @@ return false;
         }
         System.out.println("Invalid details");
         return false;
+    }
+
+    @Override
+    public List<TourismDTO> getAllEntity() {
+        System.out.println("getAllEntity method in service");
+        List<TourismEntity> listOfTourismEntity=tourismRepository.getAllEntity();
+        List<TourismDTO> listOfTourismDto=listOfTourismEntity.stream()
+                .map(entity -> {
+                    TourismDTO dto = new TourismDTO();
+                    dto.setPackageId(entity.getPackageId());
+                    dto.setPackagePrice(entity.getPackagePrice());
+                    dto.setDays(entity.getDays());
+                    dto.setDestination(entity.getDestination());
+                    dto.setPackageName(entity.getPackageName());
+                    dto.setPersonsCount(entity.getPersonsCount());
+                    return dto;
+                })
+                .collect(Collectors.toList());
+
+        return listOfTourismDto;
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceException;
+import java.util.List;
 
 @Repository
 public class TourismRepositoryImpl implements TourismRepository{
@@ -46,5 +47,28 @@ public class TourismRepositoryImpl implements TourismRepository{
             }
         }
         return true;
+    }
+
+    @Override
+    public List<TourismEntity> getAllEntity() {
+        System.out.println("getAllEntity method in repository");
+
+        EntityManager entityManager=null;
+        List<TourismEntity> list=null;
+        try{
+            entityManager=DBConnection.getEntityManager();
+            list =entityManager.createNamedQuery("getAllEntity").getResultList();
+        }catch (PersistenceException e)
+        {
+            System.out.println(e.getMessage());
+
+        }finally {
+            if(entityManager!=null && entityManager.isOpen())
+            {
+                entityManager.close();
+                System.out.println("Entity manager is closed");
+            }
+        }
+        return list;
     }
 }

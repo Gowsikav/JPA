@@ -1,10 +1,11 @@
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ page isELIgnored="false" %>
     <html lang="en">
 
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Online Exam System</title>
+        <title>Online bookstore</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
             integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr"
             crossorigin="anonymous" />
@@ -25,10 +26,10 @@
                             <a class="nav-link active" href="index.jsp">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="redirectToTourism">Online Exam</a>
+                            <a class="nav-link" href="redirectToTourism">Book Form</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="findAllData">Get All Data</a>
+                            <a class="nav-link" href="getAllData">Get All Data</a>
                         </li>
                     </ul>
                     <form class="d-flex" role="search">
@@ -38,13 +39,35 @@
                 </div>
             </div>
         </nav>
-        
-                <h4 class="text-center mb-4">Welcome to Online Exam Management</h4>
-        
+
+        <div class="d-flex justify-content-center">
+            <table class="table table-hover w-75">
+                <thead>
+                <tr>
+                    <th scope="col">Book Id</th>
+                    <th scope="col">Book Name</th>
+                    <th scope="col">Book Author</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Price</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach var="ref" items="${listOfDto}">
+                    <tr>
+                        <td>${ref.bookId}</td>
+                        <td>${ref.bookName}</td>
+                        <td>${ref.bookAuthor}</td>
+                        <td>${ref.bookCategory}</td>
+                        <td>${ref.bookPrice}</td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
 
         <footer class="text-center text-lg-start py-3 fixed-bottom" style="background-color: rgb(43, 239, 135);">
             <div class="text-center text-dark">
-                &copy; 2025 Online Exam Management. All rights reserved.
+                &copy; 2025 Online BookStore Management. All rights reserved.
             </div>
         </footer>
 

@@ -6,6 +6,9 @@ import com.xworkz.foodorder.repository.FoodOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class FoodOrderServiceImpl implements FoodOrderService{
 
@@ -30,5 +33,23 @@ public class FoodOrderServiceImpl implements FoodOrderService{
         entity.setRestaurantName(foodOrderDTO.getRestaurantName());
 
         return foodOrderRepository.save(entity);
+    }
+
+    @Override
+    public List<FoodOrderDTO> findAllDto() {
+        System.out.println("find all Dto in service");
+        List<FoodOrderDTO> orderDTOList=null;
+        List<FoodOrderEntity> orderEntities=foodOrderRepository.findAllEntity();
+        orderDTOList=orderEntities.stream().map(entity->{
+            FoodOrderDTO foodOrderDTO=new FoodOrderDTO();
+            foodOrderDTO.setFoodId(entity.getFoodId());
+            foodOrderDTO.setFoodName(entity.getFoodName());
+            foodOrderDTO.setDescription(entity.getDescription());
+            foodOrderDTO.setQuantity(entity.getQuantity());
+            foodOrderDTO.setPrice(entity.getPrice());
+            foodOrderDTO.setRestaurantName(entity.getRestaurantName());
+            return foodOrderDTO;
+        }).collect(Collectors.toList());
+        return orderDTOList;
     }
 }

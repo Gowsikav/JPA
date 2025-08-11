@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceException;
+import java.util.List;
 
 @Repository
 public class FoodOrderRepositoryImpl implements FoodOrderRepository{
@@ -51,5 +52,26 @@ public class FoodOrderRepositoryImpl implements FoodOrderRepository{
             }
         }
         return true;
+    }
+
+    @Override
+    public List<FoodOrderEntity> findAllEntity() {
+        System.out.println("findAll Entity method in repository");
+        EntityManager entityManager=null;
+        List<FoodOrderEntity> list=null;
+        try{
+            entityManager= dbConnection.getEntityManager();
+            list=entityManager.createNamedQuery("findAllEntity").getResultList();
+        }catch (PersistenceException e)
+        {
+            System.out.println(e.getMessage());
+        }finally {
+            if(entityManager!=null && entityManager.isOpen())
+            {
+                entityManager.close();
+                System.out.println("EntityManager is closed");
+            }
+        }
+        return list;
     }
 }
