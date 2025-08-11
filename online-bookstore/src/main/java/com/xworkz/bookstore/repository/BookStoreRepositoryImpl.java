@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Repository
 public class BookStoreRepositoryImpl implements BookStoreRepository{
@@ -47,5 +48,26 @@ public class BookStoreRepositoryImpl implements BookStoreRepository{
             }
         }
         return true;
+    }
+
+    @Override
+    public List<BookStoreEntity> findAllEntity() {
+        System.out.println("findAll entity method in repository");
+        EntityManager entityManager=null;
+        List<BookStoreEntity> list=null;
+        try{
+            entityManager= dbConnection.getEntityManager();
+            list=entityManager.createNamedQuery("findAllEntity").getResultList();
+        }catch (PersistenceException e)
+        {
+            System.out.println(e.getMessage());
+        }finally {
+            if(entityManager!=null && entityManager.isOpen())
+            {
+                entityManager.close();
+                System.out.println("EntityManager is closed");
+            }
+        }
+        return list;
     }
 }

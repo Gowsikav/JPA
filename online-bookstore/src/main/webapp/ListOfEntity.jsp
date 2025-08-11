@@ -1,3 +1,4 @@
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ page isELIgnored="false" %>
     <html lang="en">
 
@@ -38,9 +39,31 @@
                 </div>
             </div>
         </nav>
-        
-                <h4 class="text-center mb-4">Welcome to Online bookstore Management</h4>
-        
+
+        <div class="d-flex justify-content-center">
+            <table class="table table-hover w-75">
+                <thead>
+                <tr>
+                    <th scope="col">Book Id</th>
+                    <th scope="col">Book Name</th>
+                    <th scope="col">Book Author</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Price</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach var="ref" items="${listOfDto}">
+                    <tr>
+                        <td>${ref.bookId}</td>
+                        <td>${ref.bookName}</td>
+                        <td>${ref.bookAuthor}</td>
+                        <td>${ref.bookCategory}</td>
+                        <td>${ref.bookPrice}</td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
 
         <footer class="text-center text-lg-start py-3 fixed-bottom" style="background-color: rgb(43, 239, 135);">
             <div class="text-center text-dark">
