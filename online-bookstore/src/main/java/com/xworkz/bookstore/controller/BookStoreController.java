@@ -32,6 +32,13 @@ public class BookStoreController {
         return "BookStore";
     }
 
+    @GetMapping("/getIndex")
+    public String getIndex()
+    {
+        System.out.println("returned index  page");
+        return "index";
+    }
+
     @PostMapping("/bookstore")
     public String getBook(@Valid BookStoreDTO dto, BindingResult bindingResult, Model model)
     {
@@ -51,6 +58,7 @@ public class BookStoreController {
         if(bookStoreService.save(dto)) {
             System.out.println("Details saved");
             model.addAttribute("successMessage", "Details saved Successfully");
+            return getAllData(model);
         }else {
             model.addAttribute("message","Details not saved");
             model.addAttribute("dto",dto);

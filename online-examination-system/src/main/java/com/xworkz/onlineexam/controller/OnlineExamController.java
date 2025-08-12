@@ -32,6 +32,13 @@ public class OnlineExamController {
         return "OnlineExam";
     }
 
+    @GetMapping("/getIndex")
+    public String getIndex()
+    {
+        System.out.println("returned index page");
+        return "index";
+    }
+
     @PostMapping("/onlineExam")
     public String getExamForm(@Valid OnlineExamDTO dto, BindingResult bindingResult, Model model)
     {
@@ -51,6 +58,7 @@ public class OnlineExamController {
         {
             System.out.println("Details are saved");
             model.addAttribute("successMessage","Details saved");
+            return getAllData(model);
         }else {
             System.out.println("Details not saved");
             model.addAttribute("message","Details not saved");

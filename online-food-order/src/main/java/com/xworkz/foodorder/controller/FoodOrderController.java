@@ -32,6 +32,13 @@ public class FoodOrderController {
         return "FoodOrder";
     }
 
+    @GetMapping("/getIndex")
+    public String getIndex()
+    {
+        System.out.println("returned index  page");
+        return "index";
+    }
+
     @PostMapping("/foodOrder")
     public String getOrder(@Valid FoodOrderDTO dto, BindingResult bindingResult, Model model)
     {
@@ -50,6 +57,7 @@ public class FoodOrderController {
         if(foodOrderService.save(dto)) {
             System.out.println("Details saved");
             model.addAttribute("successMessage", "Details saved");
+            return getAllData(model);
         }else {
             System.out.println("Details not saved");
             model.addAttribute("message","Details not saved");
