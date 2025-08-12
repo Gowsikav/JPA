@@ -8,6 +8,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "tourism_info")
 @NamedQuery(name = "getAllEntity",query = "select a from TourismEntity a")
+@NamedQuery(name = "findById",query = "select a from TourismEntity a where a.packageId=:id")
 public class TourismEntity {
 
     @Id
