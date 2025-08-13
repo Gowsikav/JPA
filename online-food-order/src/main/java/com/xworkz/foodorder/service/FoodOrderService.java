@@ -8,4 +8,5 @@ public interface FoodOrderService {
 
     boolean save(FoodOrderDTO foodOrderDTO);
     List<FoodOrderDTO> findAllDto();
+    FoodOrderDTO findById(Integer id);
 }

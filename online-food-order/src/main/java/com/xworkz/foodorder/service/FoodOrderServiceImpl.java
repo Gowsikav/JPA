@@ -3,6 +3,7 @@ package com.xworkz.foodorder.service;
 import com.xworkz.foodorder.dto.FoodOrderDTO;
 import com.xworkz.foodorder.entity.FoodOrderEntity;
 import com.xworkz.foodorder.repository.FoodOrderRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,5 +52,19 @@ public class FoodOrderServiceImpl implements FoodOrderService{
             return foodOrderDTO;
         }).collect(Collectors.toList());
         return orderDTOList;
+    }
+
+    @Override
+    public FoodOrderDTO findById(Integer id) {
+        System.out.println("findById method in service");
+        FoodOrderEntity entity=foodOrderRepository.findById(id);
+        FoodOrderDTO dto=new FoodOrderDTO();
+        dto.setFoodId(entity.getFoodId());
+        dto.setFoodName(entity.getFoodName());
+        dto.setRestaurantName(entity.getRestaurantName());
+        dto.setQuantity(entity.getQuantity());
+        dto.setDescription(entity.getDescription());
+        dto.setPrice(entity.getPrice());
+        return dto;
     }
 }

@@ -74,4 +74,25 @@ public class FoodOrderRepositoryImpl implements FoodOrderRepository{
         }
         return list;
     }
+
+    @Override
+    public FoodOrderEntity findById(Integer id) {
+        System.out.println("findAll Entity method in repository");
+        EntityManager entityManager=null;
+        FoodOrderEntity entity=null;
+        try{
+            entityManager= dbConnection.getEntityManager();
+            entity=(FoodOrderEntity) entityManager.createNamedQuery("findById").setParameter("id",id).getSingleResult();
+        }catch (PersistenceException e)
+        {
+            System.out.println(e.getMessage());
+        }finally {
+            if(entityManager!=null && entityManager.isOpen())
+            {
+                entityManager.close();
+                System.out.println("EntityManager is closed");
+            }
+        }
+        return entity;
+    }
 }
