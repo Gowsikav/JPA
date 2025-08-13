@@ -70,4 +70,25 @@ public class BookStoreRepositoryImpl implements BookStoreRepository{
         }
         return list;
     }
+
+    @Override
+    public BookStoreEntity findById(Integer id) {
+        System.out.println("findAll Entity method in repository");
+        EntityManager entityManager=null;
+        BookStoreEntity entity=null;
+        try{
+            entityManager= dbConnection.getEntityManager();
+            entity=(BookStoreEntity) entityManager.createNamedQuery("findById").setParameter("id",id).getSingleResult();
+        }catch (PersistenceException e)
+        {
+            System.out.println(e.getMessage());
+        }finally {
+            if(entityManager!=null && entityManager.isOpen())
+            {
+                entityManager.close();
+                System.out.println("EntityManager is closed");
+            }
+        }
+        return entity;
+    }
 }

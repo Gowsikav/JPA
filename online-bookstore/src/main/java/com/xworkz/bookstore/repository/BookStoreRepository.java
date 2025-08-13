@@ -8,4 +8,5 @@ public interface BookStoreRepository {
 
     boolean save(BookStoreEntity entity);
     List<BookStoreEntity> findAllEntity();
+    BookStoreEntity findById(Integer id);
 }
