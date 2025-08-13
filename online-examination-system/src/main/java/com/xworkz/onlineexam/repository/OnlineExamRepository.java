@@ -8,4 +8,5 @@ public interface OnlineExamRepository {
 
     boolean save(OnlineExamEntity entity);
     List<OnlineExamEntity> findAllEntity();
+    OnlineExamEntity findById(Integer id);
 }

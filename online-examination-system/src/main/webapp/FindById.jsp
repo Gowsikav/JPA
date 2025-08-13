@@ -29,7 +29,7 @@
                     <a class="nav-link" href="redirectToTourism">Online Exam</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="findAllData">Get All Data</a>
+                    <a class="nav-link" href="findAllData">Get All Data</a>
                 </li>
             </ul>
             <form class="d-flex" role="search">
@@ -40,36 +40,43 @@
     </div>
 </nav>
 
-<div class="d-flex justify-content-center">
-    <table class="table table-hover w-75">
-        <thead>
-        <tr>
-            <th scope="col">Exam Id</th>
-            <th scope="col">Subject</th>
-            <th scope="col">No of Questions</th>
-            <th scope="col">Exam Date</th>
-            <th scope="col">Total Marks</th>
-            <th scope="col">Duration Hours</th>
-            <th scope="col">Duration Minutes</th>
-            <th scope="col">View</th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach var="ref" items="${listOfDto}">
+<c:if test="${not empty dto}">
+    <div class="d-flex justify-content-center">
+        <table class="table table-hover w-50">
+            <tbody>
             <tr>
-                <td>${ref.examId}</td>
-                <td>${ref.subject}</td>
-                <td>${ref.noOfQuestions}</td>
-                <td>${ref.examDate}</td>
-                <td>${ref.totalMarks}</td>
-                <td>${ref.durationHours}</td>
-                <td>${ref.durationMinutes}</td>
-                <td><a href="view?id=${ref.examId}">view</a> </td>
+                <th scope="row">Exam Id</th>
+                <td>${dto.examId}</td>
             </tr>
-        </c:forEach>
-        </tbody>
-    </table>
-</div>
+            <tr>
+                <th scope="row">Subject</th>
+                <td>${dto.subject}</td>
+            </tr>
+            <tr>
+                <th scope="row">No of Questions</th>
+                <td>${dto.noOfQuestions}</td>
+            </tr>
+            <tr>
+                <th scope="row">Exam Date</th>
+                <td>${dto.examDate}</td>
+            </tr>
+            <tr>
+                <th scope="row">Total Marks</th>
+                <td>${dto.totalMarks}</td>
+            </tr>
+            <tr>
+                <th scope="row">Duration Hours</th>
+                <td>${dto.durationHours}</td>
+            </tr>
+            <tr>
+                <th scope="row">Duration Minutes</th>
+                <td>${dto.durationMinutes}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</c:if>
+
 
 <footer class="text-center text-lg-start py-3 fixed-bottom" style="background-color: rgb(43, 239, 135);">
     <div class="text-center text-dark">
