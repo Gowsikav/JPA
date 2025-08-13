@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceException;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class TourismRepositoryImpl implements TourismRepository{
@@ -70,5 +71,30 @@ public class TourismRepositoryImpl implements TourismRepository{
             }
         }
         return list;
+    }
+
+    @Override
+    public Optional<TourismEntity> findById(Integer id) {
+        System.out.println("Find by id in repository");
+        EntityManager entityManager=null;
+        Optional<TourismEntity> optionalTourismEntity=null;
+        try{
+            entityManager=DBConnection.getEntityManager();
+            TourismEntity tourism=(TourismEntity) entityManager.createNamedQuery("findById").setParameter("id",id).getSingleResult();
+            if(tourism!=null)
+            {
+                return Optional.of(tourism);
+            }
+        }catch (PersistenceException e)
+        {
+            System.out.println(e.getMessage());
+        }finally {
+            if(entityManager!=null && entityManager.isOpen())
+            {
+                entityManager.close();
+                System.out.println("Entity manager is closed");
+            }
+        }
+        return optionalTourismEntity;
     }
 }

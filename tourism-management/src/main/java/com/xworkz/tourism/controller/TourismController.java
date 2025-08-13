@@ -5,11 +5,10 @@ import com.xworkz.tourism.service.TourismService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/")
@@ -18,40 +17,59 @@ public class TourismController {
     @Autowired
     private TourismService tourismService;
 
-    public TourismController()
-    {
+    public TourismController() {
         System.out.println("TourismController constructor");
     }
 
     @GetMapping("/redirectToTourism")
-    public String getTourismForm()
-    {
+    public String getTourismForm() {
         System.out.println("returned tourism form page");
         return "Tourism";
     }
 
+    @GetMapping("/getIndex")
+    public String getIndex() {
+        System.out.println("returned index page");
+        return "index";
+    }
+
     @PostMapping("/tourism")
-    public String getTourism(TourismDTO dto, Model model)
-    {
+    public String getTourism(TourismDTO dto, Model model) {
         System.out.println("getTourism method");
-        System.out.println("Controller data: "+dto);
-        if(tourismService.validate(dto)) {
+        System.out.println("Controller data: " + dto);
+        if (tourismService.validate(dto)) {
             model.addAttribute("message", "Submitted successfully");
-        }else {
+            return getAllEntity(model);
+        } else {
             model.addAttribute("message", "Invalid details");
-            model.addAttribute("dto",dto);
+            model.addAttribute("dto", dto);
         }
-//        DBConnection.closeResources();
         return "Tourism";
     }
 
     @GetMapping("/getAllEntity")
-    public String getAllEntity(Model model)
-    {
+    public String getAllEntity(Model model) {
         System.out.println("getAllEntity method in controller");
-        List<TourismDTO> list=tourismService.getAllEntity();
+        List<TourismDTO> list = tourismService.getAllEntity();
         list.forEach(System.out::println);
-        model.addAttribute("listOfDto",list);
+        model.addAttribute("listOfDto", list);
         return "ListOfTourism";
+    }
+
+    @GetMapping("/view")
+    public String getById(@RequestParam String id,Model model) {
+        System.out.println("getById method in controller");
+        System.out.println("Id: " + id);
+        Optional<TourismDTO> optionalTourismDTO=tourismService.findById(Integer.parseInt(id));
+        if(optionalTourismDTO.isPresent())
+        {
+            System.out.println("Data found");
+            System.out.println(optionalTourismDTO.get());
+            model.addAttribute("ref",optionalTourismDTO.get());
+        }else {
+            System.out.println("Data not found");
+            model.addAttribute("errorMessage", "No package found for ID: " + id);
+        }
+        return "DisplayId";
     }
 }

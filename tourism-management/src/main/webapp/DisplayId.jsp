@@ -29,7 +29,7 @@
                     <a class="nav-link" href="redirectToTourism">Tourism Form</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="getAllEntity">Get All</a>
+                    <a class="nav-link" href="getAllEntity">Get All</a>
                 </li>
 
             </ul>
@@ -40,35 +40,41 @@
         </div>
     </div>
 </nav>
+<h4 class="text-center mb-4">Tourism Details</h4>
+
+<p class="text-danger">${errorMessage}</p>
+
+<c:if test="${not empty ref}">
 
 <div class="d-flex justify-content-center">
-    <table class="table table-hover w-75">
-        <thead>
+    <table class="table table-hover table-bordered w-50">
         <tr>
             <th scope="col">Package Id</th>
-            <th scope="col">Package Name</th>
-            <th scope="col">Destination</th>
-            <th scope="col">Days</th>
-            <th scope="col">Price</th>
-            <th scope="col">Persons count</th>
-            <th scope="col">View</th>
+            <td>${ref.packageId}</td>
         </tr>
-        </thead>
-        <tbody>
-        <c:forEach var="ref" items="${listOfDto}">
-            <tr>
-                <td>${ref.packageId}</td>
-                <td>${ref.packageName}</td>
-                <td>${ref.destination}</td>
-                <td>${ref.days}</td>
-                <td>${ref.packagePrice}</td>
-                <td>${ref.personsCount}</td>
-                <td><a href="view?id=${ref.packageId}">View</a></td>
-            </tr>
-        </c:forEach>
-        </tbody>
+        <tr>
+            <th scope="col">Package Name</th>
+            <td>${ref.packageName}</td>
+        </tr>
+        <tr>
+            <th scope="col">Destination</th>
+            <td>${ref.destination}</td>
+        </tr>
+        <tr>
+            <th scope="col">Price</th>
+            <td>${ref.packagePrice}</td>
+        </tr>
+        <tr>
+            <th scope="col">Days</th>
+            <td>${ref.days}</td>
+        </tr>
+        <tr>
+            <th scope="col">Persons count</th>
+            <td>${ref.personsCount}</td>
+        </tr>
     </table>
 </div>
+</c:if>
 
 
 <footer class="text-center text-lg-start py-3 fixed-bottom" style="background-color: rgb(43, 239, 135);">

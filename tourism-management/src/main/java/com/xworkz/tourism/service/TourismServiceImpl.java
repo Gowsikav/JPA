@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -115,5 +116,32 @@ return false;
                 .collect(Collectors.toList());
 
         return listOfTourismDto;
+    }
+
+    @Override
+    public Optional<TourismDTO> findById(Integer id) {
+        System.out.println("finById method in service");
+        if(id!=null && id>0)
+        {
+            System.out.println("id is valid");
+            Optional<TourismEntity> optionalTourismEntity=tourismRepository.findById(id);
+            if(optionalTourismEntity.isPresent())
+            {
+                TourismEntity entity=new TourismEntity();
+                entity=optionalTourismEntity.get();
+                TourismDTO dto=new TourismDTO();
+                dto.setPackageId(entity.getPackageId());
+                dto.setPersonsCount(entity.getPersonsCount());
+                dto.setPackagePrice(entity.getPackagePrice());
+                dto.setDays(entity.getDays());
+                dto.setDestination(entity.getDestination());
+                dto.setPackageName(entity.getPackageName());
+                Optional<TourismDTO> optionalTourismDTO= Optional.of(dto);
+                return optionalTourismDTO;
+            }
+        }else {
+            System.out.println("id in not valid");
+        }
+        return Optional.empty();
     }
 }
