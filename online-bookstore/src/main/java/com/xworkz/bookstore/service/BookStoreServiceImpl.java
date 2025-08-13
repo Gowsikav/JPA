@@ -10,22 +10,21 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class BookStoreServiceImpl implements BookStoreService{
+public class BookStoreServiceImpl implements BookStoreService {
 
     @Autowired
     private BookStoreRepository bookStoreRepository;
 
-    public BookStoreServiceImpl()
-    {
+    public BookStoreServiceImpl() {
         System.out.println("BookStoreServiceImpl constructor");
     }
 
     @Override
     public boolean save(BookStoreDTO bookStoreDTO) {
         System.out.println("save method in service");
-        System.out.println("service data: "+bookStoreDTO);
+        System.out.println("service data: " + bookStoreDTO);
 
-        BookStoreEntity bookStoreEntity=new BookStoreEntity();
+        BookStoreEntity bookStoreEntity = new BookStoreEntity();
         bookStoreEntity.setBookName(bookStoreDTO.getBookName());
         bookStoreEntity.setBookAuthor(bookStoreDTO.getBookAuthor());
         bookStoreEntity.setBookCategory(bookStoreDTO.getBookCategory());
@@ -37,9 +36,9 @@ public class BookStoreServiceImpl implements BookStoreService{
     @Override
     public List<BookStoreDTO> findAllEntity() {
         System.out.println("findAll entity in service");
-        List<BookStoreEntity> listEntity=bookStoreRepository.findAllEntity();
-        List<BookStoreDTO> listDto=listEntity.stream().map(entity -> {
-            BookStoreDTO bookStoreDTO=new BookStoreDTO();
+        List<BookStoreEntity> listEntity = bookStoreRepository.findAllEntity();
+        List<BookStoreDTO> listDto = listEntity.stream().map(entity -> {
+            BookStoreDTO bookStoreDTO = new BookStoreDTO();
             bookStoreDTO.setBookId(entity.getBookId());
             bookStoreDTO.setBookAuthor(entity.getBookAuthor());
             bookStoreDTO.setBookName(entity.getBookName());
@@ -48,5 +47,18 @@ public class BookStoreServiceImpl implements BookStoreService{
             return bookStoreDTO;
         }).collect(Collectors.toList());
         return listDto;
+    }
+
+    @Override
+    public BookStoreDTO findById(Integer id) {
+        System.out.println("findById entity in service");
+        BookStoreEntity entity = bookStoreRepository.findById(id);
+        BookStoreDTO bookStoreDTO = new BookStoreDTO();
+        bookStoreDTO.setBookId(entity.getBookId());
+        bookStoreDTO.setBookAuthor(entity.getBookAuthor());
+        bookStoreDTO.setBookName(entity.getBookName());
+        bookStoreDTO.setBookCategory(entity.getBookCategory());
+        bookStoreDTO.setBookPrice(entity.getBookPrice());
+        return bookStoreDTO;
     }
 }

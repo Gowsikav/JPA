@@ -10,6 +10,7 @@ import java.time.LocalDate;
 @Data
 @Table(name = "online_exam_info")
 @NamedQuery(name = "findAllEntity",query = "select a from OnlineExamEntity a")
+@NamedQuery(name = "findById",query = "select a from OnlineExamEntity a where a.examId=:id")
 public class OnlineExamEntity {
 
     @Id

@@ -8,6 +8,7 @@ import javax.persistence.*;
 @Data
 @Table(name = "online_book_store")
 @NamedQuery(name = "findAllEntity",query = "select a from BookStoreEntity a")
+@NamedQuery(name = "findById",query = "select a from BookStoreEntity a where a.bookId=:id")
 public class BookStoreEntity {
 
     @Id

@@ -50,6 +50,7 @@
             <th scope="col">Restaurant Name</th>
             <th scope="col">Description</th>
             <th scope="col">Price</th>
+            <th scope="col">View</th>
         </tr>
         </thead>
         <tbody>
@@ -61,6 +62,7 @@
                 <td>${ref.restaurantName}</td>
                 <td>${ref.description}</td>
                 <td>${ref.price}</td>
+                <td><a href="view?id=${ref.foodId}">view</a> </td>
             </tr>
         </c:forEach>
         </tbody>

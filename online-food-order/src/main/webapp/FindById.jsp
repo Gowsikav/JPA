@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Online Exam System</title>
+    <title>Online Food Order</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr"
           crossorigin="anonymous"/>
@@ -26,10 +26,10 @@
                     <a class="nav-link" href="getIndex">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="redirectToTourism">Online Exam</a>
+                    <a class="nav-link" href="redirectToTourism">Food Order</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="findAllData">Get All Data</a>
+                    <a class="nav-link" href="findAll">Get All Data</a>
                 </li>
             </ul>
             <form class="d-flex" role="search">
@@ -40,40 +40,43 @@
     </div>
 </nav>
 
-<div class="d-flex justify-content-center">
-    <table class="table table-hover w-75">
-        <thead>
-        <tr>
-            <th scope="col">Exam Id</th>
-            <th scope="col">Subject</th>
-            <th scope="col">No of Questions</th>
-            <th scope="col">Exam Date</th>
-            <th scope="col">Total Marks</th>
-            <th scope="col">Duration Hours</th>
-            <th scope="col">Duration Minutes</th>
-            <th scope="col">View</th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach var="ref" items="${listOfDto}">
+<c:if test="${not empty dto}">
+    <div class="d-flex justify-content-center">
+        <table class="table table-hover w-50">
+            <tbody>
             <tr>
-                <td>${ref.examId}</td>
-                <td>${ref.subject}</td>
-                <td>${ref.noOfQuestions}</td>
-                <td>${ref.examDate}</td>
-                <td>${ref.totalMarks}</td>
-                <td>${ref.durationHours}</td>
-                <td>${ref.durationMinutes}</td>
-                <td><a href="view?id=${ref.examId}">view</a> </td>
+                <th scope="row">Food Id</th>
+                <td>${dto.foodId}</td>
             </tr>
-        </c:forEach>
-        </tbody>
-    </table>
-</div>
+            <tr>
+                <th scope="row">Food Name</th>
+                <td>${dto.foodName}</td>
+            </tr>
+            <tr>
+                <th scope="row">Quantity</th>
+                <td>${dto.quantity}</td>
+            </tr>
+            <tr>
+                <th scope="row">Restaurant Name</th>
+                <td>${dto.restaurantName}</td>
+            </tr>
+            <tr>
+                <th scope="row">Description</th>
+                <td>${dto.description}</td>
+            </tr>
+            <tr>
+                <th scope="row">Price</th>
+                <td>${dto.price}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</c:if>
+
 
 <footer class="text-center text-lg-start py-3 fixed-bottom" style="background-color: rgb(43, 239, 135);">
     <div class="text-center text-dark">
-        &copy; 2025 Online Exam Management. All rights reserved.
+        &copy; 2025 Online Food Order Management. All rights reserved.
     </div>
 </footer>
 

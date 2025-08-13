@@ -8,4 +8,5 @@ public interface OnlineExamService {
 
     boolean save(OnlineExamDTO examDTO);
     List<OnlineExamDTO> findAllEntity();
+    OnlineExamDTO findById(Integer id);
 }

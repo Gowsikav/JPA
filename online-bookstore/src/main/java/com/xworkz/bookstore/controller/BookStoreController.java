@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -74,5 +75,14 @@ public class BookStoreController {
         list.forEach(System.out::println);
         model.addAttribute("listOfDto",list);
         return "ListOfEntity";
+    }
+
+    @GetMapping("/view")
+    public String findById(@RequestParam("id")Integer id,Model model)
+    {
+        System.out.println("findById method in controller");
+        BookStoreDTO dto=bookStoreService.findById(id);
+        model.addAttribute("dto",dto);
+        return "FindById";
     }
 }

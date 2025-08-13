@@ -29,7 +29,7 @@
                             <a class="nav-link" href="redirectToTourism">Book Form</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="getAllData">Get All Data</a>
+                            <a class="nav-link" href="getAllData">Get All Data</a>
                         </li>
                     </ul>
                     <form class="d-flex" role="search">
@@ -40,32 +40,35 @@
             </div>
         </nav>
 
-        <div class="d-flex justify-content-center">
-            <table class="table table-hover w-75">
-                <thead>
-                <tr>
-                    <th scope="col">Book Id</th>
-                    <th scope="col">Book Name</th>
-                    <th scope="col">Book Author</th>
-                    <th scope="col">Category</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">View</th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach var="ref" items="${listOfDto}">
+        <c:if test="${not empty dto}">
+            <div class="d-flex justify-content-center">
+                <table class="table table-hover w-50">
+                    <tbody>
                     <tr>
-                        <td>${ref.bookId}</td>
-                        <td>${ref.bookName}</td>
-                        <td>${ref.bookAuthor}</td>
-                        <td>${ref.bookCategory}</td>
-                        <td>${ref.bookPrice}</td>
-                        <td><a href="view?id=${ref.bookId}">view</a> </td>
+                        <th scope="row">Book Id</th>
+                        <td>${dto.bookId}</td>
                     </tr>
-                </c:forEach>
-                </tbody>
-            </table>
-        </div>
+                    <tr>
+                        <th scope="row">Book Name</th>
+                        <td>${dto.bookName}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Book Author</th>
+                        <td>${dto.bookAuthor}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Category</th>
+                        <td>${dto.bookCategory}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Price</th>
+                        <td>${dto.bookPrice}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </c:if>
+
 
         <footer class="text-center text-lg-start py-3 fixed-bottom" style="background-color: rgb(43, 239, 135);">
             <div class="text-center text-dark">

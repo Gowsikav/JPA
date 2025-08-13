@@ -8,4 +8,6 @@ public interface FoodOrderRepository {
 
     boolean save(FoodOrderEntity foodOrderEntity);
     List<FoodOrderEntity> findAllEntity();
+    FoodOrderEntity findById(Integer id);
 }
+
