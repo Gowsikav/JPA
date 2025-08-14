@@ -9,6 +9,9 @@ import javax.persistence.*;
 @Table(name = "tourism_info")
 @NamedQuery(name = "getAllEntity",query = "select a from TourismEntity a")
 @NamedQuery(name = "findById",query = "select a from TourismEntity a where a.packageId=:id")
+@NamedQuery(name="updateTourismEntityById", query = "update TourismEntity a set a.packageName=:packageName,a.destination=:destination," +
+        "a.days=:days,a.packagePrice=:packagePrice,a.personsCount=:personsCount where a.packageId=:packageId")
+@NamedQuery(name = "deleteTourismById",query = "delete from TourismEntity a where a.packageId=:packageId")
 public class TourismEntity {
 
     @Id

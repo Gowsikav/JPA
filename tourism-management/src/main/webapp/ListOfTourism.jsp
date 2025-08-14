@@ -40,9 +40,10 @@
         </div>
     </div>
 </nav>
-
+<h4 class="text-center mb-4">Tourism Details</h4>
+<p class="text-center text-danger">${message}</p>
 <div class="d-flex justify-content-center">
-    <table class="table table-hover w-75">
+    <table class="table table-hover table-bordered w-75">
         <thead>
         <tr>
             <th scope="col">Package Id</th>
@@ -51,7 +52,7 @@
             <th scope="col">Days</th>
             <th scope="col">Price</th>
             <th scope="col">Persons count</th>
-            <th scope="col">View</th>
+            <th scope="col">Action</th>
         </tr>
         </thead>
         <tbody>
@@ -63,7 +64,15 @@
                 <td>${ref.days}</td>
                 <td>${ref.packagePrice}</td>
                 <td>${ref.personsCount}</td>
-                <td><a href="view?id=${ref.packageId}">View</a></td>
+                <td>
+                    <a href="view?id=${ref.packageId}" class="btn btn-primary btn-sm">View</a>
+                    <a href="edit?id=${ref.packageId}" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="delete?id=${ref.packageId}"
+                       class="btn btn-danger btn-sm"
+                       onclick="return confirm('Are you sure you want to delete this data?');">
+                        Delete
+                    </a>
+                </td>
             </tr>
         </c:forEach>
         </tbody>
