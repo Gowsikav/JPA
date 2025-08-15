@@ -165,4 +165,17 @@ return false;
             return "Data deleted";
         return "Data not Deleted";
     }
+
+    @Override
+    public TourismDTO searchByPackageName(String name) {
+        System.out.println("searchByPackageName method in service");
+        TourismEntity entity=tourismRepository.searchByPackageName(name);
+        if(entity==null)
+        {
+            return null;
+        }
+        TourismDTO dto=new TourismDTO();
+        BeanUtils.copyProperties(entity,dto);
+        return dto;
+    }
 }

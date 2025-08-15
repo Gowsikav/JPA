@@ -172,4 +172,25 @@ public class TourismRepositoryImpl implements TourismRepository{
         }
         return false;
     }
+
+    @Override
+    public TourismEntity searchByPackageName(String name) {
+        System.out.println("searchByPackageName method in repository");
+        TourismEntity tourism=null;
+        EntityManager entityManager=null;
+        try{
+            entityManager=DBConnection.getEntityManager();
+            tourism=(TourismEntity) entityManager.createNamedQuery("searchByPackageName").setParameter("name",name).getSingleResult();
+        }catch (PersistenceException e)
+        {
+            System.out.println(e.getMessage());
+        }finally {
+            if(entityManager!=null && entityManager.isOpen())
+            {
+                entityManager.close();
+                System.out.println("EntityManager is closed");
+            }
+        }
+        return tourism;
+    }
 }

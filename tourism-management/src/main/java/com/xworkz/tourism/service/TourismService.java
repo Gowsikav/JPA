@@ -12,4 +12,5 @@ public interface TourismService {
     Optional<TourismDTO> findById(Integer id);
     String updateTourismEntityById(TourismDTO dto);
     String deleteTourismById(Integer id);
+    TourismDTO searchByPackageName(String name);
 }

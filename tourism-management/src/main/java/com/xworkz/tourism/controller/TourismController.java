@@ -112,4 +112,18 @@ public class TourismController {
         return "ListOfTourism";
     }
 
+    @GetMapping("/search")
+    public String searchByPackageName(@RequestParam("packageName") String name,Model model)
+    {
+        System.out.println("searchByPackageName method in controller");
+        TourismDTO dto=tourismService.searchByPackageName(name);
+        System.out.println("Dto: "+dto);
+        model.addAttribute("ref",dto);
+        if(dto==null)
+        {
+            model.addAttribute("message","Details not found");
+        }
+        return "ListOfTourism";
+    }
+
 }
