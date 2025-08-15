@@ -25,7 +25,7 @@
                             <a class="nav-link" href="getIndex">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="redirectToTourism">Tourism Form</a>
+                            <a class="nav-link" href="redirectToTourism">Tourism Form</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="getAllEntity">Get All</a>
@@ -40,9 +40,14 @@
             </div>
         </nav>
         <div class="container d-flex justify-content-center my-5">
-            <form action="tourism" method="post"  class="p-4 border rounded shadow" style="width: 100%; max-width: 600px;">
+            <form action="updateById" method="post"  class="p-4 border rounded shadow" style="width: 100%; max-width: 600px;">
                 <h4 class="text-center mb-4">Tourism Management</h4>
                 <h6 class="text-center text-danger mb-4">${message}</h6>
+
+                <div class="mb-3">
+                    <label for="packageId" class="form-label">Package Id</label>
+                    <input type="number" class="form-control" id="packageId" name="packageId" value="${dto.packageId}" readonly>
+                </div>
 
                 <div class="mb-3">
                     <label for="packageName" class="form-label">Package Name</label>
@@ -70,7 +75,7 @@
                 </div>
 
                 <div class="text-center">
-                    <button type="submit" class="btn btn-success">Submit</button>
+                    <button type="submit" class="btn btn-success">Update</button>
                 </div>
             </form>
         </div>

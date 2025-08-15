@@ -72,4 +72,58 @@ public class TourismController {
         }
         return "DisplayId";
     }
+
+    @GetMapping("/edit")
+    public String getUpdateById(@RequestParam("id")Integer id,Model model)
+    {
+        System.out.println("getUpdateById method in service");
+        System.out.println("Id: " + id);
+        Optional<TourismDTO> optionalTourismDTO=tourismService.findById(id);
+        if(optionalTourismDTO.isPresent())
+        {
+            System.out.println("Data found");
+            System.out.println(optionalTourismDTO.get());
+            model.addAttribute("dto",optionalTourismDTO.get());
+        }
+        return "UpdateById";
+    }
+
+    @PostMapping("updateById")
+    public String updateTourismDto(TourismDTO tourismDTO,Model model)
+    {
+        System.out.println("updateTourismDto method in controller");
+        String msg=tourismService.updateTourismEntityById(tourismDTO);
+        System.out.println(msg);
+        List<TourismDTO> list = tourismService.getAllEntity();
+        model.addAttribute("message",msg);
+        model.addAttribute("listOfDto", list);
+        return "ListOfTourism";
+    }
+
+    @GetMapping("/delete")
+    public String deleteById(@RequestParam("id") Integer id,Model model)
+    {
+        System.out.println("deleteById method in controller");
+        String check= tourismService.deleteTourismById(id);
+        System.out.println("Delete:" +check);
+        List<TourismDTO> list = tourismService.getAllEntity();
+        model.addAttribute("message","Data deleted");
+        model.addAttribute("listOfDto", list);
+        return "ListOfTourism";
+    }
+
+    @GetMapping("/search")
+    public String searchByPackageName(@RequestParam("packageName") String name,Model model)
+    {
+        System.out.println("searchByPackageName method in controller");
+        TourismDTO dto=tourismService.searchByPackageName(name);
+        System.out.println("Dto: "+dto);
+        model.addAttribute("ref",dto);
+        if(dto==null)
+        {
+            model.addAttribute("message","Details not found");
+        }
+        return "ListOfTourism";
+    }
+
 }

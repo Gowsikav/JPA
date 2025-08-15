@@ -9,4 +9,7 @@ public interface FoodOrderService {
     boolean save(FoodOrderDTO foodOrderDTO);
     List<FoodOrderDTO> findAllDto();
     FoodOrderDTO findById(Integer id);
+    String updateFoodOrderById(FoodOrderDTO dto);
+    String deleteById(Integer id);
+    List<FoodOrderDTO> searchByFoodName(String name);
 }

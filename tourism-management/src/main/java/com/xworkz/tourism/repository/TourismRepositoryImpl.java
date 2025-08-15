@@ -2,10 +2,12 @@ package com.xworkz.tourism.repository;
 
 import com.xworkz.tourism.entity.TourismEntity;
 import com.xworkz.tourism.util.DBConnection;
+import org.hibernate.QueryException;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 import java.util.List;
 import java.util.Optional;
@@ -77,7 +79,7 @@ public class TourismRepositoryImpl implements TourismRepository{
     public Optional<TourismEntity> findById(Integer id) {
         System.out.println("Find by id in repository");
         EntityManager entityManager=null;
-        Optional<TourismEntity> optionalTourismEntity=null;
+        Optional<TourismEntity> optionalTourismEntity=Optional.empty();
         try{
             entityManager=DBConnection.getEntityManager();
             TourismEntity tourism=(TourismEntity) entityManager.createNamedQuery("findById").setParameter("id",id).getSingleResult();
@@ -96,5 +98,99 @@ public class TourismRepositoryImpl implements TourismRepository{
             }
         }
         return optionalTourismEntity;
+    }
+
+    @Override
+    public Boolean updateTourismEntityById(TourismEntity tourismEntity) {
+        System.out.println("updateTourismEntityById method in repository");
+        EntityManager entityManager=null;
+        EntityTransaction entityTransaction=null;
+        try{
+            entityManager=DBConnection.getEntityManager();
+            entityTransaction=entityManager.getTransaction();
+            entityTransaction.begin();
+            Integer rows=entityManager.createNamedQuery("updateTourismEntityById")
+                    .setParameter("packageName",tourismEntity.getPackageName())
+                    .setParameter("destination",tourismEntity.getDestination())
+                    .setParameter("days",tourismEntity.getDays())
+                    .setParameter("packagePrice",tourismEntity.getPackagePrice())
+                    .setParameter("personsCount",tourismEntity.getPersonsCount())
+                    .setParameter("packageId",tourismEntity.getPackageId())
+                    .executeUpdate();
+            if(rows>0)
+            {
+                entityTransaction.commit();
+                return true;
+            }
+        }catch (QueryException | NoResultException e)
+        {
+            System.out.println(e.getMessage());
+            if(entityTransaction!=null)
+            {
+                entityTransaction.rollback();
+                System.out.println("Roll backed");
+            }
+        }finally {
+            if(entityManager!=null && entityManager.isOpen())
+            {
+                entityManager.close();
+                System.out.println("EntityManager is closed");
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public Boolean deleteTourismEntityById(Integer id) {
+        System.out.println("deleteTourismEntityById method in repository");
+        EntityManager entityManager=null;
+        EntityTransaction entityTransaction=null;
+        try {
+            entityManager=DBConnection.getEntityManager();
+            entityTransaction=entityManager.getTransaction();
+            entityTransaction.begin();
+            Integer row=entityManager.createNamedQuery("deleteTourismById").setParameter("packageId",id).executeUpdate();
+            if(row>0)
+            {
+                entityTransaction.commit();
+                return true;
+            }
+        }catch (NoResultException | QueryException e)
+        {
+            System.out.println(e.getMessage());
+            if(entityTransaction!=null)
+            {
+                entityTransaction.rollback();
+                System.out.println("Roll backed");
+            }
+        }finally {
+            if(entityManager!=null && entityManager.isOpen())
+            {
+                entityManager.close();
+                System.out.println("EntityManager is closed");
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public TourismEntity searchByPackageName(String name) {
+        System.out.println("searchByPackageName method in repository");
+        TourismEntity tourism=null;
+        EntityManager entityManager=null;
+        try{
+            entityManager=DBConnection.getEntityManager();
+            tourism=(TourismEntity) entityManager.createNamedQuery("searchByPackageName").setParameter("name",name).getSingleResult();
+        }catch (PersistenceException e)
+        {
+            System.out.println(e.getMessage());
+        }finally {
+            if(entityManager!=null && entityManager.isOpen())
+            {
+                entityManager.close();
+                System.out.println("EntityManager is closed");
+            }
+        }
+        return tourism;
     }
 }

@@ -33,16 +33,20 @@
                 </li>
 
             </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+            <form class="d-flex" action="search" method="get">
+                <input class="form-control me-2" type="text" name="packageName" placeholder="Package name" aria-label="Search" />
                 <button class="btn btn-outline-success text-dark" type="submit">Search</button>
             </form>
         </div>
     </div>
 </nav>
 
+<c:if test="${not empty listOfDto}">
+
+<h4 class="text-center mb-4">Tourism Details</h4>
+<p class="text-center text-danger">${message}</p>
 <div class="d-flex justify-content-center">
-    <table class="table table-hover w-75">
+    <table class="table table-hover table-bordered w-75">
         <thead>
         <tr>
             <th scope="col">Package Id</th>
@@ -51,7 +55,7 @@
             <th scope="col">Days</th>
             <th scope="col">Price</th>
             <th scope="col">Persons count</th>
-            <th scope="col">View</th>
+            <th scope="col">Action</th>
         </tr>
         </thead>
         <tbody>
@@ -63,12 +67,57 @@
                 <td>${ref.days}</td>
                 <td>${ref.packagePrice}</td>
                 <td>${ref.personsCount}</td>
-                <td><a href="view?id=${ref.packageId}">View</a></td>
+                <td>
+                    <a href="view?id=${ref.packageId}" class="btn btn-primary btn-sm">View</a>
+                    <a href="edit?id=${ref.packageId}" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="delete?id=${ref.packageId}"
+                       class="btn btn-danger btn-sm"
+                       onclick="return confirm('Are you sure you want to delete this data?');">
+                        Delete
+                    </a>
+                </td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
 </div>
+
+</c:if>
+<c:if test="${ref==null}">
+    <h4 class="text-center text-danger">${message}</h4>
+</c:if>
+<c:if test="${not empty ref}">
+    <h4 class="text-center mb-4">Tourism Details</h4>
+    <div class="d-flex justify-content-center">
+        <table class="table table-hover table-bordered w-50">
+            <tr>
+                <th scope="col">Package Id</th>
+                <td>${ref.packageId}</td>
+            </tr>
+            <tr>
+                <th scope="col">Package Name</th>
+                <td>${ref.packageName}</td>
+            </tr>
+            <tr>
+                <th scope="col">Destination</th>
+                <td>${ref.destination}</td>
+            </tr>
+            <tr>
+                <th scope="col">Price</th>
+                <td>${ref.packagePrice}</td>
+            </tr>
+            <tr>
+                <th scope="col">Days</th>
+                <td>${ref.days}</td>
+            </tr>
+            <tr>
+                <th scope="col">Persons count</th>
+                <td>${ref.personsCount}</td>
+            </tr>
+        </table>
+    </div>
+</c:if>
+
 
 
 <footer class="text-center text-lg-start py-3 fixed-bottom" style="background-color: rgb(43, 239, 135);">

@@ -32,15 +32,22 @@
                     <a class="nav-link active" href="findAll">Get All Data</a>
                 </li>
             </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+            <form class="d-flex" action="search" method="get">
+                <input class="form-control me-2" type="text" name="foodName" placeholder="Food name" aria-label="Search" />
                 <button class="btn btn-outline-success text-dark" type="submit">Search</button>
             </form>
         </div>
     </div>
 </nav>
-
-<div class="d-flex justify-content-center">
+<c:if test="${empty listOfDto}">
+    <h4 class="text-center text-danger">${message}</h4>
+</c:if>
+<c:if test="${listOfDto==null}">
+    <h4 class="text-center text-danger">${message}</h4>
+</c:if>
+<c:if test="${not empty listOfDto}">
+    <h4 class="text-center mb-4">Tourism Details</h4>
+    <div class="d-flex justify-content-center">
     <table class="table table-hover w-75">
         <thead>
         <tr>
@@ -50,7 +57,7 @@
             <th scope="col">Restaurant Name</th>
             <th scope="col">Description</th>
             <th scope="col">Price</th>
-            <th scope="col">View</th>
+            <th scope="col">Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -62,12 +69,22 @@
                 <td>${ref.restaurantName}</td>
                 <td>${ref.description}</td>
                 <td>${ref.price}</td>
-                <td><a href="view?id=${ref.foodId}">view</a> </td>
+                <td>
+                    <a href="view?id=${ref.foodId}" class="btn btn-primary btn-sm">View</a>
+                    <a href="edit?id=${ref.foodId}" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="delete?id=${ref.foodId}"
+                       class="btn btn-danger btn-sm"
+                       onclick="return confirm('Are you sure you want to delete this data?');">
+                        Delete
+                    </a>
+                </td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
 </div>
+</c:if>
+
 
 <footer class="text-center text-lg-start py-3 fixed-bottom" style="background-color: rgb(43, 239, 135);">
     <div class="text-center text-dark">

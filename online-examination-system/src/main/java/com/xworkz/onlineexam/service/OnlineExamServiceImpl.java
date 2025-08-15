@@ -3,9 +3,12 @@ package com.xworkz.onlineexam.service;
 import com.xworkz.onlineexam.dto.OnlineExamDTO;
 import com.xworkz.onlineexam.entity.OnlineExamEntity;
 import com.xworkz.onlineexam.repository.OnlineExamRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -68,5 +71,37 @@ public class OnlineExamServiceImpl implements OnlineExamService {
         examDTO.setTotalMarks(entity.getTotalMarks());
         examDTO.setNoOfQuestions(entity.getNoOfQuestions());
         return examDTO;
+    }
+
+    @Override
+    public String updateOnlineExamById(OnlineExamDTO dto) {
+        System.out.println("updateOnlineExamById method in service");
+        OnlineExamEntity entity=new OnlineExamEntity();
+        BeanUtils.copyProperties(dto,entity);
+        if(onlineExamRepository.updateOnlineExamById(entity))
+            return "Data updated";
+        return "Data not updated";
+    }
+
+    @Override
+    public String deleteById(Integer id) {
+        System.out.println("deleteById method in service");
+        if(onlineExamRepository.deleteById(id))
+            return "Data Deleted";
+        return "Data not deleted";
+    }
+
+    @Override
+    public List<OnlineExamDTO> searchBySubject(String name) {
+        System.out.println("searchBySubject method in service");
+        List<OnlineExamDTO> list=new ArrayList<>();
+        List<OnlineExamEntity> examEntities=onlineExamRepository.searchBySubject(name);
+        for(OnlineExamEntity entity:examEntities)
+        {
+            OnlineExamDTO examDTO=new OnlineExamDTO();
+            BeanUtils.copyProperties(entity,examDTO);
+            list.add(examDTO);
+        }
+        return list;
     }
 }

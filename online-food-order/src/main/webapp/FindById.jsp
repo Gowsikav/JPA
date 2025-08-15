@@ -32,8 +32,8 @@
                     <a class="nav-link" href="findAll">Get All Data</a>
                 </li>
             </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+            <form class="d-flex" action="search" method="get">
+                <input class="form-control me-2" type="text" name="foodName" placeholder="Food name" aria-label="Search" />
                 <button class="btn btn-outline-success text-dark" type="submit">Search</button>
             </form>
         </div>
@@ -41,6 +41,7 @@
 </nav>
 
 <c:if test="${not empty dto}">
+    <h4 class="text-center mb-4">Tourism Details</h4>
     <div class="d-flex justify-content-center">
         <table class="table table-hover w-50">
             <tbody>

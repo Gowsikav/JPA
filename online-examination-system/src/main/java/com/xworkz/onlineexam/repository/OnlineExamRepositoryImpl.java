@@ -2,12 +2,14 @@ package com.xworkz.onlineexam.repository;
 
 import com.xworkz.onlineexam.entity.OnlineExamEntity;
 import com.xworkz.onlineexam.util.DBConnection;
+import org.hibernate.hql.spi.id.persistent.PersistentTableBulkIdStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceException;
+import java.util.Collections;
 import java.util.List;
 
 @Repository
@@ -92,5 +94,105 @@ public class OnlineExamRepositoryImpl implements OnlineExamRepository {
             }
         }
         return entity;
+    }
+
+    @Override
+    public Boolean updateOnlineExamById(OnlineExamEntity entity) {
+        System.out.println("updateOnlineExamById method in repository");
+        EntityManager entityManager=null;
+        EntityTransaction entityTransaction=null;
+        try {
+            entityManager= dbConnection.getEntityManager();
+            entityTransaction=entityManager.getTransaction();
+            entityTransaction.begin();
+            Integer rows=entityManager.createNamedQuery("updateOnlineExamById")
+                    .setParameter("subject",entity.getSubject())
+                    .setParameter("noOfQuestions",entity.getNoOfQuestions())
+                    .setParameter("examDate",entity.getExamDate())
+                    .setParameter("totalMarks",entity.getTotalMarks())
+                    .setParameter("durationHours",entity.getDurationHours())
+                    .setParameter("durationMinutes",entity.getDurationMinutes())
+                    .setParameter("examId",entity.getExamId())
+                    .executeUpdate();
+            if(rows>0)
+            {
+                System.out.println("Rows: "+rows);
+                entityTransaction.commit();
+                return true;
+            }
+        }catch (PersistenceException e)
+        {
+            System.out.println(e.getMessage());
+            if(entityTransaction!=null)
+            {
+                entityTransaction.rollback();
+                System.out.println("Roll backed");
+            }
+            return false;
+        }finally {
+            if(entityManager!=null && entityManager.isOpen())
+            {
+                entityManager.close();
+                System.out.println("EntityManager is closed");
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public Boolean deleteById(Integer id) {
+        System.out.println("deleteById method in repository");
+        EntityManager entityManager=null;
+        EntityTransaction entityTransaction=null;
+        try {
+            entityManager= dbConnection.getEntityManager();
+            entityTransaction=entityManager.getTransaction();
+            entityTransaction.begin();
+            Integer rows=entityManager.createNamedQuery("deleteExamById").setParameter("examId",id).executeUpdate();
+            if(rows>0)
+            {
+                System.out.println("Rows : "+rows);
+                entityTransaction.commit();
+                return true;
+            }
+        }catch (PersistenceException e)
+        {
+            System.out.println(e.getMessage());
+            if(entityTransaction!=null)
+            {
+                entityTransaction.rollback();
+                System.out.println("Roll backed");
+            }
+            return false;
+        }finally {
+            if(entityManager!=null && entityManager.isOpen())
+            {
+                entityManager.close();
+                System.out.println("EntityManager is closed");
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public List<OnlineExamEntity> searchBySubject(String name) {
+        System.out.println("searchBySubject method in repository");
+        EntityManager entityManager=null;
+        List<OnlineExamEntity> list=null;
+        try {
+            entityManager= dbConnection.getEntityManager();
+            list=entityManager.createNamedQuery("searchOnlineExamBySubject").setParameter("subject",name).getResultList();
+
+        }catch (PersistenceException e)
+        {
+            System.out.println(e.getMessage());
+        }finally {
+            if(entityManager!=null && entityManager.isOpen())
+            {
+                entityManager.close();
+                System.out.println("EntityManager is closed");
+            }
+        }
+        return list;
     }
 }

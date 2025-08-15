@@ -84,4 +84,57 @@ public class FoodOrderController {
         model.addAttribute("dto",dto);
         return "FindById";
     }
+
+    @GetMapping("/edit")
+    public String editById(@RequestParam("id") Integer id,Model model)
+    {
+        System.out.println("editById method in controller");
+        FoodOrderDTO dto=foodOrderService.findById(id);
+        model.addAttribute("dto",dto);
+        return "UpdateFoodOrder";
+    }
+
+    @PostMapping("/updateFoodOrder")
+    public String updateFoodOrder(@Valid FoodOrderDTO foodOrderDTO,BindingResult bindingResult,Model model)
+    {
+        System.out.println("updateFoodOrder method in controller");
+        if(bindingResult.hasErrors())
+        {
+            bindingResult.getFieldErrors().stream()
+                    .map(e->e.getField()+" : "+e.getDefaultMessage())
+                    .forEach(System.out::println);
+            model.addAttribute("dto",foodOrderDTO);
+            model.addAttribute("message","Invalid details");
+            return "UpdateFoodOrder";
+        }
+        String updated=foodOrderService.updateFoodOrderById(foodOrderDTO);
+        System.out.println("Updated: "+updated);
+        List<FoodOrderDTO> list=foodOrderService.findAllDto();
+        model.addAttribute("listOfDto",list);
+        return "ListOfData";
+    }
+
+    @GetMapping("/delete")
+    public String deleteTourismById(@RequestParam("id") Integer id, Model model)
+    {
+        System.out.println("deleteTourismById method in controller");
+        String deleted=foodOrderService.deleteById(id);
+        System.out.println("Deleted: "+deleted);
+        List<FoodOrderDTO> list=foodOrderService.findAllDto();
+        model.addAttribute("listOfDto",list);
+        return "ListOfData";
+    }
+
+    @GetMapping("/search")
+    public String searchByFoodName(@RequestParam("foodName") String name,Model model)
+    {
+        System.out.println("searchByFoodName method in controller");
+        List<FoodOrderDTO> foodOrderDTO=foodOrderService.searchByFoodName(name);
+        foodOrderDTO.forEach(System.out::println);
+        if(foodOrderDTO.isEmpty()) {
+            model.addAttribute("message", "Details not found");
+        }
+        model.addAttribute("listOfDto",foodOrderDTO);
+        return "ListOfData";
+    }
 }

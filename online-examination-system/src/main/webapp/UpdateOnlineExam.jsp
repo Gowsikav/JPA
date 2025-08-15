@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Tourism</title>
+        <title>Online Exam System</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
             integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr"
             crossorigin="anonymous" />
@@ -13,7 +13,7 @@
     <body>
         <nav class="navbar navbar-expand-lg" style="background-color: rgb(43, 239, 135); ">
             <div class="container-fluid">
-                <img class="navbar-brand" src="images/image.png" alt="Logo" height="100px" />
+                <img class="navbar-brand" src="images/img.png" alt="Logo" height="100px" />
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -25,48 +25,57 @@
                             <a class="nav-link" href="getIndex">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="redirectToTourism">Tourism Form</a>
+                            <a class="nav-link active" href="redirectToTourism">Online Exam</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="getAllEntity">Get All</a>
+                            <a class="nav-link" href="findAllData">Get All Data</a>
                         </li>
-
                     </ul>
-                    <form class="d-flex" role="search" action="search" method="get">
-                        <input class="form-control me-2" type="search" name="packageName" placeholder="Package name" aria-label="Search" />
+                    <form class="d-flex" action="search" method="get">
+                        <input class="form-control me-2" type="text" name="subject" placeholder="Search subject" aria-label="Search" />
                         <button class="btn btn-outline-success text-dark" type="submit">Search</button>
                     </form>
                 </div>
             </div>
         </nav>
         <div class="container d-flex justify-content-center my-5">
-            <form action="tourism" method="post"  class="p-4 border rounded shadow" style="width: 100%; max-width: 600px;">
-                <h4 class="text-center mb-4">Tourism Management</h4>
-                <h6 class="text-center text-danger mb-4">${message}</h6>
-
+            <form action="updateOnlineExam" method="post"  class="p-4 border rounded shadow" style="width: 100%; max-width: 600px;">
+                <h4 class="text-center mb-4">Online Exam Form</h4>
+                <h6 class="text-center ${message == null ? 'text-success' : 'text-danger'} mb-4">
+                    ${message == null ? successMessage : message}
+                </h6>
                 <div class="mb-3">
-                    <label for="packageName" class="form-label">Package Name</label>
-                    <input type="text" class="form-control" id="packageName" name="packageName" value="${dto.packageName}" required>
+                    <label for="id" class="form-label">Subject</label>
+                    <input type="number"  class="form-control" id="id" name="examId" value="${dto.examId}" readonly>
+                </div>
+                <div class="mb-3">
+                    <label for="subject" class="form-label">Subject</label>
+                    <input type="text" minlength="3" maxlength="30" class="form-control" id="subject" name="subject" value="${dto.subject}" required>
                 </div>
 
                 <div class="mb-3">
-                    <label for="destination" class="form-label">Destination</label>
-                    <input type="text" class="form-control" id="destination" name="destination" value="${dto.destination}" required>
+                    <label for="questionsCount" class="form-label">No of Questions</label>
+                    <input type="number" min="1" max="500" class="form-control" id="questionsCount" name="noOfQuestions" value="${dto.noOfQuestions}" required>
                 </div>
 
                 <div class="mb-3">
-                    <label for="days" class="form-label">Days</label>
-                    <input type="number" class="form-control" id="days" name="days" value="${dto.days}" required>
+                    <label for="examDate" class="form-label">Exam Date</label>
+                    <input type="date"  class="form-control" id="examDate" name="examDate" value="${dto.examDate}" required>
                 </div>
 
                 <div class="mb-3">
-                    <label for="price" class="form-label">Package Price</label>
-                    <input type="number" step="any" class="form-control" id="price" name="packagePrice" value="${dto.packagePrice}" required>
+                    <label for="totalMarks" class="form-label">Total Marks</label>
+                    <input type="number" min="5" max="500" class="form-control" id="totalMarks" name="totalMarks" value="${dto.totalMarks}" required>
                 </div>
 
                 <div class="mb-3">
-                    <label for="personsCount" class="form-label">Persons Count</label>
-                    <input type="number" class="form-control" id="personsCount" name="personsCount" value="${dto.personsCount}" required>
+                    <label for="examDurationHours" class="form-label">Exam Duration Hours</label>
+                    <input type="number" min="0" max="5" class="form-control" id="examDurationHours" name="durationHours" value="${dto.durationHours}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="durationMinutes" class="form-label">Exam Duration Minutes</label>
+                    <input type="number" min="0" max="59" class="form-control" id="durationMinutes" name="durationMinutes" value="${dto.durationMinutes}" required>
                 </div>
 
                 <div class="text-center">
@@ -77,7 +86,7 @@
 
         <footer class="text-center text-lg-start py-3" style="background-color: rgb(43, 239, 135);">
             <div class="text-center text-dark">
-                &copy; 2025 Tourism Management. All rights reserved.
+                &copy; 2025 Online Exam Management. All rights reserved.
             </div>
         </footer>
 

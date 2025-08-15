@@ -7,6 +7,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -66,5 +67,36 @@ public class FoodOrderServiceImpl implements FoodOrderService{
         dto.setDescription(entity.getDescription());
         dto.setPrice(entity.getPrice());
         return dto;
+    }
+
+    @Override
+    public String updateFoodOrderById(FoodOrderDTO dto) {
+        System.out.println("updateFoodOrderById method in service");
+        FoodOrderEntity entity=new FoodOrderEntity();
+        BeanUtils.copyProperties(dto,entity);
+        if(foodOrderRepository.updateFoodOrderById(entity))
+            return "Data updated";
+        return "Data not updated";
+    }
+
+    @Override
+    public String deleteById(Integer id) {
+        System.out.println("deleteById method in service");
+        if(foodOrderRepository.deleteById(id))
+            return "Data deleted";
+        return "Data not deleted";
+    }
+
+    @Override
+    public List<FoodOrderDTO> searchByFoodName(String name) {
+        System.out.println("searchByFoodName method in service");
+       List<FoodOrderEntity> entities=foodOrderRepository.searchByFoodName(name);
+       List<FoodOrderDTO> list=new ArrayList<>();
+       for(FoodOrderEntity entity:entities) {
+           FoodOrderDTO dto = new FoodOrderDTO();
+           BeanUtils.copyProperties(entity, dto);
+           list.add(dto);
+       }
+        return list;
     }
 }

@@ -3,6 +3,7 @@ package com.xworkz.tourism.service;
 import com.xworkz.tourism.dto.TourismDTO;
 import com.xworkz.tourism.entity.TourismEntity;
 import com.xworkz.tourism.repository.TourismRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -143,5 +144,38 @@ return false;
             System.out.println("id in not valid");
         }
         return Optional.empty();
+    }
+
+    @Override
+    public String updateTourismEntityById(TourismDTO dto) {
+        System.out.println("updateTourismEntityById method in service");
+        TourismEntity entity=new TourismEntity();
+        BeanUtils.copyProperties(dto,entity);
+        boolean result=tourismRepository.updateTourismEntityById(entity);
+        if(result)
+            return "Data is updated";
+        return "Data is not updated";
+    }
+
+    @Override
+    public String deleteTourismById(Integer id) {
+        System.out.println("deleteTourismById method in service");
+        Boolean check=tourismRepository.deleteTourismEntityById(id);
+        if(check)
+            return "Data deleted";
+        return "Data not Deleted";
+    }
+
+    @Override
+    public TourismDTO searchByPackageName(String name) {
+        System.out.println("searchByPackageName method in service");
+        TourismEntity entity=tourismRepository.searchByPackageName(name);
+        if(entity==null)
+        {
+            return null;
+        }
+        TourismDTO dto=new TourismDTO();
+        BeanUtils.copyProperties(entity,dto);
+        return dto;
     }
 }

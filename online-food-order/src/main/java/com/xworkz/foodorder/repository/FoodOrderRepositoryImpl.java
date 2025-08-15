@@ -95,4 +95,103 @@ public class FoodOrderRepositoryImpl implements FoodOrderRepository{
         }
         return entity;
     }
+
+    @Override
+    public Boolean updateFoodOrderById(FoodOrderEntity entity) {
+        System.out.println("updateById method in repository");
+        EntityManager entityManager=null;
+        EntityTransaction entityTransaction=null;
+        try{
+            entityManager= dbConnection.getEntityManager();
+            entityTransaction=entityManager.getTransaction();
+            entityTransaction.begin();
+            Integer rows=entityManager.createNamedQuery("updateFoodOrderById")
+                    .setParameter("foodName",entity.getFoodName())
+                    .setParameter("quantity",entity.getQuantity())
+                    .setParameter("description",entity.getDescription())
+                    .setParameter("restaurantName",entity.getRestaurantName())
+                    .setParameter("price",entity.getPrice())
+                    .setParameter("foodId",entity.getFoodId())
+                    .executeUpdate();
+            if(rows>0)
+            {
+                System.out.println("Rows: "+rows);
+                entityTransaction.commit();
+                return true;
+            }
+
+        }catch (PersistenceException e)
+        {
+            System.out.println(e.getMessage());
+            if(entityTransaction!=null)
+            {
+                entityTransaction.rollback();
+                System.out.println("roll backed");
+                return false;
+            }
+        }finally {
+            if(entityManager!=null && entityManager.isOpen())
+            {
+                entityManager.close();
+                System.out.println("EntityManager is closed");
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public Boolean deleteById(Integer id) {
+        System.out.println("deleteById method in repository");
+        EntityManager entityManager=null;
+        EntityTransaction entityTransaction=null;
+        try{
+            entityManager= dbConnection.getEntityManager();
+            entityTransaction=entityManager.getTransaction();
+            entityTransaction.begin();
+            Integer rows=entityManager.createNamedQuery("deleteById").setParameter("foodId",id).executeUpdate();
+            if(rows>0)
+            {
+                System.out.println("Rows: "+rows);
+                entityTransaction.commit();
+                return true;
+            }
+        }catch (PersistenceException e)
+        {
+            System.out.println(e.getMessage());
+            if(entityTransaction!=null)
+            {
+                entityTransaction.rollback();
+                System.out.println("Roll backed");
+            }
+            return false;
+        }finally {
+            if(entityManager!=null && entityManager.isOpen())
+            {
+                entityManager.close();
+                System.out.println("EntityManager is closed");
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public List<FoodOrderEntity> searchByFoodName(String name) {
+        System.out.println("searchByFoodName method in repository");
+        EntityManager entityManager=null;
+        List<FoodOrderEntity> foodOrderEntity=null;
+        try {
+            entityManager= dbConnection.getEntityManager();
+            foodOrderEntity=entityManager.createNamedQuery("searchByFoodName").setParameter("foodName",name).getResultList();
+        }catch (PersistenceException e)
+        {
+            System.out.println(e.getMessage());
+        }finally {
+            if(entityManager!=null && entityManager.isOpen())
+            {
+                entityManager.close();
+                System.out.println("EntityManager is closed");
+            }
+        }
+        return foodOrderEntity;
+    }
 }

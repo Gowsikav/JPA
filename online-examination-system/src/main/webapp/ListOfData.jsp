@@ -32,14 +32,20 @@
                     <a class="nav-link active" href="findAllData">Get All Data</a>
                 </li>
             </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+            <form class="d-flex" action="search" method="get">
+                <input class="form-control me-2" type="text" name="subject" placeholder="Search subject" aria-label="Search" />
                 <button class="btn btn-outline-success text-dark" type="submit">Search</button>
             </form>
         </div>
     </div>
 </nav>
-
+<c:if test="${empty listOfDto}">
+    <h4 class="text-center text-danger">${message}</h4>
+</c:if>
+<c:if test="${listOfDto==null}">
+    <h4 class="text-center text-danger">${message}</h4>
+</c:if>
+<c:if test="${not empty listOfDto}">
 <div class="d-flex justify-content-center">
     <table class="table table-hover w-75">
         <thead>
@@ -51,7 +57,7 @@
             <th scope="col">Total Marks</th>
             <th scope="col">Duration Hours</th>
             <th scope="col">Duration Minutes</th>
-            <th scope="col">View</th>
+            <th scope="col">Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -64,12 +70,21 @@
                 <td>${ref.totalMarks}</td>
                 <td>${ref.durationHours}</td>
                 <td>${ref.durationMinutes}</td>
-                <td><a href="view?id=${ref.examId}">view</a> </td>
+                <td>
+                    <a href="view?id=${ref.examId}" class="btn btn-primary btn-sm">View</a>
+                    <a href="edit?id=${ref.examId}" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="delete?id=${ref.examId}"
+                       class="btn btn-danger btn-sm"
+                       onclick="return confirm('Are you sure you want to delete this data?');">
+                        Delete
+                    </a>
+                </td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
 </div>
+</c:if>
 
 <footer class="text-center text-lg-start py-3 fixed-bottom" style="background-color: rgb(43, 239, 135);">
     <div class="text-center text-dark">
