@@ -11,7 +11,7 @@ public interface FoodOrderRepository {
     FoodOrderEntity findById(Integer id);
     Boolean updateFoodOrderById(FoodOrderEntity entity);
     Boolean deleteById(Integer id);
-    FoodOrderEntity searchByFoodName(String name);
+    List<FoodOrderEntity> searchByFoodName(String name);
 
 }
 

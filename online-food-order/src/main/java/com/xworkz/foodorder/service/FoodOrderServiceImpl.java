@@ -7,6 +7,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -87,15 +88,15 @@ public class FoodOrderServiceImpl implements FoodOrderService{
     }
 
     @Override
-    public FoodOrderDTO searchByFoodName(String name) {
+    public List<FoodOrderDTO> searchByFoodName(String name) {
         System.out.println("searchByFoodName method in service");
-        FoodOrderEntity entity=foodOrderRepository.searchByFoodName(name);
-        if(entity==null)
-        {
-            return null;
-        }
-        FoodOrderDTO dto=new FoodOrderDTO();
-        BeanUtils.copyProperties(entity,dto);
-        return dto;
+       List<FoodOrderEntity> entities=foodOrderRepository.searchByFoodName(name);
+       List<FoodOrderDTO> list=new ArrayList<>();
+       for(FoodOrderEntity entity:entities) {
+           FoodOrderDTO dto = new FoodOrderDTO();
+           BeanUtils.copyProperties(entity, dto);
+           list.add(dto);
+       }
+        return list;
     }
 }

@@ -39,6 +39,12 @@
         </div>
     </div>
 </nav>
+<c:if test="${empty listOfDto}">
+    <h4 class="text-center text-danger">${message}</h4>
+</c:if>
+<c:if test="${listOfDto==null}">
+    <h4 class="text-center text-danger">${message}</h4>
+</c:if>
 <c:if test="${not empty listOfDto}">
     <h4 class="text-center mb-4">Tourism Details</h4>
     <div class="d-flex justify-content-center">
@@ -79,43 +85,6 @@
 </div>
 </c:if>
 
-<c:if test="${dto==null}">
-    <h4 class="text-center text-danger">${message}</h4>
-</c:if>
-<c:if test="${not empty dto}">
-    <h4 class="text-center mb-4">Tourism Details</h4>
-    <div class="d-flex justify-content-center">
-
-        <table class="table table-hover w-50">
-            <tbody>
-            <tr>
-                <th scope="row">Food Id</th>
-                <td>${dto.foodId}</td>
-            </tr>
-            <tr>
-                <th scope="row">Food Name</th>
-                <td>${dto.foodName}</td>
-            </tr>
-            <tr>
-                <th scope="row">Quantity</th>
-                <td>${dto.quantity}</td>
-            </tr>
-            <tr>
-                <th scope="row">Restaurant Name</th>
-                <td>${dto.restaurantName}</td>
-            </tr>
-            <tr>
-                <th scope="row">Description</th>
-                <td>${dto.description}</td>
-            </tr>
-            <tr>
-                <th scope="row">Price</th>
-                <td>${dto.price}</td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</c:if>
 
 <footer class="text-center text-lg-start py-3 fixed-bottom" style="background-color: rgb(43, 239, 135);">
     <div class="text-center text-dark">

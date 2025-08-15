@@ -11,5 +11,5 @@ public interface FoodOrderService {
     FoodOrderDTO findById(Integer id);
     String updateFoodOrderById(FoodOrderDTO dto);
     String deleteById(Integer id);
-    FoodOrderDTO searchByFoodName(String name);
+    List<FoodOrderDTO> searchByFoodName(String name);
 }

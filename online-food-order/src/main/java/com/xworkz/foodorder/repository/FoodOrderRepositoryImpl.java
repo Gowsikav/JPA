@@ -175,13 +175,13 @@ public class FoodOrderRepositoryImpl implements FoodOrderRepository{
     }
 
     @Override
-    public FoodOrderEntity searchByFoodName(String name) {
+    public List<FoodOrderEntity> searchByFoodName(String name) {
         System.out.println("searchByFoodName method in repository");
         EntityManager entityManager=null;
-        FoodOrderEntity foodOrderEntity=null;
+        List<FoodOrderEntity> foodOrderEntity=null;
         try {
             entityManager= dbConnection.getEntityManager();
-            foodOrderEntity=(FoodOrderEntity) entityManager.createNamedQuery("searchByFoodName").setParameter("foodName",name).getSingleResult();
+            foodOrderEntity=entityManager.createNamedQuery("searchByFoodName").setParameter("foodName",name).getResultList();
         }catch (PersistenceException e)
         {
             System.out.println(e.getMessage());

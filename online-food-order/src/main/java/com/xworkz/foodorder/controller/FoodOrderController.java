@@ -129,12 +129,12 @@ public class FoodOrderController {
     public String searchByFoodName(@RequestParam("foodName") String name,Model model)
     {
         System.out.println("searchByFoodName method in controller");
-        FoodOrderDTO foodOrderDTO=foodOrderService.searchByFoodName(name);
-        System.out.println("Dto: "+foodOrderDTO);
-        if(foodOrderDTO==null) {
+        List<FoodOrderDTO> foodOrderDTO=foodOrderService.searchByFoodName(name);
+        foodOrderDTO.forEach(System.out::println);
+        if(foodOrderDTO.isEmpty()) {
             model.addAttribute("message", "Details not found");
         }
-        model.addAttribute("dto",foodOrderDTO);
+        model.addAttribute("listOfDto",foodOrderDTO);
         return "ListOfData";
     }
 }
