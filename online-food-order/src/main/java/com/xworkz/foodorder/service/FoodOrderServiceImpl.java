@@ -67,4 +67,35 @@ public class FoodOrderServiceImpl implements FoodOrderService{
         dto.setPrice(entity.getPrice());
         return dto;
     }
+
+    @Override
+    public String updateFoodOrderById(FoodOrderDTO dto) {
+        System.out.println("updateFoodOrderById method in service");
+        FoodOrderEntity entity=new FoodOrderEntity();
+        BeanUtils.copyProperties(dto,entity);
+        if(foodOrderRepository.updateFoodOrderById(entity))
+            return "Data updated";
+        return "Data not updated";
+    }
+
+    @Override
+    public String deleteById(Integer id) {
+        System.out.println("deleteById method in service");
+        if(foodOrderRepository.deleteById(id))
+            return "Data deleted";
+        return "Data not deleted";
+    }
+
+    @Override
+    public FoodOrderDTO searchByFoodName(String name) {
+        System.out.println("searchByFoodName method in service");
+        FoodOrderEntity entity=foodOrderRepository.searchByFoodName(name);
+        if(entity==null)
+        {
+            return null;
+        }
+        FoodOrderDTO dto=new FoodOrderDTO();
+        BeanUtils.copyProperties(entity,dto);
+        return dto;
+    }
 }

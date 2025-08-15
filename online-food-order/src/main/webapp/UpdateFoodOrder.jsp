@@ -39,12 +39,15 @@
             </div>
         </nav>
         <div class="container d-flex justify-content-center my-5">
-            <form action="foodOrder" method="post"  class="p-4 border rounded shadow" style="width: 100%; max-width: 600px;">
+            <form action="updateFoodOrder" method="post"  class="p-4 border rounded shadow" style="width: 100%; max-width: 600px;">
                 <h4 class="text-center mb-4">Online Food Order</h4>
                 <h6 class="text-center ${message == null ? 'text-success' : 'text-danger'} mb-4">
                     ${message == null ? successMessage : message}
                 </h6>
-
+                <div class="mb-3">
+                    <label for="id" class="form-label">Id</label>
+                    <input type="number"  class="form-control" id="id" name="foodId" value="${dto.foodId}" readonly>
+                </div>
                 <div class="mb-3">
                     <label for="name" class="form-label">Name</label>
                     <input type="text" minlength="3" maxlength="30" class="form-control" id="name" name="foodName" value="${dto.foodName}" required>
