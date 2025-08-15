@@ -11,6 +11,11 @@ import java.time.LocalDate;
 @Table(name = "online_exam_info")
 @NamedQuery(name = "findAllEntity",query = "select a from OnlineExamEntity a")
 @NamedQuery(name = "findById",query = "select a from OnlineExamEntity a where a.examId=:id")
+@NamedQuery(name = "updateOnlineExamById",query = "update OnlineExamEntity a set a.subject=:subject," +
+        "a.noOfQuestions=:noOfQuestions,a.examDate=:examDate,a.totalMarks=:totalMarks,a.durationHours=:durationHours," +
+        "a.durationMinutes=:durationMinutes where a.examId=:examId")
+@NamedQuery(name = "deleteExamById",query = "delete from OnlineExamEntity a where a.examId=:examId")
+@NamedQuery(name = "searchOnlineExamBySubject",query = "select a from OnlineExamEntity a where a.subject=:subject")
 public class OnlineExamEntity {
 
     @Id
