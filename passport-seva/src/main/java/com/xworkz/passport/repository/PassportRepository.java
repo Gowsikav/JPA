@@ -11,5 +11,9 @@ public interface PassportRepository {
     String findExistingEmail(String email);
     Long findExistingPhoneNumber(Long phoneNumber);
     String findExistingLoginId(String loginId);
+    PassportEntity findByPassportId(Integer id);
+    Boolean updatePassportEntityById(PassportEntity entity);
+    Boolean deleteUserById(Integer id);
+    List<PassportEntity> searchUserByUserName(String name);
 
 }

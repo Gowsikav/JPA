@@ -85,4 +85,58 @@ public class BookStoreController {
         model.addAttribute("dto",dto);
         return "FindById";
     }
+
+    @GetMapping("/edit")
+    public String editById(@RequestParam("id")Integer id, Model model)
+    {
+        System.out.println("editById method in controller");
+        BookStoreDTO dto=bookStoreService.findById(id);
+        model.addAttribute("dto",dto);
+        return "UpdateBookStore";
+    }
+
+    @PostMapping("/updateBookStore")
+    public String updateBookStoreById(@Valid BookStoreDTO dto,BindingResult bindingResult,Model model)
+    {
+        System.out.println("updateBookStoreById method in controller");
+        if (bindingResult.hasErrors())
+        {
+            System.out.println("Error in fields");
+            bindingResult.getFieldErrors().stream()
+                    .map(e->e.getField()+" : "+e.getDefaultMessage())
+                    .forEach(System.out::println);
+            model.addAttribute("message","Invalid details");
+            model.addAttribute("dto",dto);
+            return "UpdateBookStore";
+        }
+        String update= bookStoreService.updateBookStoreById(dto);
+        System.out.println("updated: "+update);
+        List<BookStoreDTO> list=bookStoreService.findAllEntity();
+        model.addAttribute("listOfDto",list);
+        return "ListOfEntity";
+    }
+
+    @GetMapping("/delete")
+    public String deleteById(@RequestParam("id")Integer id,Model model)
+    {
+        System.out.println("deleteById method in controller");
+        String delete= bookStoreService.deleteBookStoreById(id);
+        System.out.println("delete: "+delete);
+        List<BookStoreDTO> list=bookStoreService.findAllEntity();
+        model.addAttribute("listOfDto",list);
+        return "ListOfEntity";
+    }
+
+    @GetMapping("/search")
+    public String searchBookStoreByBookName(@RequestParam("bookName")String bookName,Model model)
+    {
+        System.out.println("searchBookStoreByBookName method in controller");
+        List<BookStoreDTO> bookStoreDTOList=bookStoreService.searchBookStoreByBookName(bookName);
+        if(bookStoreDTOList.isEmpty())
+        {
+            model.addAttribute("message","Data not found");
+        }
+        model.addAttribute("listOfDto",bookStoreDTOList);
+        return "ListOfEntity";
+    }
 }

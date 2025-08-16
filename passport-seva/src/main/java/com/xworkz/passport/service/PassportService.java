@@ -11,4 +11,8 @@ public interface PassportService {
     String findExistingEmail(String email);
     Long findExistingPhoneNumber(Long phoneNumber);
     String findExistingLoginId(String loginId);
+    PassportDTO findByPassportId(Integer id);
+    String  updatePassportById(PassportDTO dto);
+    String deleteUserById(Integer id);
+    List<PassportDTO> searchUserByUserName(String name);
 }

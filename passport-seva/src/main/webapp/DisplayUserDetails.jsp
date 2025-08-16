@@ -1,11 +1,11 @@
-<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page isELIgnored="false" %>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Online bookstore</title>
+    <title>Passport Seva</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr"
           crossorigin="anonymous"/>
@@ -14,7 +14,7 @@
 <body>
 <nav class="navbar navbar-expand-lg" style="background-color: rgb(43, 239, 135); ">
     <div class="container-fluid">
-        <img class="navbar-brand" src="images/img.png" alt="Logo" height="100px"/>
+        <img class="navbar-brand" src="images/image.png" alt="Logo" height="100px"/>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                 aria-expanded="false" aria-label="Toggle navigation">
@@ -26,66 +26,75 @@
                     <a class="nav-link" href="getIndex">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="redirectToTourism">Book Form</a>
+                    <a class="nav-link" href="redirectToPassport">User Registration Form</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="getAllData">Get All Data</a>
+                    <a class="nav-link" href="getAllEntity">Get All</a>
                 </li>
+
             </ul>
             <form class="d-flex" action="search" method="get">
-                <input class="form-control me-2" type="text" name="bookName" placeholder="book name"
+                <input class="form-control me-2" type="text" name="name" placeholder="Enter UserName"
                        aria-label="Search"/>
                 <button class="btn btn-outline-success text-dark" type="submit">Search</button>
             </form>
         </div>
     </div>
 </nav>
-<c:if test="${empty listOfDto}">
-    <h4 class="text-center text-danger">${message}</h4>
-</c:if>
-<c:if test="${listOfDto==null}">
-    <h4 class="text-center text-danger">${message}</h4>
-</c:if>
-<c:if test="${not empty listOfDto}">
-    <div class="d-flex justify-content-center">
-        <table class="table table-hover w-75">
-            <thead>
-            <tr>
-                <th scope="col">Book Id</th>
-                <th scope="col">Book Name</th>
-                <th scope="col">Book Author</th>
-                <th scope="col">Category</th>
-                <th scope="col">Price</th>
-                <th scope="col">View</th>
-            </tr>
-            </thead>
+
+<div class="d-flex justify-content-center">
+    <div class="w-50">
+        <h4 class="text-center text-dark mb-3">Passport Details</h4>
+        <table class="table table-bordered table-hover">
             <tbody>
-            <c:forEach var="ref" items="${listOfDto}">
-                <tr>
-                    <td>${ref.bookId}</td>
-                    <td>${ref.bookName}</td>
-                    <td>${ref.bookAuthor}</td>
-                    <td>${ref.bookCategory}</td>
-                    <td>${ref.bookPrice}</td>
-                    <td>
-                        <a href="view?id=${ref.bookId}" class="btn btn-primary btn-sm">View</a>
-                        <a href="edit?id=${ref.bookId}" class="btn btn-warning btn-sm">Edit</a>
-                        <a href="delete?id=${ref.bookId}"
-                           class="btn btn-danger btn-sm"
-                           onclick="return confirm('Are you sure you want to delete this data?');">
-                            Delete
-                        </a>
-                    </td>
-                </tr>
-            </c:forEach>
+            <tr>
+                <th scope="row">Passport Id</th>
+                <td>${ref.passportId}</td>
+            </tr>
+            <tr>
+                <th scope="row">Passport Office</th>
+                <td>${ref.passportOffice}</td>
+            </tr>
+            <tr>
+                <th scope="row">Name</th>
+                <td>${ref.name}</td>
+            </tr>
+            <tr>
+                <th scope="row">Surname</th>
+                <td>${ref.surName}</td>
+            </tr>
+            <tr>
+                <th scope="row">Date of Birth</th>
+                <td>${ref.dateOfBirth}</td>
+            </tr>
+            <tr>
+                <th scope="row">Email</th>
+                <td>${ref.email}</td>
+            </tr>
+            <tr>
+                <th scope="row">Phone Number</th>
+                <td>${ref.phoneNumber}</td>
+            </tr>
+            <tr>
+                <th scope="row">Login Id</th>
+                <td>${ref.loginId}</td>
+            </tr>
+            <tr>
+                <th scope="row">Hint Question</th>
+                <td>${ref.hintQuestion}</td>
+            </tr>
+            <tr>
+                <th scope="row">Hint Answer</th>
+                <td>${ref.hintAnswer}</td>
+            </tr>
             </tbody>
         </table>
     </div>
-</c:if>
+</div>
 
 <footer class="text-center text-lg-start py-3 fixed-bottom" style="background-color: rgb(43, 239, 135);">
     <div class="text-center text-dark">
-        &copy; 2025 Online BookStore Management. All rights reserved.
+        &copy; 2025 Passport seva. All rights reserved.
     </div>
 </footer>
 

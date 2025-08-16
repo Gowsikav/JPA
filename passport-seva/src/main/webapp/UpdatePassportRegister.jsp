@@ -33,7 +33,7 @@
 
             </ul>
             <form class="d-flex" action="search" method="get">
-                <input class="form-control me-2" type="text" name="name" placeholder="Enter UserName" aria-label="Search" />
+                <input class="form-control me-2" type="text" name="userName" placeholder="Enter UserName" />
                 <button class="btn btn-outline-success text-dark" type="submit">Search</button>
             </form>
         </div>
@@ -41,11 +41,16 @@
 </nav>
 
 <div class="container d-flex justify-content-center my-5">
-    <form action="register" method="post" class="p-4 border rounded shadow"
+    <form action="updateUser" method="post" class="p-4 border rounded shadow"
           style="width: 100%; max-width: 600px;">
         <h4 class="text-center mb-4">User Registration</h4>
         <h6 class="text-center ${message == null ? 'text-success' : 'text-danger'} mb-4">
             ${message==null?successMessage:message}</h6>
+
+        <div class="mb-3">
+            <label for="userId" class="form-label">User ID</label>
+            <input type="number"  class="form-control" id="userId" name="passportId" value="${dto.passportId}" readonly>
+        </div>
 
         <div class="mb-3">
             <label for="PassportOffice" class="form-label">Passport Office</label>

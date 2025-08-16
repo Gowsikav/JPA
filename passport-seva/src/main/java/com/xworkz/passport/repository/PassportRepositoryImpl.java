@@ -140,4 +140,130 @@ public class PassportRepositoryImpl implements PassportRepository{
         }
         return findExistingLoginId;
     }
+
+    @Override
+    public PassportEntity findByPassportId(Integer id) {
+        System.out.println("findByPassportId method in repository");
+        EntityManager entityManager=null;
+        PassportEntity passport=null;
+        try{
+            entityManager= dbConnection.getEntityManager();
+            passport=(PassportEntity) entityManager.createNamedQuery("findUserId").setParameter("passportId",id).getSingleResult();
+        }catch (PersistenceException e)
+        {
+            System.out.println(e.getMessage());
+        }finally {
+            if(entityManager!=null && entityManager.isOpen())
+            {
+                entityManager.close();
+                System.out.println("EntityManager is closed");
+            }
+        }
+        return passport;
+    }
+
+    @Override
+    public Boolean updatePassportEntityById(PassportEntity entity) {
+        System.out.println("updatePassportEntityById method in repository");
+        EntityManager entityManager=null;
+        EntityTransaction entityTransaction=null;
+        try{
+            entityManager= dbConnection.getEntityManager();
+            entityTransaction=entityManager.getTransaction();
+            entityTransaction.begin();
+            Integer rows=entityManager.createNamedQuery("updatePassportEntityById")
+                    .setParameter("passportOffice",entity.getPassportOffice())
+                    .setParameter("name",entity.getName())
+                    .setParameter("surName",entity.getSurName())
+                    .setParameter("dateOfBirth",entity.getDateOfBirth())
+                    .setParameter("email",entity.getEmail())
+                    .setParameter("phoneNumber",entity.getPhoneNumber())
+                    .setParameter("loginSameAsEmail",entity.getLoginSameAsEmail())
+                    .setParameter("loginId",entity.getLoginId())
+                    .setParameter("password",entity.getPassword())
+                    .setParameter("confirmPassword",entity.getConfirmPassword())
+                    .setParameter("hintQuestion",entity.getHintQuestion())
+                    .setParameter("hintAnswer",entity.getHintAnswer())
+                    .setParameter("passportId",entity.getPassportId())
+                    .executeUpdate();
+            if(rows>0)
+            {
+                System.out.println("rows: "+rows);
+                entityTransaction.commit();
+                return true;
+            }
+        }catch (PersistenceException e)
+        {
+            System.out.println(e.getMessage());
+            if(entityTransaction!=null)
+            {
+                entityTransaction.rollback();
+                System.out.println("Roll backed");
+            }
+            return false;
+        }finally {
+            if(entityManager!=null && entityManager.isOpen())
+            {
+                entityManager.close();
+                System.out.println("EntityManager is closed");
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public Boolean deleteUserById(Integer id) {
+        System.out.println("deleteUserById method in repository");
+        EntityManager entityManager=null;
+        EntityTransaction entityTransaction=null;
+        try {
+            entityManager= dbConnection.getEntityManager();
+            entityTransaction=entityManager.getTransaction();
+            entityTransaction.begin();
+            Integer rows=entityManager.createNamedQuery("deleteUserById").setParameter("passportId",id).executeUpdate();
+            if(rows>0)
+            {
+                System.out.println("Rows :"+rows);
+                entityTransaction.commit();
+                return true;
+            }
+        }catch (PersistenceException e)
+        {
+            System.out.println(e.getMessage());
+            if(entityTransaction!=null)
+            {
+                entityTransaction.rollback();
+                System.out.println("roll backed");
+            }
+            return false;
+        }finally {
+            if(entityManager!=null && entityManager.isOpen())
+            {
+                entityManager.close();
+                System.out.println("EntityManager is closed");
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public List<PassportEntity> searchUserByUserName(String name) {
+        System.out.println("searchUserByUserName method in repository");
+        EntityManager entityManager=null;
+        List<PassportEntity> list=null;
+        try {
+            entityManager= dbConnection.getEntityManager();
+            list=entityManager.createNamedQuery("searchUserByName").setParameter("name",name).getResultList();
+        }catch (PersistenceException e)
+        {
+            System.out.println(e.getMessage());
+        }finally {
+            if(entityManager!=null && entityManager.isOpen())
+            {
+                entityManager.close();
+                System.out.println("EntityManager is closed");
+            }
+        }
+        return list;
+    }
 }
