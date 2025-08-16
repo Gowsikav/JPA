@@ -9,4 +9,7 @@ public interface BookStoreService {
     boolean save(BookStoreDTO bookStoreDTO);
     List<BookStoreDTO> findAllEntity();
     BookStoreDTO findById(Integer id);
+    String updateBookStoreById(BookStoreDTO dto);
+    String deleteBookStoreById(Integer id);
+    List<BookStoreDTO> searchBookStoreByBookName(String bookName);
 }

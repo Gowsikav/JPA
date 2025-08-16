@@ -1,4 +1,3 @@
-<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ page isELIgnored="false" %>
     <html lang="en">
 
@@ -26,7 +25,7 @@
                             <a class="nav-link" href="getIndex">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="redirectToTourism">Book Form</a>
+                            <a class="nav-link active" href="redirectToTourism">Book Form</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="getAllData">Get All Data</a>
@@ -39,40 +38,46 @@
                 </div>
             </div>
         </nav>
+        <div class="container d-flex justify-content-center my-5">
+            <form action="updateBookStore" method="post"  class="p-4 border rounded shadow" style="width: 100%; max-width: 600px;">
+                <h4 class="text-center mb-4">Online Bookstore Management</h4>
+                <h6 class="text-center ${message == null ? 'text-success' : 'text-danger'} mb-4">
+                    ${message == null ? successMessage : message}
+                </h6>
+                <div class="mb-3">
+                    <label for="bookId" class="form-label">Book Id</label>
+                    <input type="number" class="form-control" id="bookId" name="bookId" value="${dto.bookId}" readonly>
+                </div>
+                <div class="mb-3">
+                    <label for="bookName" class="form-label">Book Name</label>
+                    <input type="text" class="form-control" id="bookName" name="bookName" value="${dto.bookName}" required>
+                </div>
 
-        <c:if test="${not empty dto}">
-            <div class="d-flex justify-content-center">
-                <table class="table table-hover w-50">
-                    <tbody>
-                    <tr>
-                        <th scope="row">Book Id</th>
-                        <td>${dto.bookId}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Book Name</th>
-                        <td>${dto.bookName}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Book Author</th>
-                        <td>${dto.bookAuthor}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Category</th>
-                        <td>${dto.bookCategory}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Price</th>
-                        <td>${dto.bookPrice}</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </c:if>
+                <div class="mb-3">
+                    <label for="bookAuthor" class="form-label">Author</label>
+                    <input type="text" class="form-control" id="bookAuthor" name="bookAuthor" value="${dto.bookAuthor}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="bookCategory" class="form-label">Category</label>
+                    <input type="text" class="form-control" id="bookCategory" name="bookCategory" value="${dto.bookCategory}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="price" class="form-label">Price</label>
+                    <input type="number" step="any" class="form-control" id="price" name="bookPrice" value="${dto.bookPrice}" required>
+                </div>
 
 
-        <footer class="text-center text-lg-start py-3 fixed-bottom" style="background-color: rgb(43, 239, 135);">
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+            </form>
+        </div>
+
+        <footer class="text-center text-lg-start py-3" style="background-color: rgb(43, 239, 135);">
             <div class="text-center text-dark">
-                &copy; 2025 Online BookStore Management. All rights reserved.
+                &copy; 2025 Online bookstore Management. All rights reserved.
             </div>
         </footer>
 

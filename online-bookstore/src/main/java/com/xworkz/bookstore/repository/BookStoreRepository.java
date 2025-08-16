@@ -9,4 +9,7 @@ public interface BookStoreRepository {
     boolean save(BookStoreEntity entity);
     List<BookStoreEntity> findAllEntity();
     BookStoreEntity findById(Integer id);
+    Boolean updateBookStoreById(BookStoreEntity entity);
+    Boolean deleteBookStoreById(Integer id);
+    List<BookStoreEntity> searchBookStoreByBookName(String bookName);
 }

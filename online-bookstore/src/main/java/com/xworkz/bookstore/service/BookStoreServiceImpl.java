@@ -3,9 +3,11 @@ package com.xworkz.bookstore.service;
 import com.xworkz.bookstore.dto.BookStoreDTO;
 import com.xworkz.bookstore.entity.BookStoreEntity;
 import com.xworkz.bookstore.repository.BookStoreRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -60,5 +62,37 @@ public class BookStoreServiceImpl implements BookStoreService {
         bookStoreDTO.setBookCategory(entity.getBookCategory());
         bookStoreDTO.setBookPrice(entity.getBookPrice());
         return bookStoreDTO;
+    }
+
+    @Override
+    public String updateBookStoreById(BookStoreDTO dto) {
+        System.out.println("updateBookStoreById method in service");
+        BookStoreEntity entity=new BookStoreEntity();
+        BeanUtils.copyProperties(dto,entity);
+        if(bookStoreRepository.updateBookStoreById(entity))
+            return "Data updated";
+        return "Data not updated";
+    }
+
+    @Override
+    public String deleteBookStoreById(Integer id) {
+        System.out.println("deleteBookStoreById method in service");
+        if(bookStoreRepository.deleteBookStoreById(id))
+            return "Data deleted";
+        return "Data not deleted";
+    }
+
+    @Override
+    public List<BookStoreDTO> searchBookStoreByBookName(String bookName) {
+        System.out.println("searchBookStoreByBookName method in service");
+        List<BookStoreEntity> list=bookStoreRepository.searchBookStoreByBookName(bookName);
+        List<BookStoreDTO> dtos=new ArrayList<>();
+        for(BookStoreEntity entity:list)
+        {
+            BookStoreDTO dto=new BookStoreDTO();
+            BeanUtils.copyProperties(entity,dto);
+            dtos.add(dto);
+        }
+        return dtos;
     }
 }
