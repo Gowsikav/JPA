@@ -33,28 +33,34 @@
                         </li>
 
                     </ul>
-                    <form class="d-flex" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                    <form class="d-flex" action="search" method="get">
+                        <input class="form-control me-2" type="text" name="name" placeholder="Enter UserName" aria-label="Search" />
                         <button class="btn btn-outline-success text-dark" type="submit">Search</button>
                     </form>
                 </div>
             </div>
         </nav>
-
+        <c:if test="${empty list}">
+            <h4 class="text-center text-danger">${message}</h4>
+        </c:if>
+        <c:if test="${list==null}">
+            <h4 class="text-center text-danger">${message}</h4>
+        </c:if>
+        <c:if test="${not empty list}">
         <div class="d-flex justify-content-center">
             <table class="table table-hover w-85">
                 <thead>
                 <tr>
-                    <th scope="col">Passport Id</th>
+                    <th scope="col">Id</th>
                     <th scope="col">Passport Office</th>
                     <th scope="col">Name</th>
                     <th scope="col">SurName</th>
-                    <th scope="col">Date of Birth</th>
+                    <th scope="col">D.O.B</th>
                     <th scope="col">Email</th>
                     <th scope="col">Phone Number</th>
                     <th scope="col">Login Id</th>
                     <th scope="col">Hint Question</th>
-                    <th scope="col">Hint Answer</th>
+                    <th scope="col">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -69,12 +75,21 @@
                         <td>${ref.phoneNumber}</td>
                         <td>${ref.loginId}</td>
                         <td>${ref.hintQuestion}</td>
-                        <td>${ref.hintAnswer}</td>
+                        <td>
+                            <a href="view?id=${ref.passportId}" class="btn btn-primary btn-sm">View</a>
+                            <a href="edit?id=${ref.passportId}" class="btn btn-warning btn-sm">Edit</a>
+                            <a href="delete?id=${ref.passportId}"
+                               class="btn btn-danger btn-sm"
+                               onclick="return confirm('Are you sure you want to delete this data?');">
+                                Delete
+                            </a>
+                        </td>
                     </tr>
                 </c:forEach>
                 </tbody>
             </table>
         </div>
+        </c:if>
 
         <footer class="text-center text-lg-start py-3 fixed-bottom" style="background-color: rgb(43, 239, 135);">
             <div class="text-center text-dark">

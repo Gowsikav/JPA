@@ -92,4 +92,45 @@ public class PassportServiceImpl implements PassportService{
         System.out.println("findExistingLoginId method in service");
         return passportRepository.findExistingLoginId(loginId);
     }
+
+    @Override
+    public PassportDTO findByPassportId(Integer id) {
+        System.out.println("findByPassportId method in service");
+        PassportEntity entity=passportRepository.findByPassportId(id);
+        PassportDTO dto=new PassportDTO();
+        BeanUtils.copyProperties(entity,dto);
+        return dto;
+    }
+
+    @Override
+    public String updatePassportById(PassportDTO dto) {
+        System.out.println("updatePassportById method in service");
+        PassportEntity entity=new PassportEntity();
+        BeanUtils.copyProperties(dto,entity);
+        if(passportRepository.updatePassportEntityById(entity))
+            return "Data updated";
+        return "Data not updated";
+    }
+
+    @Override
+    public String deleteUserById(Integer id) {
+        System.out.println("deleteUserById method in service");
+        if(passportRepository.deleteUserById(id))
+            return "Data deleted";
+        return "Data not deleted";
+    }
+
+    @Override
+    public List<PassportDTO> searchUserByUserName(String name) {
+        System.out.println("searchUserByUserName method in service");
+        List<PassportEntity> entities=passportRepository.searchUserByUserName(name);
+        List<PassportDTO> dtos=new ArrayList<>();
+        for(PassportEntity entity:entities)
+        {
+            PassportDTO dto=new PassportDTO();
+            BeanUtils.copyProperties(entity,dto);
+            dtos.add(dto);
+        }
+        return dtos;
+    }
 }

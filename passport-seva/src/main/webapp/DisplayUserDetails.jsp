@@ -1,0 +1,109 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page isELIgnored="false" %>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Passport Seva</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr"
+          crossorigin="anonymous"/>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg" style="background-color: rgb(43, 239, 135); ">
+    <div class="container-fluid">
+        <img class="navbar-brand" src="images/image.png" alt="Logo" height="100px"/>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="getIndex">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="redirectToPassport">User Registration Form</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="getAllEntity">Get All</a>
+                </li>
+
+            </ul>
+            <form class="d-flex" action="search" method="get">
+                <input class="form-control me-2" type="text" name="name" placeholder="Enter UserName"
+                       aria-label="Search"/>
+                <button class="btn btn-outline-success text-dark" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<div class="d-flex justify-content-center">
+    <div class="w-50">
+        <h4 class="text-center text-dark mb-3">Passport Details</h4>
+        <table class="table table-bordered table-hover">
+            <tbody>
+            <tr>
+                <th scope="row">Passport Id</th>
+                <td>${ref.passportId}</td>
+            </tr>
+            <tr>
+                <th scope="row">Passport Office</th>
+                <td>${ref.passportOffice}</td>
+            </tr>
+            <tr>
+                <th scope="row">Name</th>
+                <td>${ref.name}</td>
+            </tr>
+            <tr>
+                <th scope="row">Surname</th>
+                <td>${ref.surName}</td>
+            </tr>
+            <tr>
+                <th scope="row">Date of Birth</th>
+                <td>${ref.dateOfBirth}</td>
+            </tr>
+            <tr>
+                <th scope="row">Email</th>
+                <td>${ref.email}</td>
+            </tr>
+            <tr>
+                <th scope="row">Phone Number</th>
+                <td>${ref.phoneNumber}</td>
+            </tr>
+            <tr>
+                <th scope="row">Login Id</th>
+                <td>${ref.loginId}</td>
+            </tr>
+            <tr>
+                <th scope="row">Hint Question</th>
+                <td>${ref.hintQuestion}</td>
+            </tr>
+            <tr>
+                <th scope="row">Hint Answer</th>
+                <td>${ref.hintAnswer}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<footer class="text-center text-lg-start py-3 fixed-bottom" style="background-color: rgb(43, 239, 135);">
+    <div class="text-center text-dark">
+        &copy; 2025 Passport seva. All rights reserved.
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.min.js"
+        integrity="sha384-7qAoOXltbVP82dhxHAUje59V5r2YsVfBafyUDxEdApLPmcdhBPg1DKg1ERo0BZlK"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

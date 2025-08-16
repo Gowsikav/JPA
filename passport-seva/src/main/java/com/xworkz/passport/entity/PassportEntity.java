@@ -12,6 +12,13 @@ import java.time.LocalDate;
 @NamedQuery(name = "findExistingEmail",query = "select a.email from PassportEntity a where a.email=:email")
 @NamedQuery(name = "findExistingPhoneNumber",query = "select a.phoneNumber from PassportEntity a where a.phoneNumber=:phoneNumber")
 @NamedQuery(name = "findExistingLoginId",query = "select a.loginId from PassportEntity a where a.loginId=:loginId")
+@NamedQuery(name = "findUserId",query = "select a from PassportEntity a where a.passportId=:passportId")
+@NamedQuery(name = "updatePassportEntityById",query = "update PassportEntity a set a.passportOffice=:passportOffice," +
+        "a.name=:name,a.surName=:surName,a.dateOfBirth=:dateOfBirth,a.email=:email,a.phoneNumber=:phoneNumber," +
+        "a.loginSameAsEmail=:loginSameAsEmail,a.loginId=:loginId,a.password=:password,a.confirmPassword=:confirmPassword," +
+        "a.hintQuestion=:hintQuestion,a.hintAnswer=:hintAnswer where a.passportId=:passportId")
+@NamedQuery(name = "deleteUserById",query = "delete from PassportEntity a where a.passportId=:passportId")
+@NamedQuery(name = "searchUserByName",query = "select a from PassportEntity a where a.name=:name")
 public class PassportEntity {
 
     @Id
