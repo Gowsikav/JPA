@@ -24,8 +24,10 @@ public class LoginRestController {
         System.out.println("checkEmail method in rest controller");
         String existingEmail=service.checkExistingEmail(email);
         System.out.println("Existing email: "+existingEmail);
-        if(!email.equalsIgnoreCase(existingEmail))
-            return "";
-        return "Correct email";
+        if(existingEmail==null)
+            return "Email not present Register and then login";
+        if(email.equalsIgnoreCase(existingEmail))
+            return "Correct email";
+        return "Correct not email";
     }
 }
