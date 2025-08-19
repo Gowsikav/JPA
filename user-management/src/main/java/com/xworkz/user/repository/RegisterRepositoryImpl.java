@@ -39,7 +39,7 @@ public class RegisterRepositoryImpl implements RegisterRepository {
             if(entityTransaction!=null)
             {
                 entityTransaction.rollback();
-                System.out.println("roll bakced");
+                System.out.println("roll backed");
             }
             return false;
         }finally {
@@ -115,5 +115,92 @@ public class RegisterRepositoryImpl implements RegisterRepository {
             }
         }
         return entity;
+    }
+
+    @Override
+    public String getOtp(String email) {
+        System.out.println("getOtp method in repository");
+        EntityManager entityManager=null;
+        String otp=null;
+        try{
+            entityManager= dbConnection.getEntityManager();
+            otp=(String) entityManager.createNamedQuery("getOtp")
+                    .setParameter("email",email)
+                    .getSingleResult();
+        }catch (PersistenceException e)
+        {
+            System.out.println(e.getMessage());
+        }finally {
+            if(entityManager!=null && entityManager.isOpen())
+            {
+                entityManager.close();
+                System.out.println("EntityManager is closed");
+            }
+        }
+        return otp;
+    }
+
+    @Override
+    public boolean setPassword(String email, String password) {
+        System.out.println("setPassword method in repository");
+        EntityManager entityManager=null;
+        EntityTransaction entityTransaction=null;
+        try {
+            entityManager= dbConnection.getEntityManager();
+            entityTransaction=entityManager.getTransaction();
+            entityTransaction.begin();
+            int rows=entityManager.createNamedQuery("setPassword").setParameter("password",password)
+                    .setParameter("email",email).executeUpdate();
+            System.out.println("Rows: "+rows);
+            if(rows==1)
+            {
+                entityTransaction.commit();
+                return true;
+            }
+        }catch (PersistenceException e)
+        {
+            System.out.println(e.getMessage());
+            if(entityTransaction!=null)
+            {
+                entityTransaction.rollback();
+                System.out.println("roll backed");
+            }
+            return false;
+        }finally {
+            if(entityManager!=null && entityManager.isOpen())
+            {
+                entityManager.close();
+                System.out.println("EntityManager is closed");
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void mergeLockTime(RegisterEntity entity) {
+        System.out.println("mergeLockTime method in repository");
+        EntityManager entityManager=null;
+        EntityTransaction entityTransaction=null;
+        try {
+            entityManager= dbConnection.getEntityManager();
+            entityTransaction=entityManager.getTransaction();
+            entityTransaction.begin();
+            entityManager.merge(entity);
+            entityTransaction.commit();
+        }catch (PersistenceException e)
+        {
+            System.out.println(e.getMessage());
+            if(entityTransaction!=null)
+            {
+                entityTransaction.rollback();
+                System.out.println("roll backed");
+            }
+        }finally {
+            if(entityManager!=null && entityManager.isOpen())
+            {
+                entityManager.close();
+                System.out.println("EntityManager is closed");
+            }
+        }
     }
 }

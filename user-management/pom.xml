@@ -10,7 +10,6 @@
     <properties>
         <spring.version>5.3.39</spring.version>
         <servelt.version>3.1.0</servelt.version>
-        <spring-security.version>5.8.5</spring-security.version>
         <lombok.version>1.18.38</lombok.version>
         <jpa.version>2.2</jpa.version>
         <hibernate.version>5.6.15.Final</hibernate.version>
@@ -19,6 +18,9 @@
         <validator.version>2.0.1.Final</validator.version>
         <slf4j.version>2.0.17</slf4j.version>
         <jstl.version>1.2</jstl.version>
+        <spring-security.version>5.8.5</spring-security.version>
+        <spring-starter-mail.version>2.7.18</spring-starter-mail.version>
+        <mail.version>1.6.2</mail.version>
     </properties>
     <dependencies>
         <dependency>
@@ -80,6 +82,16 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-crypto</artifactId>
             <version>${spring-security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+            <version>${spring-starter-mail.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>${mail.version}</version>
         </dependency>
     </dependencies>
   <build>

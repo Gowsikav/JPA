@@ -8,4 +8,6 @@ public interface RegisterService {
     String checkExistingEmail(String email);
     String checkExistingPhoneNumber(String phoneNumber);
     RegisterDTO getUserDetails(String email, String password);
+    boolean compareOtp(String email,String otp);
+    boolean setPasswordByEmail(String email,String password,String confirmPassword);
 }
