@@ -103,17 +103,6 @@
                     <input type="text" class="form-control" id="address" name="address" value="${dto.address}" required>
                     <p class="error text-center text-danger" id="addressError"></p>
                 </div>
-
-                <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" name="password" required>
-                    <p class="error text-danger" id="passwordError"></p>
-                </div>
-                <div class="mb-3">
-                    <label for="confirmPassword" class="form-label">Confirm Password</label>
-                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
-                    <p class="error text-danger" id="confirmPasswordError"></p>
-                </div>
                 <button type="submit" class="btn btn-primary">Register</button>
             </form>
         </div>

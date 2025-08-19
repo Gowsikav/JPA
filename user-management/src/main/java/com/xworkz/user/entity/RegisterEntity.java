@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -11,6 +12,8 @@ import java.time.LocalDate;
 @NamedQuery(name = "checkExistingEmail",query ="select a.email from RegisterEntity a where a.email=:email and a.isActive=true")
 @NamedQuery(name = "checkExistingPhoneNumber",query ="select a.phoneNumber from RegisterEntity a where a.phoneNumber=:phoneNumber and a.isActive=true")
 @NamedQuery(name = "getDetailsByEmail",query = "select a from RegisterEntity a where a.email=:email and a.isActive=true")
+@NamedQuery(name = "getOtp",query = "select a.password from RegisterEntity a where a.email=:email and a.isActive=true")
+@NamedQuery(name = "setPassword",query = "update RegisterEntity a set a.password=:password ,a.loginCount=0 where a.email=:email and a.isActive=true")
 public class RegisterEntity {
 
     @Id
@@ -42,9 +45,12 @@ public class RegisterEntity {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "confirm_password")
-    private String confirmPassword;
-
     @Column(name = "is_active")
     private Boolean isActive;
+
+    @Column(name = "login_count")
+    private Integer loginCount;
+
+    @Column(name = "lock_time",columnDefinition = "DATETIME")
+    private LocalDateTime lockTime;
 }
