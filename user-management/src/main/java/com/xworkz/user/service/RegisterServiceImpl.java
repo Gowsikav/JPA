@@ -76,6 +76,17 @@ public class RegisterServiceImpl implements RegisterService {
         if (entity == null) {
             return null;
         }
+
+        if(entity.getLoginCount()==-1)
+        {
+            if(entity.getPassword().equals(password))
+            {
+                RegisterDTO dto=new RegisterDTO();
+                BeanUtils.copyProperties(entity,dto);
+                return dto;
+            }
+        }
+
         if (entity.getLockTime() != null && entity.getLockTime().isAfter(LocalDateTime.now())) {
             throw new RuntimeException("Account locked. Try again later. Unlock time: " + entity.getLockTime());
         }

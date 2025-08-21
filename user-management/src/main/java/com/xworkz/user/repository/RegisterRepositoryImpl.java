@@ -2,6 +2,8 @@ package com.xworkz.user.repository;
 
 import com.xworkz.user.entity.RegisterEntity;
 import com.xworkz.user.util.DBConnection;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -12,12 +14,15 @@ import javax.persistence.PersistenceException;
 @Repository
 public class RegisterRepositoryImpl implements RegisterRepository {
 
+    private static final Logger log= LoggerFactory.getLogger(RegisterRepositoryImpl.class);
+
     @Autowired
     private DBConnection dbConnection;
 
     public RegisterRepositoryImpl()
     {
         System.out.println("RegisterRepositoryImpl constructor");
+        log.info("RegisterRepositoryImpl constructor");
     }
 
     @Override
