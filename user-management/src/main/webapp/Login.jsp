@@ -58,6 +58,7 @@
                     <input type="password" class="form-control" id="password" name="password" required>
                     <p class="error text-danger" id="passwordError">${message}</p>
                 </div>
+                <p class="text text-warning">If a password is not set, use the OTP sent during registration as the password.</p>
                 <button type="submit" class="btn btn-primary">Login</button>
             </form>
         </div>

@@ -74,20 +74,23 @@ public class RegisterController {
     public String getLogin(@RequestParam("email") String email, @RequestParam("password") String password, Model model) {
         System.out.println("getLogin method in controller");
         System.out.println("Email: " + email + "   " + "password: " + password);
-        RegisterDTO dto=null;
-       try {
-           dto = registerService.getUserDetails(email, password);
-       }catch (RuntimeException e)
-       {
-           model.addAttribute("errorMessage",e.getMessage());
-           System.out.println(e.getMessage());
-           return "Login";
-       }
+        RegisterDTO dto = null;
+        try {
+            dto = registerService.getUserDetails(email, password);
+        } catch (RuntimeException e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            System.out.println(e.getMessage());
+            return "Login";
+        }
         if (dto == null) {
             model.addAttribute("message", "Password  incorrect");
             model.addAttribute("email", email);
             System.out.println("Details not found");
             return "Login";
+        }
+        if (dto.getLoginCount() == -1) {
+            model.addAttribute("email", dto.getEmail());
+            return "SetPassword";
         }
         model.addAttribute("dto", dto);
         System.out.println("Found details");
@@ -95,31 +98,27 @@ public class RegisterController {
     }
 
     @PostMapping("/userLoginWithOTP")
-    public String getLoginWithOTP(@RequestParam("email")String email,@RequestParam("otp")String otp,Model model)
-    {
-        System.out.println("Email: "+email+"  otp: "+otp);
-        if(registerService.compareOtp(email,otp))
-        {
+    public String getLoginWithOTP(@RequestParam("email") String email, @RequestParam("otp") String otp, Model model) {
+        System.out.println("Email: " + email + "  otp: " + otp);
+        if (registerService.compareOtp(email, otp)) {
             System.out.println("Otp is verified");
-            model.addAttribute("email",email);
+            model.addAttribute("email", email);
             return "SetPassword";
         }
-        model.addAttribute("message","Otp not matched");
-        model.addAttribute("email",email);
+        model.addAttribute("message", "Otp not matched");
+        model.addAttribute("email", email);
         return "LoginWithOTP";
     }
 
     @PostMapping("/setPassword")
-    public String setPasswordInDB(@RequestParam("email") String email,@RequestParam("password")String password,@RequestParam("confirmPassword")String confirmPassword,Model model)
-    {
-        System.out.println("Email: "+email);
-        System.out.println("Password: "+password+"   ConfirmPassword :"+confirmPassword);
-        if(registerService.setPasswordByEmail(email,password,confirmPassword))
-        {
+    public String setPasswordInDB(@RequestParam("email") String email, @RequestParam("password") String password, @RequestParam("confirmPassword") String confirmPassword, Model model) {
+        System.out.println("Email: " + email);
+        System.out.println("Password: " + password + "   ConfirmPassword :" + confirmPassword);
+        if (registerService.setPasswordByEmail(email, password, confirmPassword)) {
             return "Login";
         }
-        model.addAttribute("message","Password mismatch");
-        model.addAttribute("email",email);
+        model.addAttribute("message", "Password mismatch");
+        model.addAttribute("email", email);
         return "SetPassword";
     }
 

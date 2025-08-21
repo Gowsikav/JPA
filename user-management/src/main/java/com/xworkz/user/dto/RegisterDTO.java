@@ -40,18 +40,5 @@ public class RegisterDTO {
     @NotBlank
     private String address;
 
-//    @NotBlank
-//    @Pattern(
-//            regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{5,}$",
-//            message = "Password must be at least 5 characters long, contain one uppercase, one lowercase, one digit and one special character"
-//    )
-//    private String password;
-//
-//    @NotBlank
-//    @Pattern(
-//            regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{5,}$",
-//            message = "Password must be at least 5 characters long, contain one uppercase, one lowercase, one digit and one special character"
-//    )
-//    private String confirmPassword;
-
+    private Integer loginCount;
 }
