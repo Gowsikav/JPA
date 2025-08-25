@@ -208,4 +208,54 @@ public class RegisterRepositoryImpl implements RegisterRepository {
             }
         }
     }
+
+    @Override
+    public boolean updateUserDetails(RegisterEntity entity) {
+        System.out.println("updateUserDetails method in repository");
+        EntityManager entityManager = null;
+        EntityTransaction entityTransaction = null;
+        RegisterEntity existingEntity = null;
+        try {
+            entityManager = dbConnection.getEntityManager();
+            entityTransaction = entityManager.getTransaction();
+            entityTransaction.begin();
+            existingEntity = getUserDetailsByEmail(entity.getEmail());
+            if (existingEntity == null) {
+                System.out.println("User not found");
+                return false;
+            }
+            if (entity.getProfilePath() == null || entity.getProfilePath().isEmpty()) {
+                entity.setProfilePath(existingEntity.getProfilePath());
+            }
+            if (entity.getPassword() == null || entity.getPassword().isEmpty()) {
+                entity.setPassword(existingEntity.getPassword());
+            }
+            if (entity.getLockTime() == null) {
+                entity.setLockTime(existingEntity.getLockTime());
+            }
+            entity.setLoginCount(existingEntity.getLoginCount());
+            entity.setIsActive(true);
+            RegisterEntity mergedEntity = entityManager.merge(entity);
+
+            if (mergedEntity != null) {
+                entityTransaction.commit();
+                System.out.println("User updated successfully: " + mergedEntity);
+                return true;
+            }
+        } catch (PersistenceException e) {
+            System.out.println("Error while updating user: " + e.getMessage());
+            if (entityTransaction != null) {
+                entityTransaction.rollback();
+                System.out.println("Transaction rolled back");
+            }
+            return false;
+        } finally {
+            if (entityManager != null && entityManager.isOpen()) {
+                entityManager.close();
+                System.out.println("EntityManager is closed");
+            }
+        }
+        return false;
+    }
+
 }

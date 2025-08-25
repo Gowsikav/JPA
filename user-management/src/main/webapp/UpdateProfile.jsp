@@ -1,10 +1,11 @@
 <%@ page isELIgnored="false" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <html lang="en">
 
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Register</title>
+        <title>Update Profile</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
             integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr"
             crossorigin="anonymous" />
@@ -30,7 +31,7 @@
                             <a class="nav-link " href="redirectToIndex">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="redirectToRegister">Register</a>
+                            <a class="nav-link" href="redirectToRegister">Register</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="redirectToLogin">Login</a>
@@ -40,83 +41,106 @@
             </div>
         </nav>
 
-        <h4 class="text-center mb-4">Registration Form</h4>
+        <h4 class="text-center mb-4">Update Profile</h4>
 
         <div class="container d-flex justify-content-center my-5">
-            <form action="userRegister" method="post" enctype="multipart/form-data" id="form"
-                class="w-50 p-4 border rounded">
+            <form action="updateProfile" method="post" enctype="multipart/form-data" id="form"
+                  class="w-50 p-4 border rounded">
+
                 <h4 class="text-center ${message==null?'text-success':'text-danger'} mb-4">
                     ${message==null?successMessage:message}
                 </h4>
+
+                <div class="text-center mb-3">
+                    <img src="<c:url value='/uploads/${dto.profilePath}'/>"
+                         alt="Profile Picture"
+                         width="120" height="120"
+                         class="rounded-circle border border-2">
+                    <p class="text-muted mt-2">Current Profile Picture</p>
+                </div>
+
                 <div class="input-group mb-3">
-                    <label class="input-group-text" for="inputGroupFile01">Upload Profile Picture</label>
+                    <label class="input-group-text" for="inputGroupFile01">Change Profile Picture</label>
                     <input type="file" class="form-control" id="inputGroupFile01" name="profilePic">
                     <p class="error text-danger" id="profileError"></p>
                 </div>
 
                 <div class="mb-3">
+                    <label for="registerId" class="form-label">User Id</label>
+                    <input type="text" class="form-control" id="registerId" name="registerId"
+                           value="${dto.registerId}" readonly>
+                </div>
+
+                <div class="mb-3">
                     <label for="username" class="form-label">Username</label>
-                    <input type="text" class="form-control" id="username" name="userName" value="${dto.userName}"
-                        required>
+                    <input type="text" class="form-control" id="username" name="userName"
+                           value="${dto.userName}" required>
                     <p class="error text-danger" id="nameError"></p>
                 </div>
+
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" value="${dto.email}"
-                        onblur="checkEmail()" required>
-                    <p class="error text-danger" id="emailError"></p>
+                    <input type="email" class="form-control" id="email" name="email"
+                           value="${dto.email}" readonly>
                 </div>
+
                 <div class="mb-3">
                     <label for="phoneNumber" class="form-label">Phone Number</label>
                     <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber"
-                        value="${dto.phoneNumber}" onblur="phoneNumberCheck()" required>
+                           value="${dto.phoneNumber}" onblur="phoneNumberCheck()" required>
                     <p class="error text-danger" id="phoneNumberError"></p>
                 </div>
+
                 <div class="mb-3">
                     <label for="dob" class="form-label">Date of Birth</label>
-                    <input type="date" class="form-control" id="dob" name="dateOfBirth" value="${dto.dateOfBirth}"
-                        required>
+                    <input type="date" class="form-control" id="dob" name="dateOfBirth"
+                           value="${dto.dateOfBirth}" required>
                     <p class="error text-danger" id="dobError"></p>
                 </div>
+
                 <div class="mb-3">
                     <label class="form-label d-block">Gender</label>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="gender" id="genderFemale" value="Female"
-                            checked>
+                        <input class="form-check-input" type="radio"
+                               name="gender" id="genderFemale" value="Female"
+                               ${dto.gender == 'Female' ? 'checked' : ''}>
                         <label class="form-check-label" for="genderFemale">Female</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="gender" id="genderMale" value="Male">
+                        <input class="form-check-input" type="radio"
+                               name="gender" id="genderMale" value="Male"
+                               ${dto.gender == 'Male' ? 'checked' : ''}>
                         <label class="form-check-label" for="genderMale">Male</label>
                     </div>
-                    <p class="error text-danger" id="genderError"></p>
                 </div>
 
                 <div class="mb-3">
                     <label for="state" class="form-label">State</label>
                     <select class="form-select" id="state" name="state" required>
-                        <option value="" selected>Select State</option>
-                        <option value="TamilNadu">TamilNadu</option>
-                        <option value="Kerala">Kerala</option>
-                        <option value="Karnataka">Karnataka</option>
-                        <option value="AndhraPradesh">Andhra Pradesh</option>
-                        <option value="Telangana">Telangana</option>
-                        <option value="Maharashtra">Maharashtra</option>
-                        <option value="Gujarat">Gujarat</option>
-                        <option value="Rajasthan">Rajasthan</option>
-                        <option value="WestBengal">West Bengal</option>
-                        <option value="UttarPradesh">Uttar Pradesh</option>
+                        <option value="">Select State</option>
+                        <option value="TamilNadu" ${dto.state == 'TamilNadu' ? 'selected' : ''}>TamilNadu</option>
+                        <option value="Kerala" ${dto.state == 'Kerala' ? 'selected' : ''}>Kerala</option>
+                        <option value="Karnataka" ${dto.state == 'Karnataka' ? 'selected' : ''}>Karnataka</option>
+                        <option value="AndhraPradesh" ${dto.state == 'AndhraPradesh' ? 'selected' : ''}>Andhra Pradesh</option>
+                        <option value="Telangana" ${dto.state == 'Telangana' ? 'selected' : ''}>Telangana</option>
+                        <option value="Maharashtra" ${dto.state == 'Maharashtra' ? 'selected' : ''}>Maharashtra</option>
+                        <option value="Gujarat" ${dto.state == 'Gujarat' ? 'selected' : ''}>Gujarat</option>
+                        <option value="Rajasthan" ${dto.state == 'Rajasthan' ? 'selected' : ''}>Rajasthan</option>
+                        <option value="WestBengal" ${dto.state == 'WestBengal' ? 'selected' : ''}>West Bengal</option>
+                        <option value="UttarPradesh" ${dto.state == 'UttarPradesh' ? 'selected' : ''}>Uttar Pradesh</option>
                     </select>
-                    <p class="error text-danger" id="stateError"></p>
                 </div>
+
                 <div class="mb-3">
                     <label for="address" class="form-label">Address</label>
-                    <input type="text" class="form-control" id="address" name="address" value="${dto.address}" required>
-                    <p class="error text-center text-danger" id="addressError"></p>
+                    <input type="text" class="form-control" id="address" name="address"
+                           value="${dto.address}" required>
                 </div>
-                <button type="submit" class="btn btn-primary">Register</button>
+
+                <button type="submit" class="btn btn-success w-100">Update Profile</button>
             </form>
         </div>
+
 
         <footer class="text-center text-lg-start py-3" style="background-color: rgb(232, 114, 18);">
             <div class="text-center text-dark">

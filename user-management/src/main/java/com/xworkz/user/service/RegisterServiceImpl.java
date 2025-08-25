@@ -71,6 +71,7 @@ public class RegisterServiceImpl implements RegisterService {
 
     @Override
     public RegisterDTO getUserDetails(String email, String password) {
+        System.out.println("getUserDetails method in service");
         RegisterEntity entity = repository.getUserDetailsByEmail(email);
 
         if (entity == null) {
@@ -83,6 +84,8 @@ public class RegisterServiceImpl implements RegisterService {
             {
                 RegisterDTO dto=new RegisterDTO();
                 BeanUtils.copyProperties(entity,dto);
+                String baseUrl="http://localhost:8081/uploads/";
+                dto.setProfilePath(baseUrl+entity.getProfilePath());
                 return dto;
             }
         }
@@ -136,5 +139,22 @@ public class RegisterServiceImpl implements RegisterService {
         }
         System.out.println("Password not matched");
         return false;
+    }
+
+    @Override
+    public RegisterDTO getUserDetailsByEmail(String email) {
+        System.out.println("getUserDetailsByEmail method in service");
+        RegisterEntity entity=repository.getUserDetailsByEmail(email);
+        RegisterDTO dto=new RegisterDTO();
+        BeanUtils.copyProperties(entity,dto);
+        return dto;
+    }
+
+    @Override
+    public boolean updateUserDetails(RegisterDTO registerDTO) {
+        System.out.println("updateUserDetails method in service");
+        RegisterEntity entity=new RegisterEntity();
+        BeanUtils.copyProperties(registerDTO,entity);
+        return repository.updateUserDetails(entity);
     }
 }

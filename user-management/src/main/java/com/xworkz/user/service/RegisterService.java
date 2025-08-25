@@ -10,4 +10,6 @@ public interface RegisterService {
     RegisterDTO getUserDetails(String email, String password);
     boolean compareOtp(String email,String otp);
     boolean setPasswordByEmail(String email,String password,String confirmPassword);
+    RegisterDTO getUserDetailsByEmail(String email);
+    boolean updateUserDetails(RegisterDTO registerDTO);
 }
