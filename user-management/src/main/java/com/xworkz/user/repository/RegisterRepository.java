@@ -11,5 +11,6 @@ public interface RegisterRepository {
     String getOtp(String email);
     boolean setPassword(String email,String password);
     void mergeLockTime(RegisterEntity entity);
+    boolean updateUserDetails(RegisterEntity entity);
 
 }

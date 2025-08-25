@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @Controller
 @RequestMapping("/")
@@ -39,7 +43,6 @@ public class RegisterController {
     @GetMapping("/redirectToLogin")
     public String getLoginPage() {
         System.out.println("redirect to login page");
-
         return "Login";
     }
 
@@ -56,6 +59,15 @@ public class RegisterController {
             model.addAttribute("message", "Invalid details");
             model.addAttribute("dto", registerDTO);
             return "Register";
+        }
+
+        try{
+            byte[] bytes=registerDTO.getProfilePic().getBytes();
+            Path path = Paths.get("D:\\Java\\File upload\\" + registerDTO.getUserName()+System.currentTimeMillis()+registerDTO.getProfilePic().getOriginalFilename());
+            Files.write(path, bytes);
+            registerDTO.setProfilePath(path.getFileName().toString());
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
         if (registerService.save(registerDTO)) {
             System.out.println("Data saved");
@@ -74,7 +86,7 @@ public class RegisterController {
     public String getLogin(@RequestParam("email") String email, @RequestParam("password") String password, Model model) {
         System.out.println("getLogin method in controller");
         System.out.println("Email: " + email + "   " + "password: " + password);
-        RegisterDTO dto = null;
+        RegisterDTO dto;
         try {
             dto = registerService.getUserDetails(email, password);
         } catch (RuntimeException e) {
@@ -93,6 +105,7 @@ public class RegisterController {
             return "SetPassword";
         }
         model.addAttribute("dto", dto);
+        model.addAttribute("message","Login Successfully");
         System.out.println("Found details");
         return "LoginSuccess";
     }
@@ -122,4 +135,61 @@ public class RegisterController {
         return "SetPassword";
     }
 
+    @GetMapping("/redirectToUserDetails")
+    public String getUserDetails(@RequestParam("userEmail")String email,Model model)
+    {
+        System.out.println("getUserDetails method in controller");
+        RegisterDTO dto=registerService.getUserDetailsByEmail(email);
+        model.addAttribute("ref",dto);
+        return "LoginSuccess";
+    }
+
+    @GetMapping("editProfile")
+    public String editProfile(@RequestParam("userEmail")String email,Model model)
+    {
+        System.out.println("editProfile method in controller");
+        RegisterDTO dto=registerService.getUserDetailsByEmail(email);
+        model.addAttribute("dto",dto);
+        return "UpdateProfile";
+    }
+
+    @PostMapping("/updateProfile")
+    public String updateProfile(@Valid RegisterDTO registerDTO,BindingResult bindingResult,Model model)
+    {
+        System.out.println("updateProfile method in controller");
+        if (bindingResult.hasErrors()) {
+            System.out.println("Errors in fields");
+            bindingResult.getFieldErrors().stream()
+                    .map(e -> e.getField() + " : " + e.getDefaultMessage())
+                    .forEach(System.out::println);
+
+            model.addAttribute("message", "Invalid details");
+            model.addAttribute("dto", registerDTO);
+            return "UpdateProfile";
+        }
+        if(registerDTO.getProfilePic().isEmpty())
+        {
+            System.out.println("profile pic not changed");
+        }
+        else {
+            try {
+                byte[] bytes = registerDTO.getProfilePic().getBytes();
+                Path path = Paths.get("D:\\Java\\File upload\\" + registerDTO.getUserName() + System.currentTimeMillis() + registerDTO.getProfilePic().getOriginalFilename());
+                Files.write(path, bytes);
+                registerDTO.setProfilePath(path.getFileName().toString());
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        if(registerService.updateUserDetails(registerDTO))
+        {
+            model.addAttribute("message","Profile Updated");
+            registerDTO=registerService.getUserDetailsByEmail(registerDTO.getEmail());
+            model.addAttribute("dto",registerDTO);
+            return "LoginSuccess";
+        }else {
+            model.addAttribute("message","Invalid details");
+            return "UpdateProfile";
+        }
+    }
 }

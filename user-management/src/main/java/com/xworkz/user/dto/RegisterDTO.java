@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.*;
 import java.time.LocalDate;
@@ -41,4 +42,8 @@ public class RegisterDTO {
     private String address;
 
     private Integer loginCount;
+
+    private MultipartFile profilePic;
+
+    private String profilePath;
 }

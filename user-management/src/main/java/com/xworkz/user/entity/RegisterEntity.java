@@ -53,4 +53,8 @@ public class RegisterEntity {
 
     @Column(name = "lock_time",columnDefinition = "DATETIME")
     private LocalDateTime lockTime;
+
+    @Column(name = "profile_path")
+    private String profilePath;
+
 }
