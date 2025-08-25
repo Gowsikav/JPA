@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @NamedQuery(name = "getDetailsByEmail",query = "select a from RegisterEntity a where a.email=:email and a.isActive=true")
 @NamedQuery(name = "getOtp",query = "select a.password from RegisterEntity a where a.email=:email and a.isActive=true")
 @NamedQuery(name = "setPassword",query = "update RegisterEntity a set a.password=:password ,a.loginCount=0 where a.email=:email and a.isActive=true")
+@NamedQuery(name = "setOTP",query = "update RegisterEntity a set a.password=:otp where a.email=:email and a.isActive=true")
 public class RegisterEntity {
 
     @Id

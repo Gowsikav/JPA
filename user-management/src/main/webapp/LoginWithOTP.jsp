@@ -49,12 +49,15 @@
                     <input type="email" class="form-control" id="email" name="email" value="${email}" required>
                     <p class="error text-success" id="emailError"></p>
                 </div>
+
                 <div class="mb-3">
                     <label for="otp" class="form-label">OTP</label>
                     <input type="number" class="form-control" id="otp" name="otp" required>
                     <p class="error text-danger" id="otpError">${message}</p>
                 </div>
-                <button type="submit" class="btn btn-primary">Login</button>
+                <button type="submit" class="btn btn-primary" id="loginBtn">Login</button>
+                <div class="mt-3 text-danger fw-bold" id="timer"></div>
+                <button type="button" class="btn btn-link mt-2" id="resendBtn" style="display:none;" onclick="resendOtp()">Resend OTP</button>
             </form>
         </div>
 

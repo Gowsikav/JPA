@@ -12,4 +12,5 @@ public interface RegisterService {
     boolean setPasswordByEmail(String email,String password,String confirmPassword);
     RegisterDTO getUserDetailsByEmail(String email);
     boolean updateUserDetails(RegisterDTO registerDTO);
+    boolean setOTPByEmail(String email);
 }
