@@ -97,6 +97,14 @@
                     <td>${ref.state}</td>
                 </tr>
                 <tr>
+                    <th scope="row">District</th>
+                    <td>${ref.district}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Pincode</th>
+                    <td>${ref.pincode}</td>
+                </tr>
+                <tr>
                     <th scope="row">Address</th>
                     <td>${ref.address}</td>
                 </tr>
@@ -111,7 +119,7 @@
     </div>
 </c:if>
 
-<footer class="text-center text-lg-start py-3 fixed-bottom" style="background-color: rgb(232, 114, 18);">
+<footer class="text-center text-lg-start py-3 ${ref == null ? 'fixed-bottom' : ''}" style="background-color: rgb(232, 114, 18);">
     <div class="text-center text-dark">
         &copy; 2025 User Management. All rights reserved.
     </div>

@@ -1,6 +1,7 @@
 package com.xworkz.user.entity;
 
 import lombok.Data;
+import lombok.NonNull;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -42,6 +43,12 @@ public class RegisterEntity {
 
     @Column(name = "address")
     private String address;
+
+    @Column(name = "district")
+    private String district;
+
+    @Column(name = "pincode")
+    private String pincode;
 
     @Column(name = "password")
     private String password;
