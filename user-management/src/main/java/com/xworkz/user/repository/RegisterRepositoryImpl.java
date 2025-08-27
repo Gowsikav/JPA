@@ -214,7 +214,7 @@ public class RegisterRepositoryImpl implements RegisterRepository {
         System.out.println("updateUserDetails method in repository");
         EntityManager entityManager = null;
         EntityTransaction entityTransaction = null;
-        RegisterEntity existingEntity = null;
+        RegisterEntity existingEntity;
         try {
             entityManager = dbConnection.getEntityManager();
             entityTransaction = entityManager.getTransaction();
@@ -258,4 +258,41 @@ public class RegisterRepositoryImpl implements RegisterRepository {
         return false;
     }
 
+    @Override
+    public boolean updateOTPByEmail(String email,String otp) {
+        System.out.println("updateOTPByEmail method in repository");
+        EntityManager entityManager=null;
+        EntityTransaction entityTransaction=null;
+        try {
+            entityManager= dbConnection.getEntityManager();
+            entityTransaction=entityManager.getTransaction();
+            entityTransaction.begin();
+            int rows=entityManager.createNamedQuery("setOTP")
+                    .setParameter("otp",otp)
+                    .setParameter("email",email)
+                    .executeUpdate();
+            System.out.println("Rows: "+rows);
+            if(rows==1)
+            {
+                entityTransaction.commit();
+                return true;
+            }
+        }catch (PersistenceException e)
+        {
+            System.out.println(e.getMessage());
+            if(entityTransaction!=null)
+            {
+                entityTransaction.rollback();
+                System.out.println("roll backed");
+            }
+            return false;
+        }finally {
+            if(entityManager!=null&& entityManager.isOpen())
+            {
+                entityManager.close();
+                System.out.println("EntityManager is closed");
+            }
+        }
+        return false;
+    }
 }

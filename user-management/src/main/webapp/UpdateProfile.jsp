@@ -132,6 +132,20 @@
                 </div>
 
                 <div class="mb-3">
+                    <label for="district" class="form-label">District</label>
+                    <select id="district" class="form-select" name="district" required>
+                        <option value="">Select District</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="pincode" class="form-label">Pincode</label>
+                    <select id="pincode" class="form-select" name="pincode" required>
+                        <option value="">Select Pincode</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
                     <label for="address" class="form-label">Address</label>
                     <input type="text" class="form-control" id="address" name="address"
                            value="${dto.address}" required>

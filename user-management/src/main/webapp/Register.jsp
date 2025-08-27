@@ -96,19 +96,35 @@
                     <label for="state" class="form-label">State</label>
                     <select class="form-select" id="state" name="state" required>
                         <option value="" selected>Select State</option>
-                        <option value="TamilNadu">TamilNadu</option>
+                        <option value="Tamil Nadu">Tamil Nadu</option>
                         <option value="Kerala">Kerala</option>
                         <option value="Karnataka">Karnataka</option>
-                        <option value="AndhraPradesh">Andhra Pradesh</option>
+                        <option value="Andhra Pradesh">Andhra Pradesh</option>
                         <option value="Telangana">Telangana</option>
                         <option value="Maharashtra">Maharashtra</option>
                         <option value="Gujarat">Gujarat</option>
                         <option value="Rajasthan">Rajasthan</option>
-                        <option value="WestBengal">West Bengal</option>
-                        <option value="UttarPradesh">Uttar Pradesh</option>
+                        <option value="West Bengal">West Bengal</option>
+                        <option value="Uttar Pradesh">Uttar Pradesh</option>
                     </select>
                     <p class="error text-danger" id="stateError"></p>
                 </div>
+
+                <div class="mb-3">
+                    <label for="district" class="form-label">District</label>
+                    <select id="district" class="form-select" name="district" required>
+                        <option value="">Select District</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="pincode" class="form-label">Pincode</label>
+                    <select id="pincode" class="form-select" name="pincode" required>
+                        <option value="">Select Pincode</option>
+                    </select>
+                </div>
+
+
                 <div class="mb-3">
                     <label for="address" class="form-label">Address</label>
                     <input type="text" class="form-control" id="address" name="address" value="${dto.address}" required>

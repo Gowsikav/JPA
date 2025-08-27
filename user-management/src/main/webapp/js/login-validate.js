@@ -49,3 +49,45 @@ function toggleSubmit() {
     submitButton.disabled = false;
   }
 }
+
+let countdownInterval;
+
+function startCountdown(durationInMinutes) {
+    let time = durationInMinutes * 60;
+    const timerEl = document.getElementById("timer");
+    const loginBtn = document.getElementById("loginBtn");
+    const resendBtn = document.getElementById("resendBtn");
+
+    loginBtn.disabled = false;
+    resendBtn.style.display = "none";
+
+    clearInterval(countdownInterval);
+
+    countdownInterval = setInterval(() => {
+        const minutes = Math.floor(time / 60);
+        const seconds = time % 60;
+
+        timerEl.innerHTML = `OTP valid for: ${minutes}m ${seconds < 10 ? "0" : ""}${seconds}s`;
+
+        if (time <= 0) {
+            clearInterval(countdownInterval);
+            timerEl.innerHTML = "OTP expired!";
+            loginBtn.disabled = true;
+            resendBtn.style.display = "inline-block";
+        }
+        time--;
+    }, 1000);
+}
+
+startCountdown(2);
+
+function resendOtp() {
+    const email = document.getElementById("email").value;
+    fetch("resend-otp?email=" + encodeURIComponent(email), { method: "POST" })
+        .then(res => res.text())
+        .then(msg => {
+            alert(msg);
+            startCountdown(2);
+        })
+        .catch(err => console.error(err));
+}

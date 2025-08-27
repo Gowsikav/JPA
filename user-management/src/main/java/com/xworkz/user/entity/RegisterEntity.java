@@ -1,6 +1,7 @@
 package com.xworkz.user.entity;
 
 import lombok.Data;
+import lombok.NonNull;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 @NamedQuery(name = "getDetailsByEmail",query = "select a from RegisterEntity a where a.email=:email and a.isActive=true")
 @NamedQuery(name = "getOtp",query = "select a.password from RegisterEntity a where a.email=:email and a.isActive=true")
 @NamedQuery(name = "setPassword",query = "update RegisterEntity a set a.password=:password ,a.loginCount=0 where a.email=:email and a.isActive=true")
+@NamedQuery(name = "setOTP",query = "update RegisterEntity a set a.password=:otp where a.email=:email and a.isActive=true")
 public class RegisterEntity {
 
     @Id
@@ -41,6 +43,12 @@ public class RegisterEntity {
 
     @Column(name = "address")
     private String address;
+
+    @Column(name = "district")
+    private String district;
+
+    @Column(name = "pincode")
+    private String pincode;
 
     @Column(name = "password")
     private String password;

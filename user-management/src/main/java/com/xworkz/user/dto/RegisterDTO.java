@@ -38,6 +38,12 @@ public class RegisterDTO {
     @NonNull
     private String state;
 
+    @NonNull
+    private String district;
+
+    @NonNull
+    private String pincode;
+
     @NotBlank
     private String address;
 

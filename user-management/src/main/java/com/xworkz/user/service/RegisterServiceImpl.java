@@ -157,4 +157,21 @@ public class RegisterServiceImpl implements RegisterService {
         BeanUtils.copyProperties(registerDTO,entity);
         return repository.updateUserDetails(entity);
     }
+
+    @Override
+    public boolean setOTPByEmail(String email) {
+        System.out.println("setOTPByEmail method in service");
+        String generatedNumericOtp=OTPUtil.generateNumericOtp(6);
+        if(repository.updateOTPByEmail(email,generatedNumericOtp))
+        {
+            if(emailSender.mailSend(email,generatedNumericOtp))
+            {
+                System.out.println("otp sent");
+                return true;
+            }
+            System.out.println("otp not updated");
+        }
+
+        return false;
+    }
 }
