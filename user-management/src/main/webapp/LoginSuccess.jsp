@@ -56,13 +56,13 @@
     </div>
 </c:if>
 
-<c:if test="${not empty ref}">
+<c:if test="${empty message}">
     <div class="d-flex justify-content-center">
         <div class="w-50">
             <h4 class="text-center text-dark mb-3">User Details</h4>
 
             <div class="text-center mb-3">
-                <img src="<c:url value='/uploads/${ref.profilePath}'/>" alt="Profile Picture" width="120"
+                <img src="<c:url value='/uploads/${dto.profilePath}'/>" alt="Profile Picture" width="120"
                      height="120" class="rounded-circle border border-2">
             </div>
 
@@ -70,48 +70,48 @@
                 <tbody>
                 <tr>
                     <th scope="row">User Id</th>
-                    <td>${ref.registerId}</td>
+                    <td>${dto.registerId}</td>
                 </tr>
                 <tr>
                     <th scope="row">Name</th>
-                    <td>${ref.userName}</td>
+                    <td>${dto.userName}</td>
                 </tr>
                 <tr>
                     <th scope="row">Email</th>
-                    <td>${ref.email}</td>
+                    <td>${dto.email}</td>
                 </tr>
                 <tr>
                     <th scope="row">Phone Number</th>
-                    <td>${ref.phoneNumber}</td>
+                    <td>${dto.phoneNumber}</td>
                 </tr>
                 <tr>
                     <th scope="row">Date of Birth</th>
-                    <td>${ref.dateOfBirth}</td>
+                    <td>${dto.dateOfBirth}</td>
                 </tr>
                 <tr>
                     <th scope="row">Gender</th>
-                    <td>${ref.gender}</td>
+                    <td>${dto.gender}</td>
                 </tr>
                 <tr>
                     <th scope="row">State</th>
-                    <td>${ref.state}</td>
+                    <td>${dto.state}</td>
                 </tr>
                 <tr>
                     <th scope="row">District</th>
-                    <td>${ref.district}</td>
+                    <td>${dto.district}</td>
                 </tr>
                 <tr>
                     <th scope="row">Pincode</th>
-                    <td>${ref.pincode}</td>
+                    <td>${dto.pincode}</td>
                 </tr>
                 <tr>
                     <th scope="row">Address</th>
-                    <td>${ref.address}</td>
+                    <td>${dto.address}</td>
                 </tr>
                 </tbody>
             </table>
             <div class="text-center mt-3">
-                <a href="editProfile?userEmail=${ref.email}" class="btn btn-primary">
+                <a href="editProfile?userEmail=${dto.email}" class="btn btn-primary">
                     Edit Profile
                 </a>
             </div>
@@ -119,7 +119,7 @@
     </div>
 </c:if>
 
-<footer class="text-center text-lg-start py-3 ${ref == null ? 'fixed-bottom' : ''}" style="background-color: rgb(232, 114, 18);">
+<footer class="text-center text-lg-start py-3 ${message != null ? 'fixed-bottom' : ''}" style="background-color: rgb(232, 114, 18);">
     <div class="text-center text-dark">
         &copy; 2025 User Management. All rights reserved.
     </div>
