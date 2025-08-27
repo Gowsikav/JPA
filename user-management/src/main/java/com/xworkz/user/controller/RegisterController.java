@@ -140,7 +140,7 @@ public class RegisterController {
     {
         System.out.println("getUserDetails method in controller");
         RegisterDTO dto=registerService.getUserDetailsByEmail(email);
-        model.addAttribute("ref",dto);
+        model.addAttribute("dto",dto);
         return "LoginSuccess";
     }
 
