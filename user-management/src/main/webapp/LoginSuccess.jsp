@@ -38,11 +38,18 @@
                 </li>
                 <li class="nav-item d-flex align-items-center ms-3">
                     <a href="redirectToUserDetails?userEmail=${dto.email}">
-                        <img src="<c:url value='/uploads/${dto.profilePath}'/>"
-                             alt="Profile Picture"
-                             class="rounded-circle"
-                             width="50" height="50"
-                             style="object-fit: cover; border: 2px solid white;">
+                        <c:choose>
+                            <c:when test="${empty dto.profilePath}">
+                                <img src="images/profile-pic.png" alt="Profile Picture"  class="rounded-circle"
+                                     width="50" height="50"
+                                     style="object-fit: cover; border: 2px solid white;">
+                            </c:when>
+                            <c:otherwise>
+                                <img src="<c:url value='/uploads/${dto.profilePath}'/>" alt="Profile Picture"  class="rounded-circle"
+                                     width="50" height="50"
+                                     style="object-fit: cover; border: 2px solid white;">
+                            </c:otherwise>
+                        </c:choose>
                     </a>
                 </li>
             </ul>
@@ -62,8 +69,16 @@
             <h4 class="text-center text-dark mb-3">User Details</h4>
 
             <div class="text-center mb-3">
-                <img src="<c:url value='/uploads/${dto.profilePath}'/>" alt="Profile Picture" width="120"
-                     height="120" class="rounded-circle border border-2">
+                <c:choose>
+                    <c:when test="${empty dto.profilePath}">
+                        <img src="images/profile-pic.png" alt="Profile Picture" width="120"
+                             height="120" class="rounded-circle border border-2">
+                    </c:when>
+                    <c:otherwise>
+                        <img src="<c:url value='/uploads/${dto.profilePath}'/>" alt="Profile Picture"  width="120"
+                             height="120" class="rounded-circle border border-2">
+                    </c:otherwise>
+                </c:choose>
             </div>
 
             <table class="table table-bordered table-hover">

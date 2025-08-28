@@ -58,14 +58,6 @@ public class RegisterController {
             return "Register";
         }
 
-        try{
-            byte[] bytes=registerDTO.getProfilePic().getBytes();
-            Path path = Paths.get("D:\\Java\\File upload\\" + registerDTO.getUserName()+System.currentTimeMillis()+registerDTO.getProfilePic().getOriginalFilename());
-            Files.write(path, bytes);
-            registerDTO.setProfilePath(path.getFileName().toString());
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
         if (registerService.save(registerDTO)) {
             System.out.println("Data saved");
             model.addAttribute("email", registerDTO.getEmail());

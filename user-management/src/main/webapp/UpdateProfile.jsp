@@ -51,17 +51,23 @@
                     ${message==null?successMessage:message}
                 </h4>
 
-                <div class="text-center mb-3">
-                    <img src="<c:url value='/uploads/${dto.profilePath}'/>"
-                         alt="Profile Picture"
-                         width="120" height="120"
-                         class="rounded-circle border border-2">
-                    <p class="text-muted mt-2">Current Profile Picture</p>
-                </div>
+               <div class="text-center mb-3">
+                   <c:choose>
+                       <c:when test="${empty dto.profilePath}">
+                           <img src="images/profile-pic.png" alt="Profile Picture" width="120"
+                                height="120" class="rounded-circle border border-2">
+                       </c:when>
+                       <c:otherwise>
+                           <img src="<c:url value='/uploads/${dto.profilePath}'/>" alt="Profile Picture"  width="120"
+                                height="120" class="rounded-circle border border-2">
+                       </c:otherwise>
+                   </c:choose>
+                   <p class="text-muted mt-2">Current Profile Picture</p>
+               </div>
 
                 <div class="input-group mb-3">
                     <label class="input-group-text" for="inputGroupFile01">Change Profile Picture</label>
-                    <input type="file" class="form-control" id="inputGroupFile01" name="profilePic">
+                    <input type="file" class="form-control" id="inputGroupFile01" name="profilePic" required>
                     <p class="error text-danger" id="profileError"></p>
                 </div>
 
