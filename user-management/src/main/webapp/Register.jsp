@@ -48,11 +48,6 @@
                 <h4 class="text-center ${message==null?'text-success':'text-danger'} mb-4">
                     ${message==null?successMessage:message}
                 </h4>
-                <div class="input-group mb-3">
-                    <label class="input-group-text" for="inputGroupFile01">Upload Profile Picture</label>
-                    <input type="file" class="form-control" id="inputGroupFile01" name="profilePic">
-                    <p class="error text-danger" id="profileError"></p>
-                </div>
 
                 <div class="mb-3">
                     <label for="username" class="form-label">Username</label>
