@@ -1,22 +1,20 @@
 package com.xworkz.onlineexam.repository;
 
 import com.xworkz.onlineexam.entity.OnlineExamEntity;
-import com.xworkz.onlineexam.util.DBConnection;
-import org.hibernate.hql.spi.id.persistent.PersistentTableBulkIdStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceException;
-import java.util.Collections;
 import java.util.List;
 
 @Repository
 public class OnlineExamRepositoryImpl implements OnlineExamRepository {
 
     @Autowired
-    private DBConnection dbConnection;
+    private EntityManagerFactory entityManagerFactory;
 
     public OnlineExamRepositoryImpl()
     {
@@ -30,7 +28,7 @@ public class OnlineExamRepositoryImpl implements OnlineExamRepository {
         EntityManager entityManager=null;
         EntityTransaction entityTransaction=null;
         try{
-            entityManager=dbConnection.getEntityManager();
+            entityManager=entityManagerFactory.createEntityManager();
             entityTransaction=entityManager.getTransaction();
             entityTransaction.begin();
             entityManager.persist(entity);
@@ -60,7 +58,7 @@ public class OnlineExamRepositoryImpl implements OnlineExamRepository {
         EntityManager entityManager=null;
         List<OnlineExamEntity> list=null;
         try{
-            entityManager= dbConnection.getEntityManager();
+            entityManager= entityManagerFactory.createEntityManager();
             list=entityManager.createNamedQuery("findAllEntity").getResultList();
         }catch (PersistenceException e)
         {
@@ -81,7 +79,7 @@ public class OnlineExamRepositoryImpl implements OnlineExamRepository {
         EntityManager entityManager=null;
         OnlineExamEntity entity=null;
         try{
-            entityManager= dbConnection.getEntityManager();
+            entityManager= entityManagerFactory.createEntityManager();
             entity=(OnlineExamEntity) entityManager.createNamedQuery("findById").setParameter("id",id).getSingleResult();
         }catch (PersistenceException e)
         {
@@ -102,7 +100,7 @@ public class OnlineExamRepositoryImpl implements OnlineExamRepository {
         EntityManager entityManager=null;
         EntityTransaction entityTransaction=null;
         try {
-            entityManager= dbConnection.getEntityManager();
+            entityManager= entityManagerFactory.createEntityManager();
             entityTransaction=entityManager.getTransaction();
             entityTransaction.begin();
             Integer rows=entityManager.createNamedQuery("updateOnlineExamById")
@@ -145,7 +143,7 @@ public class OnlineExamRepositoryImpl implements OnlineExamRepository {
         EntityManager entityManager=null;
         EntityTransaction entityTransaction=null;
         try {
-            entityManager= dbConnection.getEntityManager();
+            entityManager= entityManagerFactory.createEntityManager();
             entityTransaction=entityManager.getTransaction();
             entityTransaction.begin();
             Integer rows=entityManager.createNamedQuery("deleteExamById").setParameter("examId",id).executeUpdate();
@@ -180,7 +178,7 @@ public class OnlineExamRepositoryImpl implements OnlineExamRepository {
         EntityManager entityManager=null;
         List<OnlineExamEntity> list=null;
         try {
-            entityManager= dbConnection.getEntityManager();
+            entityManager= entityManagerFactory.createEntityManager();
             list=entityManager.createNamedQuery("searchOnlineExamBySubject").setParameter("subject",name).getResultList();
 
         }catch (PersistenceException e)
