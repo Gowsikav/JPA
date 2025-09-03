@@ -2,6 +2,8 @@ package com.xworkz.user.service;
 
 import com.xworkz.user.dto.RegisterDTO;
 
+import java.util.List;
+
 public interface RegisterService {
 
     boolean save(RegisterDTO registerDTO);
@@ -13,4 +15,6 @@ public interface RegisterService {
     RegisterDTO getUserDetailsByEmail(String email);
     boolean updateUserDetails(RegisterDTO registerDTO);
     boolean setOTPByEmail(String email);
+    List<String> getAllEmail();
+
 }

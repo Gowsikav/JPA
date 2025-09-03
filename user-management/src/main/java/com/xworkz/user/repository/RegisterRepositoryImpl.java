@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceException;
+import java.util.List;
 
 @Repository
 public class RegisterRepositoryImpl implements RegisterRepository {
@@ -294,5 +295,26 @@ public class RegisterRepositoryImpl implements RegisterRepository {
             }
         }
         return false;
+    }
+
+    @Override
+    public List<String> getAllEmail() {
+        System.out.println("getAll Email from repository");
+        EntityManager entityManager=null;
+        List<String> list=null;
+        try{
+            entityManager= dbConnection.getEntityManager();
+            list=entityManager.createNamedQuery("getAllEmail").getResultList();
+        }catch (PersistenceException e)
+        {
+            System.out.println(e.getMessage());
+        }finally {
+            if(entityManager!=null && entityManager.isOpen())
+            {
+                entityManager.close();
+                System.out.println("Entity manager is closed");
+            }
+        }
+        return list;
     }
 }
