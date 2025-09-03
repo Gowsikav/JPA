@@ -34,7 +34,7 @@
                     <a class="nav-link" href="redirectToRegister">Book Register</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="redirectToViewAll">View All</a>
+                    <a class="nav-link" href="redirectToViewAll">View All</a>
                 </li>
             </ul>
         </div>

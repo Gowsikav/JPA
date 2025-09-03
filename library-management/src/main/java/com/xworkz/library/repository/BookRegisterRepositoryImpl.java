@@ -1,21 +1,17 @@
 package com.xworkz.library.repository;
 
 import com.xworkz.library.entity.BookRegisterEntity;
-import com.xworkz.library.util.DBConnection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-import javax.persistence.PersistenceException;
-import javax.persistence.Query;
+import javax.persistence.*;
 import java.util.List;
 
 @Repository
 public class BookRegisterRepositoryImpl implements BookRegisterRepository{
 
     @Autowired
-    private DBConnection dbConnection;
+    private EntityManagerFactory entityManagerFactory;
 
     public BookRegisterRepositoryImpl()
     {
@@ -29,7 +25,7 @@ public class BookRegisterRepositoryImpl implements BookRegisterRepository{
         EntityManager entityManager=null;
         EntityTransaction entityTransaction=null;
         try {
-            entityManager= dbConnection.getEntityManager();
+            entityManager= entityManagerFactory.createEntityManager();
             entityTransaction=entityManager.getTransaction();
             entityTransaction.begin();
             entityManager.persist(entity);
@@ -59,7 +55,7 @@ public class BookRegisterRepositoryImpl implements BookRegisterRepository{
         EntityManager entityManager=null;
         List<BookRegisterEntity> entities=null;
         try {
-            entityManager= dbConnection.getEntityManager();
+            entityManager= entityManagerFactory.createEntityManager();;
             Query query=entityManager.createNamedQuery("getAll");
             entities=query.getResultList();
         }catch (PersistenceException e)
@@ -81,7 +77,7 @@ public class BookRegisterRepositoryImpl implements BookRegisterRepository{
         EntityManager entityManager=null;
         BookRegisterEntity entity=null;
         try {
-            entityManager= dbConnection.getEntityManager();
+            entityManager= entityManagerFactory.createEntityManager();
             entity=(BookRegisterEntity) entityManager.createNamedQuery("getDataById").setParameter("id",id).getSingleResult();
         }catch (PersistenceException e)
         {
@@ -102,7 +98,7 @@ public class BookRegisterRepositoryImpl implements BookRegisterRepository{
         EntityManager entityManager=null;
         EntityTransaction entityTransaction=null;
         try {
-            entityManager= dbConnection.getEntityManager();
+            entityManager= entityManagerFactory.createEntityManager();
             entityTransaction=entityManager.getTransaction();
             entityTransaction.begin();
             entityManager.merge(entity);
@@ -132,7 +128,7 @@ public class BookRegisterRepositoryImpl implements BookRegisterRepository{
         EntityManager entityManager=null;
         EntityTransaction entityTransaction=null;
         try {
-            entityManager= dbConnection.getEntityManager();
+            entityManager= entityManagerFactory.createEntityManager();
             entityTransaction=entityManager.getTransaction();
             entityTransaction.begin();
             int row=entityManager.createNamedQuery("deleteDataById").setParameter("id",id).executeUpdate();

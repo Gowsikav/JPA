@@ -15,6 +15,7 @@
         <hibernate.version>5.6.15.Final</hibernate.version>
         <mysql.version>8.0.33</mysql.version>
         <jstl.version>1.2</jstl.version>
+        <sprng-orm.version>5.3.39</sprng-orm.version>
     </properties>
   <dependencies>
       <dependency>
@@ -51,6 +52,12 @@
           <groupId>javax.servlet</groupId>
           <artifactId>jstl</artifactId>
           <version>${jstl.version}</version>
+      </dependency>
+      <!-- https://mvnrepository.com/artifact/org.springframework/spring-orm -->
+      <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-orm</artifactId>
+          <version>${sprng-orm.version}</version>
       </dependency>
   </dependencies>
   <build>
