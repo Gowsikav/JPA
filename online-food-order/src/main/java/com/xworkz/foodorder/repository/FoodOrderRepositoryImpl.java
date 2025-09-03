@@ -1,11 +1,11 @@
 package com.xworkz.foodorder.repository;
 
 import com.xworkz.foodorder.entity.FoodOrderEntity;
-import com.xworkz.foodorder.util.DBConnection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceException;
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
 public class FoodOrderRepositoryImpl implements FoodOrderRepository{
 
     @Autowired
-    private DBConnection dbConnection;
+    private EntityManagerFactory entityManagerFactory;
 
     public FoodOrderRepositoryImpl()
     {
@@ -29,7 +29,7 @@ public class FoodOrderRepositoryImpl implements FoodOrderRepository{
         EntityTransaction entityTransaction=null;
         try
         {
-            entityManager= dbConnection.getEntityManager();
+            entityManager= entityManagerFactory.createEntityManager();
             entityTransaction=entityManager.getTransaction();
             entityTransaction.begin();
             entityManager.persist(foodOrderEntity);
@@ -60,7 +60,7 @@ public class FoodOrderRepositoryImpl implements FoodOrderRepository{
         EntityManager entityManager=null;
         List<FoodOrderEntity> list=null;
         try{
-            entityManager= dbConnection.getEntityManager();
+            entityManager= entityManagerFactory.createEntityManager();
             list=entityManager.createNamedQuery("findAllEntity").getResultList();
         }catch (PersistenceException e)
         {
@@ -81,7 +81,7 @@ public class FoodOrderRepositoryImpl implements FoodOrderRepository{
         EntityManager entityManager=null;
         FoodOrderEntity entity=null;
         try{
-            entityManager= dbConnection.getEntityManager();
+            entityManager= entityManagerFactory.createEntityManager();
             entity=(FoodOrderEntity) entityManager.createNamedQuery("findById").setParameter("id",id).getSingleResult();
         }catch (PersistenceException e)
         {
@@ -102,7 +102,7 @@ public class FoodOrderRepositoryImpl implements FoodOrderRepository{
         EntityManager entityManager=null;
         EntityTransaction entityTransaction=null;
         try{
-            entityManager= dbConnection.getEntityManager();
+            entityManager= entityManagerFactory.createEntityManager();
             entityTransaction=entityManager.getTransaction();
             entityTransaction.begin();
             Integer rows=entityManager.createNamedQuery("updateFoodOrderById")
@@ -145,7 +145,7 @@ public class FoodOrderRepositoryImpl implements FoodOrderRepository{
         EntityManager entityManager=null;
         EntityTransaction entityTransaction=null;
         try{
-            entityManager= dbConnection.getEntityManager();
+            entityManager= entityManagerFactory.createEntityManager();
             entityTransaction=entityManager.getTransaction();
             entityTransaction.begin();
             Integer rows=entityManager.createNamedQuery("deleteById").setParameter("foodId",id).executeUpdate();
@@ -180,7 +180,7 @@ public class FoodOrderRepositoryImpl implements FoodOrderRepository{
         EntityManager entityManager=null;
         List<FoodOrderEntity> foodOrderEntity=null;
         try {
-            entityManager= dbConnection.getEntityManager();
+            entityManager= entityManagerFactory.createEntityManager();
             foodOrderEntity=entityManager.createNamedQuery("searchByFoodName").setParameter("foodName",name).getResultList();
         }catch (PersistenceException e)
         {

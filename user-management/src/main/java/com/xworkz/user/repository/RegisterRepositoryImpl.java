@@ -1,13 +1,13 @@
 package com.xworkz.user.repository;
 
 import com.xworkz.user.entity.RegisterEntity;
-import com.xworkz.user.util.DBConnection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceException;
 import java.util.List;
@@ -18,7 +18,7 @@ public class RegisterRepositoryImpl implements RegisterRepository {
     private static final Logger log= LoggerFactory.getLogger(RegisterRepositoryImpl.class);
 
     @Autowired
-    private DBConnection dbConnection;
+    private EntityManagerFactory entityManagerFactory;
 
     public RegisterRepositoryImpl()
     {
@@ -34,7 +34,7 @@ public class RegisterRepositoryImpl implements RegisterRepository {
         EntityManager entityManager=null;
         EntityTransaction entityTransaction=null;
         try{
-            entityManager= dbConnection.getEntityManager();
+            entityManager= entityManagerFactory.createEntityManager();
             entityTransaction=entityManager.getTransaction();
             entityTransaction.begin();
             entityManager.persist(entity);
@@ -64,7 +64,7 @@ public class RegisterRepositoryImpl implements RegisterRepository {
         EntityManager entityManager=null;
         String existingEmail=null;
         try{
-            entityManager= dbConnection.getEntityManager();
+            entityManager= entityManagerFactory.createEntityManager();
             existingEmail=(String) entityManager.createNamedQuery("checkExistingEmail").setParameter("email",email).getSingleResult();
         }catch (PersistenceException e)
         {
@@ -85,7 +85,7 @@ public class RegisterRepositoryImpl implements RegisterRepository {
         EntityManager entityManager=null;
         String existingNumber=null;
         try{
-            entityManager= dbConnection.getEntityManager();
+            entityManager= entityManagerFactory.createEntityManager();
             existingNumber=(String) entityManager.createNamedQuery("checkExistingPhoneNumber").setParameter("phoneNumber",phoneNumber).getSingleResult();
         }catch (PersistenceException e)
         {
@@ -106,7 +106,7 @@ public class RegisterRepositoryImpl implements RegisterRepository {
         EntityManager entityManager=null;
         RegisterEntity entity=null;
         try{
-            entityManager= dbConnection.getEntityManager();
+            entityManager= entityManagerFactory.createEntityManager();
             entity=(RegisterEntity) entityManager.createNamedQuery("getDetailsByEmail")
                     .setParameter("email",email)
                     .getSingleResult();
@@ -129,7 +129,7 @@ public class RegisterRepositoryImpl implements RegisterRepository {
         EntityManager entityManager=null;
         String otp=null;
         try{
-            entityManager= dbConnection.getEntityManager();
+            entityManager= entityManagerFactory.createEntityManager();
             otp=(String) entityManager.createNamedQuery("getOtp")
                     .setParameter("email",email)
                     .getSingleResult();
@@ -152,7 +152,7 @@ public class RegisterRepositoryImpl implements RegisterRepository {
         EntityManager entityManager=null;
         EntityTransaction entityTransaction=null;
         try {
-            entityManager= dbConnection.getEntityManager();
+            entityManager= entityManagerFactory.createEntityManager();
             entityTransaction=entityManager.getTransaction();
             entityTransaction.begin();
             int rows=entityManager.createNamedQuery("setPassword").setParameter("password",password)
@@ -188,7 +188,7 @@ public class RegisterRepositoryImpl implements RegisterRepository {
         EntityManager entityManager=null;
         EntityTransaction entityTransaction=null;
         try {
-            entityManager= dbConnection.getEntityManager();
+            entityManager= entityManagerFactory.createEntityManager();
             entityTransaction=entityManager.getTransaction();
             entityTransaction.begin();
             entityManager.merge(entity);
@@ -217,7 +217,7 @@ public class RegisterRepositoryImpl implements RegisterRepository {
         EntityTransaction entityTransaction = null;
         RegisterEntity existingEntity;
         try {
-            entityManager = dbConnection.getEntityManager();
+            entityManager = entityManagerFactory.createEntityManager();
             entityTransaction = entityManager.getTransaction();
             entityTransaction.begin();
             existingEntity = getUserDetailsByEmail(entity.getEmail());
@@ -265,7 +265,7 @@ public class RegisterRepositoryImpl implements RegisterRepository {
         EntityManager entityManager=null;
         EntityTransaction entityTransaction=null;
         try {
-            entityManager= dbConnection.getEntityManager();
+            entityManager= entityManagerFactory.createEntityManager();
             entityTransaction=entityManager.getTransaction();
             entityTransaction.begin();
             int rows=entityManager.createNamedQuery("setOTP")

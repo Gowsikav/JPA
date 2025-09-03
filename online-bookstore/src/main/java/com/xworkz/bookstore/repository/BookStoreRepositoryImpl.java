@@ -1,7 +1,6 @@
 package com.xworkz.bookstore.repository;
 
 import com.xworkz.bookstore.entity.BookStoreEntity;
-import com.xworkz.bookstore.util.DBConnection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -12,7 +11,7 @@ import java.util.List;
 public class BookStoreRepositoryImpl implements BookStoreRepository{
 
     @Autowired
-    private DBConnection dbConnection;
+    private EntityManagerFactory entityManagerFactory;
 
     public BookStoreRepositoryImpl()
     {
@@ -26,7 +25,7 @@ public class BookStoreRepositoryImpl implements BookStoreRepository{
         EntityManager entityManager=null;
         EntityTransaction entityTransaction=null;
         try{
-            entityManager= dbConnection.getEntityManager();
+            entityManager= entityManagerFactory.createEntityManager();
             entityTransaction=entityManager.getTransaction();
             entityTransaction.begin();
             entityManager.persist(entity);
@@ -56,7 +55,7 @@ public class BookStoreRepositoryImpl implements BookStoreRepository{
         EntityManager entityManager=null;
         List<BookStoreEntity> list=null;
         try{
-            entityManager= dbConnection.getEntityManager();
+            entityManager= entityManagerFactory.createEntityManager();
             list=entityManager.createNamedQuery("findAllEntity").getResultList();
         }catch (PersistenceException e)
         {
@@ -77,7 +76,7 @@ public class BookStoreRepositoryImpl implements BookStoreRepository{
         EntityManager entityManager=null;
         BookStoreEntity entity=null;
         try{
-            entityManager= dbConnection.getEntityManager();
+            entityManager= entityManagerFactory.createEntityManager();
             entity=(BookStoreEntity) entityManager.createNamedQuery("findById").setParameter("id",id).getSingleResult();
         }catch (PersistenceException e)
         {
@@ -98,7 +97,7 @@ public class BookStoreRepositoryImpl implements BookStoreRepository{
         EntityManager entityManager=null;
         EntityTransaction entityTransaction=null;
         try{
-            entityManager= dbConnection.getEntityManager();
+            entityManager= entityManagerFactory.createEntityManager();
             entityTransaction=entityManager.getTransaction();
             entityTransaction.begin();
             Integer rows=entityManager.createNamedQuery("updateBookStoreById")
@@ -138,7 +137,7 @@ public class BookStoreRepositoryImpl implements BookStoreRepository{
         EntityManager entityManager=null;
         EntityTransaction entityTransaction=null;
         try{
-            entityManager= dbConnection.getEntityManager();
+            entityManager= entityManagerFactory.createEntityManager();
             entityTransaction=entityManager.getTransaction();
             entityTransaction.begin();
             Integer rows=entityManager.createNamedQuery("deleteBookStoreById").setParameter("bookId",id).executeUpdate();
@@ -173,7 +172,7 @@ public class BookStoreRepositoryImpl implements BookStoreRepository{
         EntityManager entityManager=null;
         List<BookStoreEntity> list=null;
         try{
-            entityManager= dbConnection.getEntityManager();
+            entityManager= entityManagerFactory.createEntityManager();
             list=entityManager.createNamedQuery("searchBookStoreByBookName").setParameter("bookName",bookName).getResultList();
         }catch (PersistenceException e)
         {

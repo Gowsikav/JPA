@@ -1,19 +1,20 @@
 package com.xworkz.tourism.repository;
 
 import com.xworkz.tourism.entity.TourismEntity;
-import com.xworkz.tourism.util.DBConnection;
 import org.hibernate.QueryException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-import javax.persistence.NoResultException;
-import javax.persistence.PersistenceException;
+import javax.persistence.*;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
 public class TourismRepositoryImpl implements TourismRepository{
+    
+    @Autowired
+    private EntityManagerFactory entityManagerFactory;
+    
     public TourismRepositoryImpl()
     {
         System.out.println("TourismRepositoryImpl constructor");
@@ -27,7 +28,7 @@ public class TourismRepositoryImpl implements TourismRepository{
         EntityManager entityManager=null;
         EntityTransaction entityTransaction=null;
         try{
-            entityManager= DBConnection.getEntityManager();
+            entityManager= entityManagerFactory.createEntityManager();
             entityTransaction=entityManager.getTransaction();
             entityTransaction.begin();
             entityManager.persist(entity);
@@ -59,7 +60,7 @@ public class TourismRepositoryImpl implements TourismRepository{
         EntityManager entityManager=null;
         List<TourismEntity> list=null;
         try{
-            entityManager=DBConnection.getEntityManager();
+            entityManager=entityManagerFactory.createEntityManager();
             list =entityManager.createNamedQuery("getAllEntity").getResultList();
         }catch (PersistenceException e)
         {
@@ -81,7 +82,7 @@ public class TourismRepositoryImpl implements TourismRepository{
         EntityManager entityManager=null;
         Optional<TourismEntity> optionalTourismEntity=Optional.empty();
         try{
-            entityManager=DBConnection.getEntityManager();
+            entityManager=entityManagerFactory.createEntityManager();
             TourismEntity tourism=(TourismEntity) entityManager.createNamedQuery("findById").setParameter("id",id).getSingleResult();
             if(tourism!=null)
             {
@@ -106,7 +107,7 @@ public class TourismRepositoryImpl implements TourismRepository{
         EntityManager entityManager=null;
         EntityTransaction entityTransaction=null;
         try{
-            entityManager=DBConnection.getEntityManager();
+            entityManager=entityManagerFactory.createEntityManager();
             entityTransaction=entityManager.getTransaction();
             entityTransaction.begin();
             Integer rows=entityManager.createNamedQuery("updateTourismEntityById")
@@ -146,7 +147,7 @@ public class TourismRepositoryImpl implements TourismRepository{
         EntityManager entityManager=null;
         EntityTransaction entityTransaction=null;
         try {
-            entityManager=DBConnection.getEntityManager();
+            entityManager=entityManagerFactory.createEntityManager();
             entityTransaction=entityManager.getTransaction();
             entityTransaction.begin();
             Integer row=entityManager.createNamedQuery("deleteTourismById").setParameter("packageId",id).executeUpdate();
@@ -179,7 +180,7 @@ public class TourismRepositoryImpl implements TourismRepository{
         TourismEntity tourism=null;
         EntityManager entityManager=null;
         try{
-            entityManager=DBConnection.getEntityManager();
+            entityManager=entityManagerFactory.createEntityManager();
             tourism=(TourismEntity) entityManager.createNamedQuery("searchByPackageName").setParameter("name",name).getSingleResult();
         }catch (PersistenceException e)
         {

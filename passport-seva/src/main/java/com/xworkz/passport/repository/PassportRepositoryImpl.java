@@ -1,11 +1,11 @@
 package com.xworkz.passport.repository;
 
 import com.xworkz.passport.entity.PassportEntity;
-import com.xworkz.passport.util.DBConnection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceException;
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
 public class PassportRepositoryImpl implements PassportRepository{
 
     @Autowired
-    private DBConnection dbConnection;
+    private EntityManagerFactory entityManagerFactory;
 
     public PassportRepositoryImpl()
     {
@@ -29,7 +29,7 @@ public class PassportRepositoryImpl implements PassportRepository{
         EntityManager entityManager=null;
         EntityTransaction entityTransaction=null;
         try{
-            entityManager= dbConnection.getEntityManager();
+            entityManager= entityManagerFactory.createEntityManager();
             entityTransaction=entityManager.getTransaction();
             entityTransaction.begin();
             entityManager.persist(passport);
@@ -60,7 +60,7 @@ public class PassportRepositoryImpl implements PassportRepository{
         EntityManager entityManager=null;
         List<PassportEntity> list=null;
         try {
-            entityManager= dbConnection.getEntityManager();
+            entityManager= entityManagerFactory.createEntityManager();
             list=entityManager.createNamedQuery("findAll").getResultList();
         }catch (PersistenceException e)
         {
@@ -81,7 +81,7 @@ public class PassportRepositoryImpl implements PassportRepository{
         EntityManager entityManager=null;
         String existingEmail=null;
         try{
-            entityManager= dbConnection.getEntityManager();
+            entityManager= entityManagerFactory.createEntityManager();
             existingEmail=(String)entityManager.createNamedQuery("findExistingEmail").setParameter("email",email).getSingleResult();
 
         }catch (PersistenceException e)
@@ -103,7 +103,7 @@ public class PassportRepositoryImpl implements PassportRepository{
         EntityManager entityManager=null;
         Long existingPhoneNumber=null;
         try{
-            entityManager= dbConnection.getEntityManager();
+            entityManager= entityManagerFactory.createEntityManager();
             existingPhoneNumber=(Long)entityManager.createNamedQuery("findExistingPhoneNumber").setParameter("phoneNumber",phoneNumber).getSingleResult();
 
         }catch (PersistenceException e)
@@ -125,7 +125,7 @@ public class PassportRepositoryImpl implements PassportRepository{
         EntityManager entityManager=null;
         String findExistingLoginId=null;
         try{
-            entityManager= dbConnection.getEntityManager();
+            entityManager= entityManagerFactory.createEntityManager();
             findExistingLoginId=(String)entityManager.createNamedQuery("findExistingLoginId").setParameter("loginId",loginId).getSingleResult();
 
         }catch (PersistenceException e)
@@ -147,7 +147,7 @@ public class PassportRepositoryImpl implements PassportRepository{
         EntityManager entityManager=null;
         PassportEntity passport=null;
         try{
-            entityManager= dbConnection.getEntityManager();
+            entityManager= entityManagerFactory.createEntityManager();
             passport=(PassportEntity) entityManager.createNamedQuery("findUserId").setParameter("passportId",id).getSingleResult();
         }catch (PersistenceException e)
         {
@@ -168,7 +168,7 @@ public class PassportRepositoryImpl implements PassportRepository{
         EntityManager entityManager=null;
         EntityTransaction entityTransaction=null;
         try{
-            entityManager= dbConnection.getEntityManager();
+            entityManager= entityManagerFactory.createEntityManager();
             entityTransaction=entityManager.getTransaction();
             entityTransaction.begin();
             Integer rows=entityManager.createNamedQuery("updatePassportEntityById")
@@ -217,7 +217,7 @@ public class PassportRepositoryImpl implements PassportRepository{
         EntityManager entityManager=null;
         EntityTransaction entityTransaction=null;
         try {
-            entityManager= dbConnection.getEntityManager();
+            entityManager= entityManagerFactory.createEntityManager();
             entityTransaction=entityManager.getTransaction();
             entityTransaction.begin();
             Integer rows=entityManager.createNamedQuery("deleteUserById").setParameter("passportId",id).executeUpdate();
@@ -252,7 +252,7 @@ public class PassportRepositoryImpl implements PassportRepository{
         EntityManager entityManager=null;
         List<PassportEntity> list=null;
         try {
-            entityManager= dbConnection.getEntityManager();
+            entityManager= entityManagerFactory.createEntityManager();
             list=entityManager.createNamedQuery("searchUserByName").setParameter("name",name).getResultList();
         }catch (PersistenceException e)
         {

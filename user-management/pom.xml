@@ -21,6 +21,7 @@
         <spring-security.version>5.8.5</spring-security.version>
         <spring-starter-mail.version>2.7.18</spring-starter-mail.version>
         <mail.version>1.6.2</mail.version>
+        <sprng-orm.version>5.3.39</sprng-orm.version>
     </properties>
     <dependencies>
         <dependency>
@@ -120,11 +121,10 @@
             <version>1.3.1</version>
         </dependency>
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>2.17.2</version> <!-- pick the latest stable -->
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>${sprng-orm.version}</version>
         </dependency>
-
     </dependencies>
   <build>
     <finalName>user-management</finalName>
