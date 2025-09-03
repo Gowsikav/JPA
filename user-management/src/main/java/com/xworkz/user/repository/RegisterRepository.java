@@ -2,6 +2,8 @@ package com.xworkz.user.repository;
 
 import com.xworkz.user.entity.RegisterEntity;
 
+import java.util.List;
+
 public interface RegisterRepository {
 
     boolean save(RegisterEntity entity);
@@ -13,5 +15,6 @@ public interface RegisterRepository {
     void mergeLockTime(RegisterEntity entity);
     boolean updateUserDetails(RegisterEntity entity);
     boolean updateOTPByEmail(String email,String otp);
+    List<String> getAllEmail();
 
 }

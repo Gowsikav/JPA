@@ -30,6 +30,9 @@
                             <a class="nav-link active" href="redirectToIndex">Home</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="redirectToFindDetails">Find Details</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="redirectToRegister">Register</a>
                         </li>
                         <li class="nav-item">

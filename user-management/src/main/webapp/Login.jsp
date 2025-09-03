@@ -1,4 +1,6 @@
 <%@ page isELIgnored="false" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
     <html lang="en">
 
     <head>
@@ -50,8 +52,12 @@
                 </c:if>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" onblur="checkEmail()" value="${email}" required>
-                    <p class="error text-success" id="emailError"></p>
+                    <select class="form-select" id="email" name="email" required>
+                        <option value="">Select Email</option>
+                        <c:forEach var="email" items="${emails}">
+                            <option value="${email}">${email}</option>
+                        </c:forEach>
+                    </select>
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>

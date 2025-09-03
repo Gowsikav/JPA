@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 @Controller
 @RequestMapping("/")
@@ -38,8 +39,11 @@ public class RegisterController {
     }
 
     @GetMapping("/redirectToLogin")
-    public String getLoginPage() {
+    public String getLoginPage(Model model) {
         System.out.println("redirect to login page");
+        System.out.println("getEmailsList method in controller");
+        List<String> list=registerService.getAllEmail();
+        model.addAttribute("emails",list);
         return "Login";
     }
 
@@ -192,5 +196,25 @@ public class RegisterController {
             return "Otp send to your email";
         }
         return "Otp not sent";
+    }
+
+    @GetMapping("/redirectToFindDetails")
+    public String getEmailForFindDetailsPage(Model model)
+    {
+        System.out.println("getEmailForFindDetailsPage method in controller");
+        System.out.println("getEmailsList method in controller");
+        List<String> list=registerService.getAllEmail();
+        model.addAttribute("emails",list);
+        return "FindDetails";
+    }
+
+    @GetMapping("/getUserByEmail")
+    @ResponseBody
+    public RegisterDTO getDetailsByEmailForFindDetailsPage(@RequestParam("email")String email)
+    {
+        System.out.println("getDetailsByEmailForFindDetailsPage method in controller");
+        RegisterDTO dto=registerService.getUserDetailsByEmail(email);
+        System.out.println(dto);
+        return dto;
     }
 }
