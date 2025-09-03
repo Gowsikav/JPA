@@ -303,7 +303,7 @@ public class RegisterRepositoryImpl implements RegisterRepository {
         EntityManager entityManager=null;
         List<String> list=null;
         try{
-            entityManager= dbConnection.getEntityManager();
+            entityManager= entityManagerFactory.createEntityManager();
             list=entityManager.createNamedQuery("getAllEmail").getResultList();
         }catch (PersistenceException e)
         {
