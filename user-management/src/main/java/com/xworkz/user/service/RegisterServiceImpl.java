@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -173,5 +174,11 @@ public class RegisterServiceImpl implements RegisterService {
         }
 
         return false;
+    }
+
+    @Override
+    public List<String> getAllEmail() {
+        System.out.println("getAllEmail method in service");
+        return repository.getAllEmail();
     }
 }

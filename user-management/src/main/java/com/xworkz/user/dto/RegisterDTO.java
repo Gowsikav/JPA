@@ -1,5 +1,7 @@
 package com.xworkz.user.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -30,6 +32,7 @@ public class RegisterDTO {
     @Past
     @NonNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonSerialize(using = ToStringSerializer.class)
     private LocalDate dateOfBirth;
 
     @NonNull
