@@ -56,7 +56,7 @@ public class PassportConfiguration implements WebMvcConfigurer {
         HibernateJpaVendorAdapter hibernateJpaVendorAdapter=new HibernateJpaVendorAdapter();
         entityManagerFactoryBean.setJpaVendorAdapter(hibernateJpaVendorAdapter);
         entityManagerFactoryBean.setJpaProperties(getHibernateProperties());
-        entityManagerFactoryBean.setPackagesToScan(new String[]{"com.xworkz.library.entity"});
+        entityManagerFactoryBean.setPackagesToScan(new String[]{"com.xworkz.passport.entity"});
         return entityManagerFactoryBean;
     }
 

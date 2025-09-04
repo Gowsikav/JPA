@@ -55,7 +55,7 @@ public class OnlineExamConfiguration implements WebMvcConfigurer {
         HibernateJpaVendorAdapter hibernateJpaVendorAdapter=new HibernateJpaVendorAdapter();
         entityManagerFactoryBean.setJpaVendorAdapter(hibernateJpaVendorAdapter);
         entityManagerFactoryBean.setJpaProperties(getHibernateProperties());
-        entityManagerFactoryBean.setPackagesToScan(new String[]{"com.xworkz.library.entity"});
+        entityManagerFactoryBean.setPackagesToScan(new String[]{"com.xworkz.onlineexam.entity"});
         return entityManagerFactoryBean;
     }
 

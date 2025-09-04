@@ -55,7 +55,7 @@ public class TourismConfiguration implements WebMvcConfigurer {
         HibernateJpaVendorAdapter hibernateJpaVendorAdapter=new HibernateJpaVendorAdapter();
         entityManagerFactoryBean.setJpaVendorAdapter(hibernateJpaVendorAdapter);
         entityManagerFactoryBean.setJpaProperties(getHibernateProperties());
-        entityManagerFactoryBean.setPackagesToScan(new String[]{"com.xworkz.library.entity"});
+        entityManagerFactoryBean.setPackagesToScan(new String[]{"com.xworkz.tourism.entity"});
         return entityManagerFactoryBean;
     }
 

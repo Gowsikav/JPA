@@ -70,7 +70,7 @@ public class UserConfiguration implements WebMvcConfigurer {
         HibernateJpaVendorAdapter hibernateJpaVendorAdapter=new HibernateJpaVendorAdapter();
         entityManagerFactoryBean.setJpaVendorAdapter(hibernateJpaVendorAdapter);
         entityManagerFactoryBean.setJpaProperties(getHibernateProperties());
-        entityManagerFactoryBean.setPackagesToScan(new String[]{"com.xworkz.library.entity"});
+        entityManagerFactoryBean.setPackagesToScan(new String[]{"com.xworkz.user.entity"});
         return entityManagerFactoryBean;
     }
 
