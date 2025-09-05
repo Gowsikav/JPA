@@ -1,6 +1,8 @@
 package com.xworkz.user.entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -65,4 +67,28 @@ public class RegisterEntity {
     @Column(name = "profile_path")
     private String profilePath;
 
+    @OneToOne(cascade = CascadeType.ALL,mappedBy = "registerEntity")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private AuditEntity audit;
+
+    @PrePersist
+    public void prePersist() {
+        if (audit == null) {
+            audit = new AuditEntity();
+            audit.setRegisterEntity(this);
+        }
+        audit.setCreatedBy(this.userName);
+        audit.setCreatedAt(LocalDateTime.now());
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        if (audit == null) {
+            audit = new AuditEntity();
+            audit.setRegisterEntity(this);
+        }
+        audit.setModifiedBy(this.userName);
+        audit.setModifiedAt(LocalDateTime.now());
+    }
 }
