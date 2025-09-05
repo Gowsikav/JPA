@@ -121,7 +121,7 @@ public class RegisterController {
         System.out.println("Email: " + email);
         System.out.println("Password: " + password + "   ConfirmPassword :" + confirmPassword);
         if (registerService.setPasswordByEmail(email, password, confirmPassword)) {
-            return "Login";
+            return getLoginPage(model);
         }
         model.addAttribute("message", "Password mismatch");
         model.addAttribute("email", email);

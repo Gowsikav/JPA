@@ -215,36 +215,39 @@ public class RegisterRepositoryImpl implements RegisterRepository {
         System.out.println("updateUserDetails method in repository");
         EntityManager entityManager = null;
         EntityTransaction entityTransaction = null;
-        RegisterEntity existingEntity;
+
         try {
             entityManager = entityManagerFactory.createEntityManager();
             entityTransaction = entityManager.getTransaction();
             entityTransaction.begin();
-            existingEntity = getUserDetailsByEmail(entity.getEmail());
+
+            RegisterEntity existingEntity = entityManager
+                    .createNamedQuery("getDetailsByEmail", RegisterEntity.class)
+                    .setParameter("email", entity.getEmail())
+                    .getSingleResult();
+
             if (existingEntity == null) {
                 System.out.println("User not found");
                 return false;
             }
-            if (entity.getProfilePath() == null || entity.getProfilePath().isEmpty()) {
-                entity.setProfilePath(existingEntity.getProfilePath());
+            if (entity.getProfilePath() != null && !entity.getProfilePath().isEmpty()) {
+                existingEntity.setProfilePath(entity.getProfilePath());
             }
-            if (entity.getPassword() == null || entity.getPassword().isEmpty()) {
-                entity.setPassword(existingEntity.getPassword());
+            if (entity.getPassword() != null && !entity.getPassword().isEmpty()) {
+                existingEntity.setPassword(entity.getPassword());
             }
-            if (entity.getLockTime() == null) {
-                entity.setLockTime(existingEntity.getLockTime());
+            if (entity.getLockTime() != null) {
+                existingEntity.setLockTime(entity.getLockTime());
             }
-            entity.setLoginCount(existingEntity.getLoginCount());
-            entity.setIsActive(true);
-            RegisterEntity mergedEntity = entityManager.merge(entity);
+            existingEntity.setLoginCount(existingEntity.getLoginCount());
+            existingEntity.setIsActive(true);
 
-            if (mergedEntity != null) {
-                entityTransaction.commit();
-                System.out.println("User updated successfully: " + mergedEntity);
-                return true;
-            }
+            entityTransaction.commit();
+            System.out.println("User updated successfully: " + existingEntity);
+            return true;
+
         } catch (PersistenceException e) {
-            System.out.println("Error while updating user: " + e.getMessage());
+            System.out.println(e.getMessage());
             if (entityTransaction != null) {
                 entityTransaction.rollback();
                 System.out.println("Transaction rolled back");
@@ -256,7 +259,6 @@ public class RegisterRepositoryImpl implements RegisterRepository {
                 System.out.println("EntityManager is closed");
             }
         }
-        return false;
     }
 
     @Override
