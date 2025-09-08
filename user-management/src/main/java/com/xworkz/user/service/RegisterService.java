@@ -16,5 +16,6 @@ public interface RegisterService {
     boolean updateUserDetails(RegisterDTO registerDTO);
     boolean setOTPByEmail(String email);
     List<String> getAllEmail();
+    boolean deleteAccountByEmail(String email);
 
 }
