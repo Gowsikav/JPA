@@ -125,10 +125,12 @@
                 </tr>
                 </tbody>
             </table>
-            <div class="text-center mt-3">
+            <div class="text-center mt-3 d-flex justify-content-center gap-2">
                 <a href="editProfile?userEmail=${dto.email}" class="btn btn-primary">
                     Edit Profile
                 </a>
+                <a href="deleteByEmail?email=${dto.email}" class="btn btn-danger"
+                   onclick="return confirm('Are you sure you want to delete this account?');">Delete Account</a>
             </div>
         </div>
     </div>

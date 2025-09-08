@@ -9,10 +9,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 @Controller
@@ -38,14 +34,6 @@ public class RegisterController {
         return "Register";
     }
 
-    @GetMapping("/redirectToLogin")
-    public String getLoginPage(Model model) {
-        System.out.println("redirect to login page");
-        System.out.println("getEmailsList method in controller");
-        List<String> list=registerService.getAllEmail();
-        model.addAttribute("emails",list);
-        return "Login";
-    }
 
     @PostMapping("/userRegister")
     public String getRegister(@Valid RegisterDTO registerDTO, BindingResult bindingResult, Model model) {
@@ -116,75 +104,7 @@ public class RegisterController {
         return "LoginWithOTP";
     }
 
-    @PostMapping("/setPassword")
-    public String setPasswordInDB(@RequestParam("email") String email, @RequestParam("password") String password, @RequestParam("confirmPassword") String confirmPassword, Model model) {
-        System.out.println("Email: " + email);
-        System.out.println("Password: " + password + "   ConfirmPassword :" + confirmPassword);
-        if (registerService.setPasswordByEmail(email, password, confirmPassword)) {
-            return getLoginPage(model);
-        }
-        model.addAttribute("message", "Password mismatch");
-        model.addAttribute("email", email);
-        return "SetPassword";
-    }
 
-    @GetMapping("/redirectToUserDetails")
-    public String getUserDetails(@RequestParam("userEmail")String email,Model model)
-    {
-        System.out.println("getUserDetails method in controller");
-        RegisterDTO dto=registerService.getUserDetailsByEmail(email);
-        model.addAttribute("dto",dto);
-        return "LoginSuccess";
-    }
-
-    @GetMapping("editProfile")
-    public String editProfile(@RequestParam("userEmail")String email,Model model)
-    {
-        System.out.println("editProfile method in controller");
-        RegisterDTO dto=registerService.getUserDetailsByEmail(email);
-        model.addAttribute("dto",dto);
-        return "UpdateProfile";
-    }
-
-    @PostMapping("/updateProfile")
-    public String updateProfile(@Valid RegisterDTO registerDTO,BindingResult bindingResult,Model model)
-    {
-        System.out.println("updateProfile method in controller");
-        if (bindingResult.hasErrors()) {
-            System.out.println("Errors in fields");
-            bindingResult.getFieldErrors().stream()
-                    .map(e -> e.getField() + " : " + e.getDefaultMessage())
-                    .forEach(System.out::println);
-
-            model.addAttribute("message", "Invalid details");
-            model.addAttribute("dto", registerDTO);
-            return "UpdateProfile";
-        }
-        if(registerDTO.getProfilePic().isEmpty())
-        {
-            System.out.println("profile pic not changed");
-        }
-        else {
-            try {
-                byte[] bytes = registerDTO.getProfilePic().getBytes();
-                Path path = Paths.get("D:\\Java\\File upload\\" + registerDTO.getUserName() + System.currentTimeMillis() + registerDTO.getProfilePic().getOriginalFilename());
-                Files.write(path, bytes);
-                registerDTO.setProfilePath(path.getFileName().toString());
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-        if(registerService.updateUserDetails(registerDTO))
-        {
-            model.addAttribute("message","Profile Updated");
-            registerDTO=registerService.getUserDetailsByEmail(registerDTO.getEmail());
-            model.addAttribute("dto",registerDTO);
-            return "LoginSuccess";
-        }else {
-            model.addAttribute("message","Invalid details");
-            return "UpdateProfile";
-        }
-    }
 
     @PostMapping("/resend-otp")
     @ResponseBody

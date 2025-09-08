@@ -16,5 +16,5 @@ public interface RegisterRepository {
     boolean updateUserDetails(RegisterEntity entity);
     boolean updateOTPByEmail(String email,String otp);
     List<String> getAllEmail();
-
+    boolean deleteAccountByEmail(String email);
 }

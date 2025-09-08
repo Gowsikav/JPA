@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @NamedQuery(name = "getOtp",query = "select a.password from RegisterEntity a where a.email=:email and a.isActive=true")
 @NamedQuery(name = "setPassword",query = "update RegisterEntity a set a.password=:password ,a.loginCount=0 where a.email=:email and a.isActive=true")
 @NamedQuery(name = "setOTP",query = "update RegisterEntity a set a.password=:otp where a.email=:email and a.isActive=true")
-@NamedQuery(name = "getAllEmail",query = "select a.email from RegisterEntity a")
+@NamedQuery(name = "getAllEmail",query = "select a.email from RegisterEntity a where a.isActive=true")
 public class RegisterEntity {
 
     @Id
@@ -90,5 +90,17 @@ public class RegisterEntity {
         }
         audit.setModifiedBy(this.userName);
         audit.setModifiedAt(LocalDateTime.now());
+    }
+
+    public void softDelete()
+    {
+        if(audit==null)
+        {
+            audit=new AuditEntity();
+            audit.setRegisterEntity(this);
+        }
+
+        audit.setDeletedAt(LocalDateTime.now());
+        audit.setDeletedBy(this.userName);
     }
 }

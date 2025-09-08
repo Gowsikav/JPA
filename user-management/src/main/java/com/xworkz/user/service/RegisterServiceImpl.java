@@ -181,4 +181,10 @@ public class RegisterServiceImpl implements RegisterService {
         System.out.println("getAllEmail method in service");
         return repository.getAllEmail();
     }
+
+    @Override
+    public boolean deleteAccountByEmail(String email) {
+        System.out.println("deleteAccountByEmail method in service");
+        return repository.deleteAccountByEmail(email);
+    }
 }
