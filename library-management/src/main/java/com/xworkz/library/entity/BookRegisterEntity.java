@@ -1,9 +1,14 @@
 package com.xworkz.library.entity;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -32,4 +37,25 @@ public class BookRegisterEntity {
 
     @Column(name = "price")
     private Float price;
+
+    @OneToMany(mappedBy = "registerEntity",cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private List<AuditInfoEntity> audits=new ArrayList<>();
+
+    @PrePersist
+    public void onPrePersist() {
+        AuditInfoEntity audit1 = new AuditInfoEntity();
+        audit1.setRegisterEntity(this);
+        audit1.setCreatedAt(LocalDateTime.now());
+        audit1.setCreatedBy(this.bookTitle);
+        audits.add(audit1);
+
+        AuditInfoEntity audit2 = new AuditInfoEntity();
+        audit2.setRegisterEntity(this);
+        audit2.setCreatedAt(LocalDateTime.now());
+        audit2.setCreatedBy("Admin");
+        audits.add(audit2);
+    }
+
 }
